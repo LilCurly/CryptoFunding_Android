@@ -1,16 +1,16 @@
 package com.example.cryptofunding.repository.dao
 
-import com.example.cryptofunding.entity.Wallet
+import com.example.cryptofunding.repository.data.WalletData
 
 class FakeDao : AbstractDao {
-    private val listOfWallets = mutableListOf<Wallet>()
+    private val listOfWallets = mutableListOf<WalletData>()
 
-    override fun saveWallet(wallet: Wallet): Boolean {
+    override fun saveWallet(wallet: WalletData): Boolean {
         listOfWallets.add(wallet)
         return true
     }
 
-    override fun removeWallet(wallet: Wallet): Boolean {
+    override fun removeWallet(wallet: WalletData): Boolean {
         if (listOfWallets.contains(wallet)) {
             listOfWallets.remove(wallet)
             return true
@@ -18,7 +18,7 @@ class FakeDao : AbstractDao {
         return false
     }
 
-    override fun loadWallets(): List<Wallet> {
+    override fun loadWallets(): List<WalletData> {
         return listOfWallets
     }
 
