@@ -35,4 +35,5 @@ dependencies {
 
     // WEB3J
     implementation ('org.web3j:core:4.2.0-android')
+    implementation ('org.web3j:core:4.5.6')
 }
