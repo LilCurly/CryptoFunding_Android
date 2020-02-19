@@ -1,4 +1,4 @@
-package com.example.cryptofunding;
+package com.example.cryptofunding.contract;
 
 import java.math.BigInteger;
 import java.util.Arrays;

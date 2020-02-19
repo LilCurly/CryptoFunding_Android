@@ -1,6 +1,5 @@
 package com.example.cryptofunding.contract
 
-import com.example.cryptofunding.MyContract
 import com.example.cryptofunding.utils.CONTRACT_ADDRESS
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
