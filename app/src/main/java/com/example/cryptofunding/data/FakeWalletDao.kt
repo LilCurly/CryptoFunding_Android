@@ -26,8 +26,4 @@ class FakeWalletDao: AbstractWalletDao {
     override fun deleteWallet(wallet: Wallet) {
         wallets.remove(wallet)
     }
-
-    override fun exists(publicKey: String): Wallet? {
-        return wallets.first { it.publicKey == publicKey}
-    }
 }

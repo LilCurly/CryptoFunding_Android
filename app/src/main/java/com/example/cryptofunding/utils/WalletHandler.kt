@@ -44,7 +44,7 @@ object WalletHandler {
 
         val createdWallet = Wallet(credentials.address, name, fullPath)
 
-        if (repository.exists(createdWallet.publicKey) == null) {
+        if (repository.getByPublicKey(createdWallet.publicKey) == null) {
             repository.insertWallet(createdWallet)
         } else {
             Log.d(DEBUG, "Wallet already exists")

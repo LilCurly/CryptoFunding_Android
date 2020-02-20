@@ -6,5 +6,4 @@ interface AbstractWalletDao {
     fun getByName(name: String): Wallet?
     fun insertWallet(wallet: Wallet)
     fun deleteWallet(wallet: Wallet)
-    fun exists(publicKey: String): Wallet?
 }

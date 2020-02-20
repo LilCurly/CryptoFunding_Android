@@ -8,7 +8,6 @@ class WalletRepository private constructor(private val walletDao: AbstractWallet
     fun getByName(name: String) = walletDao.getByName(name)
     fun insertWallet(wallet: Wallet) = walletDao.insertWallet(wallet)
     fun deleteWallet(wallet: Wallet) = walletDao.deleteWallet(wallet)
-    fun exists(publicKey: String) = walletDao.exists(publicKey)
 
     companion object {
         @Volatile private var instance: WalletRepository? = null
