@@ -7,11 +7,10 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cryptofunding.contract.Contract
 import com.example.cryptofunding.data.AppRoomDatabase
-import com.example.cryptofunding.data.WalletRepository
+import com.example.cryptofunding.data.DefaultWalletRepository
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.utils.WalletHandler
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.web3j.crypto.WalletUtils
 import java.math.BigInteger
 import java.security.Provider
 import java.security.Security
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         setupBouncyCastle()
 
-        val repo = WalletRepository.getInstance(AppRoomDatabase.getInstance(this).walletDao())
+        val repo = DefaultWalletRepository.getInstance(AppRoomDatabase.getInstance(this).walletDao())
 
         WalletHandler.generateNewWalletFileFromPrivateKey(
             "test",
@@ -35,9 +34,11 @@ class MainActivity : AppCompatActivity() {
             filesDir.absolutePath,
             repo)
 
+        //WalletHandler.generateNewWalletFile("test", "myOtherWallet", filesDir.absolutePath, repo)
+
         val wallet = repo.getByName("myWallet")
 
-        val credentials = WalletUtils.loadCredentials("test", wallet?.jsonPath)
+        //val credentials = WalletUtils.loadCredentials("test", wallet?.jsonPath)
         val contract = Contract.getInstance()
 //        val result = contract.launchFundingProject(BigInteger.valueOf(1), mutableListOf(BigInteger.valueOf(10000000000000)), mutableListOf(BigInteger.valueOf(500)))
 //        val receipt = result.sendAsync().join()
@@ -48,15 +49,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBouncyCastle() {
         val provider: Provider = Security.getProvider(BouncyCastleProvider.PROVIDER_NAME)
-            ?: // Web3j will set up the provider lazily when it's first used.
+            ?:
             return
-        if (provider.javaClass == BouncyCastleProvider::class.java) { // BC with same package name, shouldn't happen in real life.
+        if (provider.javaClass == BouncyCastleProvider::class.java) {
             return
         }
-        // Android registers its own BC provider. As it might be outdated and might not include
-        // all needed ciphers, we substitute it with a known BC bundled in the app.
-        // Android's BC has its package rewritten to "com.android.org.bouncycastle" and because
-        // of that it's possible to have another BC implementation loaded in VM.
         Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
         Security.insertProviderAt(BouncyCastleProvider(), 1)
     }

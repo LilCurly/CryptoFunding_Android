@@ -1,8 +1,9 @@
 package com.example.cryptofunding.utils
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.cryptofunding.data.Wallet
-import com.example.cryptofunding.data.WalletRepository
+import com.example.cryptofunding.data.DefaultWalletRepository
 import org.web3j.crypto.CipherException
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.WalletUtils
@@ -15,10 +16,10 @@ object WalletHandler {
         password: String,
         name: String,
         path: String,
-        repository: WalletRepository
+        repository: DefaultWalletRepository
     ): Wallet {
         val filePath = File(path)
-        val fileName = WalletUtils.generateNewWalletFile(password, filePath)
+        val fileName = WalletUtils.generateLightNewWalletFile(password, filePath)
         val fullPath = "$filePath/$fileName"
 
         val credentials = WalletUtils.loadCredentials(password, fullPath)
@@ -33,7 +34,7 @@ object WalletHandler {
         name: String,
         privateKey: String,
         path: String,
-        repository: WalletRepository
+        repository: DefaultWalletRepository
     ): Wallet {
         val credentials = Credentials.create(privateKey)
 
@@ -53,11 +54,7 @@ object WalletHandler {
         return createdWallet
     }
 
-    fun loadWallets(repository: WalletRepository): List<Wallet> {
-        return repository.getAll()
-    }
-
-    fun loadCurrentWallet(wallet: Wallet, password: String, repository: WalletRepository): Wallet? {
+    fun loadCurrentWallet(wallet: Wallet, password: String, repository: DefaultWalletRepository): Wallet? {
         return try {
             WalletUtils.loadCredentials(password, wallet.jsonPath)
             repository.currentWallet = wallet
@@ -67,7 +64,7 @@ object WalletHandler {
         }
     }
 
-    fun getCurrentWallet(repository: WalletRepository): Wallet? {
+    fun getCurrentWallet(repository: DefaultWalletRepository): Wallet? {
         return repository.currentWallet
     }
 }

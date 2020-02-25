@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WalletListFragment">
+    tools:context=".WalletListFragment"
+    android:background="@color/colorPrimaryApp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/wallet_list_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

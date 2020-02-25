@@ -1,21 +1,11 @@
 package com.example.cryptofunding.data
 
-class WalletRepository private constructor(private val walletDao: AbstractWalletDao) {
-    var currentWallet: Wallet? = null
+import androidx.lifecycle.LiveData
 
-    fun getAll() = walletDao.getAll()
-    fun getByPublicKey(publicKey: String) = walletDao.getByPublicKey(publicKey)
-    fun getByName(name: String) = walletDao.getByName(name)
-    fun insertWallet(wallet: Wallet) = walletDao.insertWallet(wallet)
-    fun deleteWallet(wallet: Wallet) = walletDao.deleteWallet(wallet)
-
-    companion object {
-        @Volatile private var instance: WalletRepository? = null
-
-        fun getInstance(walletDao: AbstractWalletDao): WalletRepository {
-            return instance ?: synchronized(this) {
-                instance ?: WalletRepository(walletDao).also { instance = it }
-            }
-        }
-    }
+interface WalletRepository {
+    fun getAll(): LiveData<List<Wallet>>
+    fun getByPublicKey(publicKey: String): LiveData<Wallet>
+    fun getByName(name: String): LiveData<Wallet>
+    fun insertWallet(wallet: Wallet)
+    fun deleteWallet(wallet: Wallet)
 }

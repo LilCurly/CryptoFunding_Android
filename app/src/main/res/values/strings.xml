@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CryptoFunding</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tool_smallnumber">10.45</string>
+    <string name="eth_indicator">ETH</string>
 </resources>
