@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".WalletListFragment"
     android:background="@color/colorPrimaryApp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wallet_list_detailview"
+        android:layout_width="match_parent"
+        android:layout_height="255dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bottomleft_rounded_background"
+        android:elevation="6dp">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/wallet_list_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:paddingTop="265dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="@id/wallet_list_detailview"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
