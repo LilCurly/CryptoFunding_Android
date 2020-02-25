@@ -27,7 +27,6 @@ class WalletListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_wallet_list, container, false)
     }
 
@@ -35,15 +34,10 @@ class WalletListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.wallets.observe(this) {
-            Log.d(DEBUG, "Got a wallet!")
-            Log.d(DEBUG, "Got ${it.size}")
             viewModel.setupWalletList(it)
             view.wallet_list_recyclerview.adapter = viewModel.adapter
             view.wallet_list_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            Log.d(DEBUG, "Finished")
         }
-
-        Log.d(DEBUG, "Works!")
     }
 
 
