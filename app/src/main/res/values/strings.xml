@@ -5,4 +5,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tool_smallnumber">10.45</string>
     <string name="eth_indicator">ETH</string>
+    <string name="selected_info">Sélectionné</string>
+    <string name="nowallet">Vous n\'avez enregistré aucun portefeuille</string>
+    <string name="available_amount">Montant disponible</string>
+    <string name="notifications">Notifications</string>
+    <string name="no_selected_wallet">Aucun portefeuille sélectionné</string>
 </resources>
