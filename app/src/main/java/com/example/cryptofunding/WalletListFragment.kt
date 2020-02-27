@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.viewmodel.viewModel
+import kotlinx.android.synthetic.main.fragment_wallet_list.*
 import kotlinx.android.synthetic.main.fragment_wallet_list.view.*
 
 /**
@@ -33,11 +34,46 @@ class WalletListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        hideDetails()
+
         viewModel.wallets.observe(this) {
-            viewModel.setupWalletList(it)
-            view.wallet_list_recyclerview.adapter = viewModel.adapter
-            view.wallet_list_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            if (it.isNotEmpty()) {
+                wallet_list_nowallet.visibility = View.GONE
+                viewModel.setupWalletList(it)
+                wallet_list_recyclerview.adapter = viewModel.adapter
+                wallet_list_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
+            else {
+                wallet_list_recyclerview.visibility = View.GONE
+            }
         }
+
+        viewModel.currentWallet.observe(this) {
+            wallet_list_noselected.visibility = View.GONE
+            showDetails()
+
+            wallet_list_detailname.text = it.name
+            wallet_list_notifamount.text = "0"
+            wallet_list_amount.text = it.getAmount()
+        }
+    }
+
+    private fun showDetails() {
+        wallet_list_detailname.visibility = View.VISIBLE
+        wallet_list_amount.visibility = View.VISIBLE
+        wallet_list_available.visibility = View.VISIBLE
+        wallet_list_currency.visibility = View.VISIBLE
+        wallet_list_notification.visibility = View.VISIBLE
+        wallet_list_notifamount.visibility = View.VISIBLE
+    }
+
+    private fun hideDetails() {
+        wallet_list_detailname.visibility = View.GONE
+        wallet_list_amount.visibility = View.GONE
+        wallet_list_available.visibility = View.GONE
+        wallet_list_currency.visibility = View.GONE
+        wallet_list_notification.visibility = View.GONE
+        wallet_list_notifamount.visibility = View.GONE
     }
 
 

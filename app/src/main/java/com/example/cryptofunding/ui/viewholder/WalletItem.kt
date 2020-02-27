@@ -1,7 +1,10 @@
 package com.example.cryptofunding.ui.viewholder
 
+import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.observe
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Wallet
 import com.mikepenz.fastadapter.FastAdapter
@@ -22,14 +25,14 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
         return ViewHolder(v)
     }
 
-    class ViewHolder(view: View): FastAdapter.ViewHolder<WalletItem>(view) {
+    class ViewHolder(private val view: View): FastAdapter.ViewHolder<WalletItem>(view) {
         private val address: TextView = view.walletitem_address
         private val amount: TextView = view.walletitem_amount
         private val name: TextView = view.walletitem_name
 
         override fun bindView(item: WalletItem, payloads: MutableList<Any>) {
-            address.text = item.address
             amount.text = item.amount
+            address.text = item.address
             name.text = item.name
         }
 
