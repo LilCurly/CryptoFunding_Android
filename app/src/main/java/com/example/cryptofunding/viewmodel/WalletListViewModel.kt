@@ -1,5 +1,10 @@
 package com.example.cryptofunding.viewmodel
 
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
+import android.view.View
+import android.view.animation.LinearInterpolator
+import android.view.animation.ScaleAnimation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +19,7 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
     val wallets: LiveData<List<Wallet>> = repo.getAll()
     val currentWallet: MutableLiveData<Wallet> = MutableLiveData()
     lateinit var adapter: FastAdapter<WalletItem>
+    private var currentSelectedView: View? = null
 
     fun setupWalletList(walletList: List<Wallet>) {
         val itemAdapter = ItemAdapter<WalletItem>()
@@ -22,9 +28,15 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
             WalletItem(it)
         })
 
-        adapter.onClickListener = { _, _, item, _ ->
-            setCurrentWallet(item.wallet)
-            currentWallet.value = item.wallet
+        adapter.onClickListener = { view, _, item, _ ->
+            if (repo.currentWallet == null || item.wallet != repo.currentWallet) {
+                setCurrentWallet(item.wallet)
+                currentWallet.value = item.wallet
+                deselectRow()
+                currentSelectedView = view
+                createScaleAnimation(view)
+            }
+
             true
         }
     }
@@ -35,5 +47,53 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
 
     private fun setCurrentWallet(wallet: Wallet) {
         repo.currentWallet = wallet
+    }
+
+    private fun deselectRow() {
+        currentSelectedView?.let {
+            it.animation = null
+            it.animate()
+                .setDuration(100)
+                .scaleY(1f)
+                .scaleX(1f)
+                .setInterpolator(LinearInterpolator())
+                .start()
+        }
+    }
+
+    private fun createScaleAnimation(view: View?) {
+        view?.let {
+            val interpolator = LinearInterpolator()
+            it.animate()
+                .setDuration(50)
+                .scaleX(1.06f)
+                .scaleY(1.06f)
+                .setStartDelay(10)
+                .setInterpolator(interpolator)
+                .setListener(object: AnimatorListener {
+                    override fun onAnimationRepeat(p0: Animator?) {
+
+                    }
+
+                    override fun onAnimationEnd(p0: Animator?) {
+                        it.animate()
+                            .setDuration(100)
+                            .scaleX(1.04f)
+                            .scaleY(1.04f)
+                            .setInterpolator(interpolator)
+                            .start()
+                    }
+
+                    override fun onAnimationCancel(p0: Animator?) {
+
+                    }
+
+                    override fun onAnimationStart(p0: Animator?) {
+
+                    }
+
+                })
+                .start()
+        }
     }
 }
