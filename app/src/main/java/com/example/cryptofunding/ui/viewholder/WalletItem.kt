@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.item_wallet.view.*
 class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
     val name: String = wallet.name
     val address: String? = wallet.publicKey
-    val amount: String? = wallet.getAmount()
+    val amount: String? = wallet.loadAmount()
 
     override val layoutRes: Int
         get() = R.layout.item_wallet

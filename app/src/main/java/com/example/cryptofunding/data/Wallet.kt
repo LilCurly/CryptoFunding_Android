@@ -31,13 +31,18 @@ data class Wallet(
 
     fun getAmount(): String? {
         if (amount == "") {
-            val web3j = Web3j.build(HttpService(INFURA_ADDRESS))
-            val ethBalance =
-                web3j.ethGetBalance(publicKey, DefaultBlockParameterName.LATEST).sendAsync().join()
-            val balanceInEth = Convert.fromWei(ethBalance.balance.toString(), Convert.Unit.ETHER)
-                .setScale(2, RoundingMode.HALF_EVEN)
-            amount = balanceInEth.toString()
+            loadAmount()
         }
+        return amount
+    }
+
+    fun loadAmount(): String? {
+        val web3j = Web3j.build(HttpService(INFURA_ADDRESS))
+        val ethBalance =
+            web3j.ethGetBalance(publicKey, DefaultBlockParameterName.LATEST).sendAsync().join()
+        val balanceInEth = Convert.fromWei(ethBalance.balance.toString(), Convert.Unit.ETHER)
+            .setScale(2, RoundingMode.HALF_EVEN)
+        amount = balanceInEth.toString()
         return amount
     }
 }
