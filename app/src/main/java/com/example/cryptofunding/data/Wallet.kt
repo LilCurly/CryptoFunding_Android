@@ -1,15 +1,11 @@
 package com.example.cryptofunding.data
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.MutableLiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.example.cryptofunding.utils.INFURA_ADDRESS
 import org.web3j.protocol.Web3j
-import org.web3j.protocol.core.DefaultBlockParameter
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
 import org.web3j.utils.Convert
@@ -33,7 +29,6 @@ data class Wallet(
         return super.hashCode()
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun getAmount(): String? {
         if (amount == "") {
             val web3j = Web3j.build(HttpService(INFURA_ADDRESS))
