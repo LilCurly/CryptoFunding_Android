@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.viewmodel.viewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_wallet_list.*
 import kotlinx.android.synthetic.main.fragment_wallet_list.view.*
 
@@ -33,7 +35,7 @@ class WalletListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupToolbar()
         hideDetails()
 
         viewModel.wallets.observe(this) {
@@ -49,7 +51,6 @@ class WalletListFragment : Fragment() {
         }
 
         viewModel.currentWallet.observe(this) {
-            wallet_list_noselected.visibility = View.GONE
             showDetails()
 
             wallet_list_detailname.text = it.name
@@ -59,6 +60,7 @@ class WalletListFragment : Fragment() {
     }
 
     private fun showDetails() {
+        wallet_list_noselected.visibility = View.GONE
         wallet_list_detailname.visibility = View.VISIBLE
         wallet_list_amount.visibility = View.VISIBLE
         wallet_list_available.visibility = View.VISIBLE
@@ -68,6 +70,7 @@ class WalletListFragment : Fragment() {
     }
 
     private fun hideDetails() {
+        wallet_list_noselected.visibility = View.VISIBLE
         wallet_list_detailname.visibility = View.GONE
         wallet_list_amount.visibility = View.GONE
         wallet_list_available.visibility = View.GONE
@@ -76,5 +79,7 @@ class WalletListFragment : Fragment() {
         wallet_list_notifamount.visibility = View.GONE
     }
 
-
+    private fun setupToolbar() {
+        activity?.toolbar_title?.text = getString(R.string.my_wallets)
+    }
 }

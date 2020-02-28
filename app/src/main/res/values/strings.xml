@@ -10,4 +10,5 @@
     <string name="available_amount">Montant disponible</string>
     <string name="notifications">Notifications</string>
     <string name="no_selected_wallet">Aucun portefeuille sélectionné</string>
+    <string name="my_wallets">Mes portefeuilles</string>
 </resources>
