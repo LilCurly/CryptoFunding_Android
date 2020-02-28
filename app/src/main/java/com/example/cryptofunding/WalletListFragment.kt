@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,11 +64,14 @@ class WalletListFragment : Fragment() {
     private fun showDetails() {
         wallet_list_noselected.visibility = View.GONE
         wallet_list_detailname.visibility = View.VISIBLE
+        wallet_list_detailname.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
         wallet_list_amount.visibility = View.VISIBLE
+        wallet_list_amount.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
         wallet_list_available.visibility = View.VISIBLE
         wallet_list_currency.visibility = View.VISIBLE
         wallet_list_notification.visibility = View.VISIBLE
         wallet_list_notifamount.visibility = View.VISIBLE
+        wallet_list_notifamount.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
     }
 
     private fun hideDetails() {
