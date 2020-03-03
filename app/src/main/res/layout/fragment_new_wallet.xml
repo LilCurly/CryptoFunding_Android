@@ -12,7 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabTextColor="@color/colorBackgroundWhiteApp"
+        app:tabBackground="@color/colorSecondaryApp"
+        app:tabIndicatorColor="@color/colorBackgroundDarkApp"
+        app:tabIndicatorHeight="48dp"
+        android:elevation="10dp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/newWallet_pager"
