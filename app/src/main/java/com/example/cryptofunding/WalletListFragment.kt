@@ -11,6 +11,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.utils.DEBUG
@@ -58,6 +59,11 @@ class WalletListFragment : Fragment() {
             wallet_list_detailname.text = it.name
             wallet_list_notifamount.text = "0"
             wallet_list_amount.text = it.getAmount()
+        }
+
+        wallet_list_addwallet_fab.setOnClickListener {
+            val action = WalletListFragmentDirections.actionWalletListFragmentToNewWalletFragment2()
+            view.findNavController().navigate(action)
         }
     }
 
