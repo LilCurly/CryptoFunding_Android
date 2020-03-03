@@ -14,4 +14,5 @@
     <string name="walletname_hint">Nom</string>
     <string name="walletpassword_hint">Mot de passe</string>
     <string name="create">Creer</string>
+    <string name="import_text">Importer</string>
 </resources>

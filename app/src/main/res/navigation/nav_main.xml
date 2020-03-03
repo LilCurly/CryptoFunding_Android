@@ -9,7 +9,11 @@
         android:id="@+id/walletListFragment"
         android:name="com.example.cryptofunding.WalletListFragment"
         android:label="fragment_wallet_list"
-        tools:layout="@layout/fragment_wallet_list" />
+        tools:layout="@layout/fragment_wallet_list" >
+        <action
+            android:id="@+id/action_walletListFragment_to_newWalletFragment2"
+            app:destination="@id/newWalletFragment" />
+    </fragment>
     <fragment
         android:id="@+id/newWalletFragment"
         android:name="com.example.cryptofunding.NewWalletFragment"
