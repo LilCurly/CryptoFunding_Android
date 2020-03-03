@@ -13,6 +13,7 @@ import com.example.cryptofunding.data.WalletRepository
 import com.example.cryptofunding.ui.viewholder.WalletItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.select.getSelectExtension
 import javax.inject.Inject
 
 class WalletListViewModel @Inject  constructor(private val repo: WalletRepository) : ViewModel() {
@@ -20,29 +21,32 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
     val currentWallet: MutableLiveData<Wallet> = MutableLiveData()
     lateinit var adapter: FastAdapter<WalletItem>
     private var currentSelectedView: View? = null
+    private var itemPosition: Int? = null
 
     fun setupWalletList(walletList: List<Wallet>) {
         val itemAdapter = ItemAdapter<WalletItem>()
         adapter = FastAdapter.with(itemAdapter)
+
         itemAdapter.add(walletList.map {
             WalletItem(it)
         })
 
-        adapter.onClickListener = { view, _, item, _ ->
+        adapter.onClickListener = { view, adapter, item, index ->
             if (repo.currentWallet == null || item.wallet != repo.currentWallet) {
+                itemPosition?.let {
+                    adapter.getAdapterItem(it).isSelected = false
+                }
+                itemPosition = index
                 setCurrentWallet(item.wallet)
                 currentWallet.value = item.wallet
                 deselectRow()
+                item.isSelected = true
                 currentSelectedView = view
                 createScaleAnimation(view)
             }
 
             true
         }
-    }
-
-    fun getCurrentWallet(): Wallet? {
-        return repo.currentWallet
     }
 
     private fun setCurrentWallet(wallet: Wallet) {
@@ -53,10 +57,12 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
         currentSelectedView?.let {
             it.animation = null
             it.animate()
-                .setDuration(100)
+                .setDuration(50)
                 .scaleY(1f)
                 .scaleX(1f)
+                .setStartDelay(10)
                 .setInterpolator(LinearInterpolator())
+                .setListener(null)
                 .start()
         }
     }

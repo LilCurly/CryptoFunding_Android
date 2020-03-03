@@ -2,6 +2,7 @@ package com.example.cryptofunding.ui.viewholder
 
 import android.util.Log
 import android.view.View
+import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.observe
@@ -34,12 +35,34 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
             amount.text = item.amount
             address.text = item.address
             name.text = item.name
+
+            if (item.isSelected) {
+                view.animate()
+                    .setDuration(0)
+                    .setStartDelay(0)
+                    .setListener(null)
+                    .setInterpolator(LinearInterpolator())
+                    .scaleX(1.04f)
+                    .scaleY(1.04f)
+                    .start()
+            }
         }
 
         override fun unbindView(item: WalletItem) {
             address.text = null
             amount.text = null
             name.text = null
+
+            if (item.isSelected) {
+                view.animate()
+                    .setDuration(0)
+                    .setStartDelay(0)
+                    .setListener(null)
+                    .setInterpolator(LinearInterpolator())
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .start()
+            }
         }
 
     }
