@@ -15,4 +15,5 @@
     <string name="walletpassword_hint">Mot de passe</string>
     <string name="create">Creer</string>
     <string name="import_text">Importer</string>
+    <string name="walletprivatekey_hint">Clé privée</string>
 </resources>

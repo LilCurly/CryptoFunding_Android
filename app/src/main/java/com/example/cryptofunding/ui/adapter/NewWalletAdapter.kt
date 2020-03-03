@@ -3,6 +3,7 @@ package com.example.cryptofunding.ui.adapter
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.cryptofunding.CreateWalletFragment
+import com.example.cryptofunding.ImportWalletFragment
 
 class NewWalletAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
@@ -11,7 +12,7 @@ class NewWalletAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> CreateWalletFragment()
-            1 -> CreateWalletFragment()
+            1 -> ImportWalletFragment()
             else -> CreateWalletFragment()
         }
     }
