@@ -11,4 +11,7 @@
     <string name="notifications">Notifications</string>
     <string name="no_selected_wallet">Aucun portefeuille sélectionné</string>
     <string name="my_wallets">Mes portefeuilles</string>
+    <string name="walletname_hint">Nom</string>
+    <string name="walletpassword_hint">Mot de passe</string>
+    <string name="create">Creer</string>
 </resources>

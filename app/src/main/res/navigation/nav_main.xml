@@ -15,4 +15,9 @@
         android:name="com.example.cryptofunding.NewWalletFragment"
         android:label="fragment_new_wallet"
         tools:layout="@layout/fragment_new_wallet" />
+    <fragment
+        android:id="@+id/createWalletFragment"
+        android:name="com.example.cryptofunding.CreateWalletFragment"
+        android:label="fragment_create_wallet"
+        tools:layout="@layout/fragment_create_wallet" />
 </navigation>
