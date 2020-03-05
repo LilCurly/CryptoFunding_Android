@@ -58,7 +58,9 @@ class WalletListFragment : Fragment() {
 
             wallet_list_detailname.text = it.name
             wallet_list_notifamount.text = "0"
-            wallet_list_amount.text = it.getAmount()
+            it.amount.observe(this) { currentAmount ->
+                wallet_list_amount.text = currentAmount
+            }
         }
 
         wallet_list_addwallet_fab.setOnClickListener {

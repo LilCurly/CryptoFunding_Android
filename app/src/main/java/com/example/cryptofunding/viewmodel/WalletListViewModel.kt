@@ -8,6 +8,7 @@ import android.view.animation.ScaleAnimation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.observe
 import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.data.WalletRepository
 import com.example.cryptofunding.ui.viewholder.WalletItem
@@ -28,7 +29,14 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
         adapter = FastAdapter.with(itemAdapter)
 
         itemAdapter.add(walletList.map {
-            WalletItem(it)
+            it.loadAmount()
+            val item = WalletItem(it)
+            repo.currentWallet?.let { currentWallet ->
+                if (it == currentWallet) {
+                    item.isSelected = true
+                }
+            }
+            item
         })
 
         adapter.onClickListener = { view, adapter, item, index ->
