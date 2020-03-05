@@ -83,4 +83,7 @@ dependencies {
 
     // FastAdpater
     implementation "com.mikepenz:fastadapter:4.1.2"
+
+    // Lottie
+    implementation 'com.airbnb.android:lottie:3.4.0'
 }

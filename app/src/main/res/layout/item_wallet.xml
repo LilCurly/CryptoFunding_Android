@@ -60,6 +60,14 @@
             android:orientation="vertical"
             android:gravity="center" >
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loading_item_amount_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_fileName="loadingn.json"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true" />
+
             <TextView
                 android:id="@+id/walletitem_amount"
                 android:layout_width="wrap_content"
@@ -67,7 +75,8 @@
                 tools:text="@string/tool_smallnumber"
                 android:fontFamily="@font/opensans_bold"
                 android:textColor="@color/colorBackgroundWhiteApp"
-                android:textSize="21sp" />
+                android:textSize="21sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/walletitem_currency"
@@ -76,7 +85,8 @@
                 android:fontFamily="@font/opensans_regular"
                 android:textColor="@color/colorBackgroundWhiteApp"
                 android:text="@string/eth_indicator"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
