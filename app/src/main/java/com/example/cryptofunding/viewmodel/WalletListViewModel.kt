@@ -29,7 +29,9 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
         adapter = FastAdapter.with(itemAdapter)
 
         itemAdapter.add(walletList.map {
-            it.loadAmount()
+            if (it.amount.value == null) {
+                it.loadAmount()
+            }
             val item = WalletItem(it)
             repo.currentWallet?.let { currentWallet ->
                 if (it == currentWallet) {
