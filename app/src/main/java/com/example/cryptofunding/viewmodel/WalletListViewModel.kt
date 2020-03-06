@@ -20,96 +20,24 @@ import javax.inject.Inject
 class WalletListViewModel @Inject  constructor(private val repo: WalletRepository) : ViewModel() {
     val wallets: LiveData<List<Wallet>> = repo.getAll()
     val currentWallet: MutableLiveData<Wallet> = MutableLiveData()
-    lateinit var adapter: FastAdapter<WalletItem>
-    private var currentSelectedView: View? = null
-    private var itemPosition: Int? = null
 
-    fun setupWalletList(walletList: List<Wallet>) {
-        val itemAdapter = ItemAdapter<WalletItem>()
-        adapter = FastAdapter.with(itemAdapter)
-
-        itemAdapter.add(walletList.map {
-            if (it.amount.value == null) {
-                it.loadAmount()
+    fun isCurrentWallet(wallet: Wallet): Boolean {
+        repo.currentWallet?.let {
+            if (it == wallet) {
+                return true
             }
-            val item = WalletItem(it)
-            repo.currentWallet?.let { currentWallet ->
-                if (it == currentWallet) {
-                    item.isSelected = true
-                }
-            }
-            item
-        })
-
-        adapter.onClickListener = { view, adapter, item, index ->
-            if (repo.currentWallet == null || item.wallet != repo.currentWallet) {
-                itemPosition?.let {
-                    adapter.getAdapterItem(it).isSelected = false
-                }
-                itemPosition = index
-                setCurrentWallet(item.wallet)
-                currentWallet.value = item.wallet
-                deselectRow()
-                item.isSelected = true
-                currentSelectedView = view
-                createScaleAnimation(view)
-            }
-
-            true
         }
+        return false
     }
 
-    private fun setCurrentWallet(wallet: Wallet) {
+    fun setCurrentWallet(wallet: Wallet) {
         repo.currentWallet = wallet
+        currentWallet.value = wallet
     }
 
-    private fun deselectRow() {
-        currentSelectedView?.let {
-            it.animation = null
-            it.animate()
-                .setDuration(50)
-                .scaleY(1f)
-                .scaleX(1f)
-                .setStartDelay(10)
-                .setInterpolator(LinearInterpolator())
-                .setListener(null)
-                .start()
-        }
-    }
-
-    private fun createScaleAnimation(view: View?) {
-        view?.let {
-            val interpolator = LinearInterpolator()
-            it.animate()
-                .setDuration(50)
-                .scaleX(1.06f)
-                .scaleY(1.06f)
-                .setStartDelay(10)
-                .setInterpolator(interpolator)
-                .setListener(object: AnimatorListener {
-                    override fun onAnimationRepeat(p0: Animator?) {
-
-                    }
-
-                    override fun onAnimationEnd(p0: Animator?) {
-                        it.animate()
-                            .setDuration(100)
-                            .scaleX(1.04f)
-                            .scaleY(1.04f)
-                            .setInterpolator(interpolator)
-                            .start()
-                    }
-
-                    override fun onAnimationCancel(p0: Animator?) {
-
-                    }
-
-                    override fun onAnimationStart(p0: Animator?) {
-
-                    }
-
-                })
-                .start()
+    fun loadAmountIfNeeded(wallet: Wallet) {
+        if (wallet.amount.value == null) {
+            wallet.loadAmount()
         }
     }
 }
