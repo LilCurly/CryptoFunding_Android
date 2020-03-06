@@ -14,25 +14,32 @@ import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.viewholder.WalletItem
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.viewmodel.viewModel
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.ISelectionListener
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.listeners.OnBindViewHolderListener
+import com.mikepenz.fastadapter.select.SelectExtension
+import com.mikepenz.fastadapter.select.getSelectExtension
+import com.mikepenz.fastadapter.select.selectExtension
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_wallet_list.*
 import kotlinx.android.synthetic.main.fragment_wallet_list.view.*
+import kotlinx.android.synthetic.main.item_wallet.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class WalletListFragment : Fragment() {
     lateinit var adapter: FastAdapter<WalletItem>
-    private var currentSelectedView: View? = null
-    private var itemPosition: Int? = null
+    private var currentItemPosition: Int? = null
 
     private val viewModel by viewModel {
         activity!!.injector.walletListViewModel
@@ -50,13 +57,15 @@ class WalletListFragment : Fragment() {
         setupToolbar()
         hideDetails()
 
+        wallet_list_recyclerview.itemAnimator = null
+
         viewModel.wallets.observe(this) {
             if (it.isNotEmpty()) {
                 wallet_list_nowallet.visibility = View.GONE
+                wallet_list_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 setupWalletList(it)
                 handleClickListener()
                 wallet_list_recyclerview.adapter = this.adapter
-                wallet_list_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
             else {
                 wallet_list_recyclerview.visibility = View.GONE
@@ -82,6 +91,9 @@ class WalletListFragment : Fragment() {
     private fun setupWalletList(wallets: List<Wallet>) {
         val itemAdapter = ItemAdapter<WalletItem>()
         adapter = FastAdapter.with(itemAdapter)
+        adapter.selectExtension {
+            isSelectable = true
+        }
 
         itemAdapter.add(wallets.map {
             viewModel.loadAmountIfNeeded(it)
@@ -94,17 +106,12 @@ class WalletListFragment : Fragment() {
     }
 
     private fun handleClickListener() {
-        adapter.onClickListener = { view, adapter, item, index ->
+        adapter.onClickListener = { view, _, item, index ->
             if (!viewModel.isCurrentWallet(item.wallet)) {
-                itemPosition?.let {
-                    adapter.getAdapterItem(it).isSelected = false
-                }
-                itemPosition = index
                 viewModel.setCurrentWallet(item.wallet)
                 deselectRow()
-                item.isSelected = true
-                currentSelectedView = view
-                createScaleAnimation()
+                currentItemPosition = index
+                launchScaleAnimation(view)
             }
 
             true
@@ -139,21 +146,23 @@ class WalletListFragment : Fragment() {
     }
 
     private fun deselectRow() {
-        currentSelectedView?.let {
-            it.animation = null
-            it.animate()
-                .setDuration(50)
-                .scaleY(1f)
-                .scaleX(1f)
-                .setStartDelay(10)
-                .setInterpolator(LinearInterpolator())
-                .setListener(null)
-                .start()
+        currentItemPosition?.let { position ->
+            wallet_list_recyclerview.layoutManager?.findViewByPosition(position)?.let {
+                it.animation = null
+                it.animate()
+                    .setDuration(50)
+                    .scaleY(1f)
+                    .scaleX(1f)
+                    .setStartDelay(10)
+                    .setInterpolator(LinearInterpolator())
+                    .setListener(null)
+                    .start()
+            }
         }
     }
 
-    private fun createScaleAnimation() {
-        currentSelectedView?.let {
+    private fun launchScaleAnimation(view: View?) {
+        view?.let {
             val interpolator = LinearInterpolator()
             it.animate()
                 .setDuration(50)

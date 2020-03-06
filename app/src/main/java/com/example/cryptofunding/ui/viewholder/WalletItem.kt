@@ -44,14 +44,7 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
             }
 
             if (item.isSelected) {
-                view.animate()
-                    .setDuration(0)
-                    .setStartDelay(0)
-                    .setListener(null)
-                    .setInterpolator(LinearInterpolator())
-                    .scaleX(1.04f)
-                    .scaleY(1.04f)
-                    .start()
+                scaleUpView()
             }
         }
 
@@ -59,17 +52,32 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
             address.text = null
             amount.text = null
             name.text = null
-
             if (item.isSelected) {
-                view.animate()
-                    .setDuration(0)
-                    .setStartDelay(0)
-                    .setListener(null)
-                    .setInterpolator(LinearInterpolator())
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .start()
+                scaleDownView()
             }
+            itemView.animation = null
+        }
+
+        fun scaleUpView() {
+            itemView.animate()
+                .setDuration(0)
+                .setStartDelay(0)
+                .setListener(null)
+                .setInterpolator(LinearInterpolator())
+                .scaleX(1.04f)
+                .scaleY(1.04f)
+                .start()
+        }
+
+        fun scaleDownView() {
+            itemView.animate()
+                .setDuration(0)
+                .setStartDelay(0)
+                .setListener(null)
+                .setInterpolator(LinearInterpolator())
+                .scaleX(1f)
+                .scaleY(1f)
+                .start()
         }
 
         private fun stopAnimation() {
@@ -79,6 +87,5 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
             currency.visibility = View.VISIBLE
             currency.startAnimation(AnimationUtils.loadAnimation(view.context, R.anim.fade_in))
         }
-
     }
 }
