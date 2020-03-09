@@ -105,6 +105,9 @@ class WalletListFragment : Fragment() {
         })
     }
 
+    /**
+     * Click listener for the items in the recyclerview
+     */
     private fun handleClickListener() {
         adapter.onClickListener = { view, _, item, index ->
             if (!viewModel.isCurrentWallet(item.wallet)) {
@@ -118,6 +121,9 @@ class WalletListFragment : Fragment() {
         }
     }
 
+    /**
+     * Showing the details of the currently selected wallet
+     */
     private fun showDetails() {
         wallet_list_noselected.visibility = View.GONE
         wallet_list_detailname.visibility = View.VISIBLE
@@ -131,6 +137,9 @@ class WalletListFragment : Fragment() {
         wallet_list_notifamount.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
     }
 
+    /**
+     * Hiding the details if no waller is selected
+     */
     private fun hideDetails() {
         wallet_list_noselected.visibility = View.VISIBLE
         wallet_list_detailname.visibility = View.GONE
@@ -145,8 +154,12 @@ class WalletListFragment : Fragment() {
         activity?.toolbar_title?.text = getString(R.string.my_wallets)
     }
 
+    /**
+     * Animation launched when the item currently selected gets deselected
+     */
     private fun deselectRow() {
         currentItemPosition?.let { position ->
+            // Using the position in the recyclerview to retrieve the item with the LayoutManager if it is on the screen.
             wallet_list_recyclerview.layoutManager?.findViewByPosition(position)?.let {
                 it.animation = null
                 it.animate()
@@ -161,6 +174,10 @@ class WalletListFragment : Fragment() {
         }
     }
 
+    /**
+     * Animation launched when an item in the recyclerview is selected
+     * Arg: The view representing the selected item
+     */
     private fun launchScaleAnimation(view: View?) {
         view?.let {
             val interpolator = LinearInterpolator()
