@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.adapter.NewWalletAdapter
+import com.example.cryptofunding.viewmodel.viewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_new_wallet.*
 
@@ -13,6 +15,10 @@ import kotlinx.android.synthetic.main.fragment_new_wallet.*
  * A simple [Fragment] subclass.
  */
 class NewWalletFragment : Fragment() {
+
+    val viewModel by viewModel {
+        activity!!.injector.newWalletViewModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

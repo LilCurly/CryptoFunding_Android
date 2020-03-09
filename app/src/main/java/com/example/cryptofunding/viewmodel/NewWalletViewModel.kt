@@ -1,7 +1,9 @@
 package com.example.cryptofunding.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.cryptofunding.data.WalletRepository
+import com.example.cryptofunding.utils.DEBUG
 import javax.inject.Inject
 
 enum class WalletCreationType {
@@ -14,6 +16,8 @@ class NewWalletViewModel @Inject constructor(private val repo: WalletRepository)
     var password: String? = null
     var privateKey :String? = null
 
+    var test: Int = 0
+
     fun saveWallet(type: WalletCreationType) {
 
         when (type) {
@@ -24,5 +28,10 @@ class NewWalletViewModel @Inject constructor(private val repo: WalletRepository)
 
             }
         }
+    }
+
+    fun test() {
+        Log.d(DEBUG, test.toString())
+        test++
     }
 }

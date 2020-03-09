@@ -1,6 +1,7 @@
 package com.example.cryptofunding.di
 
 import android.content.Context
+import com.example.cryptofunding.viewmodel.NewWalletViewModel
 import com.example.cryptofunding.viewmodel.WalletListViewModel
 import dagger.BindsInstance
 import dagger.Component
@@ -18,4 +19,5 @@ interface ApplicationComponent {
     }
 
     val walletListViewModel: WalletListViewModel
+    val newWalletViewModel: NewWalletViewModel
 }

@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.cryptofunding.di.injector
+import com.example.cryptofunding.viewmodel.viewModel
+import kotlinx.android.synthetic.main.fragment_create_wallet.*
 
 /**
  * A simple [Fragment] subclass.
@@ -17,6 +20,14 @@ class CreateWalletFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_wallet, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewModel = (parentFragment as NewWalletFragment).viewModel
+        button_createwallet.setOnClickListener {
+            viewModel.test()
+        }
     }
 
 }
