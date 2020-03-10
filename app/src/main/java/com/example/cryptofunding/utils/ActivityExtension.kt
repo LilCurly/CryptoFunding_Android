@@ -20,10 +20,13 @@ fun Context.convertDpToPx(dp: Float): Float {
 }
 fun Fragment.isKeyboardOpen(): Boolean {
     val visibleBounds = Rect()
-    this.activity!!.getRootView().getWindowVisibleDisplayFrame(visibleBounds)
-    val heightDiff = this.activity!!.getRootView().height - visibleBounds.height()
-    val marginOfError = this.activity!!.convertDpToPx(50F).roundToInt()
-    return heightDiff > marginOfError
+    this.activity?.let {
+        it.getRootView().getWindowVisibleDisplayFrame(visibleBounds)
+        val heightDiff = it.getRootView().height - visibleBounds.height()
+        val marginOfError = it.convertDpToPx(50F).roundToInt()
+        return heightDiff > marginOfError
+    }
+    return false
 }
 
 fun Fragment.isKeyboardClosed(): Boolean {
