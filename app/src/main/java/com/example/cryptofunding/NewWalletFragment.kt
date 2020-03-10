@@ -59,7 +59,7 @@ class NewWalletFragment : Fragment() {
                     newWallet_tablayout.animate()
                         .setInterpolator(LinearInterpolator())
                         .setStartDelay(0)
-                        .setDuration(100)
+                        .setDuration(115)
                         .translationY(-275F)
                         .alpha(0F)
                         .setUpdateListener {
