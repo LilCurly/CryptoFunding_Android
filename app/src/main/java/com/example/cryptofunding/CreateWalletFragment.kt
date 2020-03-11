@@ -46,6 +46,10 @@ class CreateWalletFragment : Fragment() {
                 viewModel.validePassword()
             }
         }
+
+        button_createwallet.setOnClickListener {
+            viewModel.createWallet()
+        }
     }
 
     private fun setupEditTextDrawables() {

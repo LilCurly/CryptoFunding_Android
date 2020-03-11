@@ -51,6 +51,10 @@ class ImportWalletFragment : Fragment() {
                 viewModel.validatePrivateKey()
             }
         }
+
+        button_importwallet.setOnClickListener {
+            viewModel.importWallet()
+        }
     }
 
     private fun setupEditTextDrawables() {

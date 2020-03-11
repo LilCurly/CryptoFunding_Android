@@ -1,7 +1,12 @@
 package com.example.cryptofunding.viewmodel
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.util.Log
+import android.view.View
+import android.view.animation.LinearInterpolator
 import androidx.databinding.BaseObservable
+import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.example.cryptofunding.data.WalletRepository
@@ -9,9 +14,26 @@ import com.example.cryptofunding.utils.DEBUG
 import java.util.*
 import javax.inject.Inject
 
-enum class WalletCreationType {
-    Import,
-    Create
+@BindingAdapter("fadeVisible")
+fun setFadeVisible(view: View, error: String?) {
+    if (error == null && view.visibility == View.VISIBLE) {
+        view.visibility = View.GONE
+    }
+    else if (error != null && view.visibility == View.GONE) {
+        view.animate().cancel()
+        view.visibility = View.VISIBLE
+        view.alpha = 0F
+
+        view.animate()
+            .alpha(1F)
+            .setDuration(150)
+            .setInterpolator(LinearInterpolator())
+            .setListener(object: AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    view.alpha = 1F
+                }
+            })
+    }
 }
 
 class NewWalletViewModel @Inject constructor(private val repo: WalletRepository): ViewModel() {
@@ -22,17 +44,22 @@ class NewWalletViewModel @Inject constructor(private val repo: WalletRepository)
     var passwordError: ObservableField<String> = ObservableField()
     var privateKeyError: ObservableField<String> = ObservableField()
 
-    var test: Int = 0
+    fun createWallet() {
+        validateName()
+        validePassword()
 
-    fun saveWallet(type: WalletCreationType) {
+        if (nameError.get() == null && passwordError.get() == null) {
+            Log.d(DEBUG, "Create ok")
+        }
+    }
 
-        when (type) {
-            WalletCreationType.Create -> {
+    fun importWallet() {
+        validateName()
+        validePassword()
+        validatePrivateKey()
 
-            }
-            WalletCreationType.Import -> {
-
-            }
+        if (nameError.get() == null && passwordError.get() == null && privateKeyError.get() == null) {
+            Log.d(DEBUG, "Import ok")
         }
     }
 
@@ -45,7 +72,6 @@ class NewWalletViewModel @Inject constructor(private val repo: WalletRepository)
                 nameError.set(null)
             }
         }
-        //nameError.set("Ce champ ne peut pas être vide")
     }
 
     fun validePassword() {
