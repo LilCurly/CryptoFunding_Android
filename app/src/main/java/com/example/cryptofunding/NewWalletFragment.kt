@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.animation.LinearInterpolator
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.transition.TransitionManager
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.adapter.NewWalletAdapter
 import com.example.cryptofunding.utils.DEBUG
@@ -65,7 +66,8 @@ class NewWalletFragment : Fragment() {
                         .setUpdateListener {
                             val constraintSet = ConstraintSet()
                             constraintSet.clone(newwallet_constraint)
-                            constraintSet.connect(R.id.newWallet_pager, ConstraintSet.TOP, R.id.newwallet_constraint, ConstraintSet.TOP, 25)
+                            constraintSet.connect(R.id.newWallet_pager, ConstraintSet.TOP, R.id.newwallet_constraint, ConstraintSet.TOP, 50)
+                            TransitionManager.beginDelayedTransition(newwallet_constraint)
                             constraintSet.applyTo(newwallet_constraint)
                         }
                         .start()
@@ -82,6 +84,7 @@ class NewWalletFragment : Fragment() {
                             val constraintSet = ConstraintSet()
                             constraintSet.clone(newwallet_constraint)
                             constraintSet.connect(R.id.newWallet_pager, ConstraintSet.TOP, R.id.newWallet_tablayout, ConstraintSet.BOTTOM, 0)
+                            TransitionManager.beginDelayedTransition(newwallet_constraint)
                             constraintSet.applyTo(newwallet_constraint)
                         }
                         .start()

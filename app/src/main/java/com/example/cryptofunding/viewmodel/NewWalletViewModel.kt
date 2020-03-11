@@ -9,6 +9,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.cryptofunding.data.WalletRepository
 import com.example.cryptofunding.utils.DEBUG
 import java.util.*
@@ -49,7 +50,7 @@ class NewWalletViewModel @Inject constructor(private val repo: WalletRepository)
         validePassword()
 
         if (nameError.get() == null && passwordError.get() == null) {
-            Log.d(DEBUG, "Create ok")
+            
         }
     }
 
