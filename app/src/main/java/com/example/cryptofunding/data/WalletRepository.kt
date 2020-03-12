@@ -9,4 +9,5 @@ interface WalletRepository {
     fun getByName(name: String): LiveData<Wallet>
     fun insertWallet(wallet: Wallet)
     fun deleteWallet(wallet: Wallet)
+    fun exists(publicKey: String): Wallet?
 }

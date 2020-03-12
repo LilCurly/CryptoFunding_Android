@@ -16,4 +16,5 @@
     <string name="create">Creer</string>
     <string name="import_text">Importer</string>
     <string name="walletprivatekey_hint">Clé privée</string>
+    <string name="error_occured">Une erreur est survenue</string>
 </resources>

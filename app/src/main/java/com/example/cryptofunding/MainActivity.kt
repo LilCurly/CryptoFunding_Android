@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             filesDir.absolutePath,
             repo)
 
-        //WalletHandler.generateNewWalletFile("test", "myOtherWallet", filesDir.absolutePath, repo)
+//        WalletHandler.generateNewWalletFile("test", "myOtherWallet", filesDir.absolutePath, repo)
 
         val wallet = repo.getByName("myWallet")
 

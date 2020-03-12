@@ -1,15 +1,18 @@
 package com.example.cryptofunding
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import com.example.cryptofunding.data.Result
 import com.example.cryptofunding.databinding.FragmentCreateWalletBinding
-import com.example.cryptofunding.di.injector
-import com.example.cryptofunding.viewmodel.viewModel
+import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.viewmodel.NewWalletViewModel
 import kotlinx.android.synthetic.main.fragment_create_wallet.*
 import kotlin.math.roundToInt
 
@@ -48,7 +51,7 @@ class CreateWalletFragment : Fragment() {
         }
 
         button_createwallet.setOnClickListener {
-            viewModel.createWallet()
+            subscribeUiForCoroutine(viewModel)
         }
     }
 
@@ -66,6 +69,18 @@ class CreateWalletFragment : Fragment() {
         passwordDrawable?.let {
             it.setBounds(0, 0, size, size)
             createwallet_password.setCompoundDrawables(it, null, null, null)
+        }
+    }
+
+    private fun subscribeUiForCoroutine(viewModel: NewWalletViewModel) {
+        context?.let {
+            viewModel.createWallet(it.filesDir.absolutePath)?.observe(viewLifecycleOwner, Observer { result ->
+                when (result.status) {
+                    Result.Status.LOADING -> Log.d(DEBUG, "Loading")
+                    Result.Status.SUCCESS -> Log.d(DEBUG, "Success")
+                    Result.Status.ERROR -> Log.d(DEBUG, "Error")
+                }
+            })
         }
     }
 

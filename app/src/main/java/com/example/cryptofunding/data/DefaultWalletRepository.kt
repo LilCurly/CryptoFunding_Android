@@ -10,6 +10,7 @@ class DefaultWalletRepository @Inject internal constructor(private val walletDao
     override fun getByName(name: String) = walletDao.getByName(name)
     override fun insertWallet(wallet: Wallet) = walletDao.insertWallet(wallet)
     override fun deleteWallet(wallet: Wallet) = walletDao.deleteWallet(wallet)
+    override fun exists(publicKey: String): Wallet? = walletDao.exists(publicKey)
 
     companion object {
         @Volatile private var instance: DefaultWalletRepository? = null

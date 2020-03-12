@@ -17,6 +17,9 @@ interface WalletDao: AbstractWalletDao {
     @Query("SELECT * FROM wallet WHERE name = :name")
     override fun getByName(name: String): LiveData<Wallet>
 
+    @Query("SELECT * FROM wallet WHERE id = :publicKey")
+    override fun exists(publicKey: String): Wallet?
+
     @Insert
     override fun insertWallet(wallet: Wallet)
 

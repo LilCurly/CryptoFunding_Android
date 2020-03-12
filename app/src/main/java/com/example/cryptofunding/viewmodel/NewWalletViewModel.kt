@@ -2,16 +2,21 @@ package com.example.cryptofunding.viewmodel
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.databinding.BaseObservable
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptofunding.data.Result
+import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.data.WalletRepository
 import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.utils.WalletHandler
 import java.util.*
 import javax.inject.Inject
 
@@ -45,23 +50,25 @@ class NewWalletViewModel @Inject constructor(private val repo: WalletRepository)
     var passwordError: ObservableField<String> = ObservableField()
     var privateKeyError: ObservableField<String> = ObservableField()
 
-    fun createWallet() {
+    fun createWallet(filePath: String): LiveData<Result<Wallet>>? {
         validateName()
         validePassword()
 
         if (nameError.get() == null && passwordError.get() == null) {
-            
+            return WalletHandler.generateNewWalletFile(password.get()!!, name.get()!!, filePath, repo)
         }
+        return null
     }
 
-    fun importWallet() {
+    fun importWallet(filePath: String): LiveData<Result<Wallet>>? {
         validateName()
         validePassword()
         validatePrivateKey()
 
         if (nameError.get() == null && passwordError.get() == null && privateKeyError.get() == null) {
-            Log.d(DEBUG, "Import ok")
+            return WalletHandler.generateNewWalletFileFromPrivateKey(password.get()!!, name.get()!!, privateKey.get()!!, filePath, repo)
         }
+        return null
     }
 
     fun validateName() {
