@@ -1,5 +1,7 @@
 package com.example.cryptofunding.utils
 
+import android.animation.TimeInterpolator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
@@ -31,4 +33,19 @@ fun Fragment.isKeyboardOpen(): Boolean {
 
 fun Fragment.isKeyboardClosed(): Boolean {
     return !this.isKeyboardOpen()
+}
+
+inline fun getValueAnimator(
+    forward: Boolean = true,
+    duration: Long,
+    interpolator: TimeInterpolator,
+    crossinline updateListener: (progress: Float) -> Unit
+): ValueAnimator {
+    val a =
+        if (forward) ValueAnimator.ofFloat(0f, 1f)
+        else ValueAnimator.ofFloat(1f, 0f)
+    a.addUpdateListener { updateListener(it.animatedValue as Float) }
+    a.duration = duration
+    a.interpolator = interpolator
+    return a
 }
