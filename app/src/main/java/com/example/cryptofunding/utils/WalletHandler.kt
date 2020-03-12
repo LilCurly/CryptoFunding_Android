@@ -32,7 +32,7 @@ object WalletHandler {
 
                 val credentials = WalletUtils.loadCredentials(password, fullPath)
                 val createdWallet = Wallet(credentials.address, name, fullPath)
-                repository.insertWallet(createdWallet)
+                //repository.insertWallet(createdWallet)
                 emit(Result.success(createdWallet))
             } catch (ex: Exception) {
                 emit(Result.error("Une erreur est survenue"))
@@ -59,7 +59,7 @@ object WalletHandler {
                 val createdWallet = Wallet(credentials.address, name, fullPath)
 
                 if (repository.exists(createdWallet.publicKey) == null) {
-                    repository.insertWallet(createdWallet)
+                    //repository.insertWallet(createdWallet)
                     emit(Result.success(createdWallet))
                 } else {
                     emit(Result.error("Un portefeuille pour cette clé est déjà enregistré"))

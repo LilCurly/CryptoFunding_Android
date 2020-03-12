@@ -18,6 +18,7 @@ import com.example.cryptofunding.viewmodel.NewWalletViewModel
 import com.example.cryptofunding.viewmodel.viewModel
 import kotlinx.android.synthetic.main.fragment_create_wallet.*
 import kotlinx.android.synthetic.main.fragment_import_wallet.*
+import kotlinx.android.synthetic.main.fragment_new_wallet_animated.*
 import kotlin.math.roundToInt
 
 class ImportWalletFragment : Fragment() {
