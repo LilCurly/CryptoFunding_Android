@@ -88,7 +88,7 @@ class CreateWalletFragment : Fragment() {
         context?.let {
             viewModel.createWallet(it.filesDir.absolutePath)?.observe(viewLifecycleOwner, Observer { result ->
                 when (result.status) {
-                    Result.Status.LOADING -> animateView()
+                    Result.Status.LOADING -> Log.d(DEBUG, "Loading")
                     Result.Status.SUCCESS -> Log.d(DEBUG, "Success")
                     Result.Status.ERROR -> Log.d(DEBUG, "Error")
                 }

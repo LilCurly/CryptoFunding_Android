@@ -6,13 +6,14 @@
             name="viewModel"
             type="com.example.cryptofunding.viewmodel.NewWalletViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/createwallet_constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryApp"
+        app:layoutDescription="@xml/create_wallet"
         tools:context=".CreateWalletFragment">
 
         <LinearLayout
@@ -109,5 +110,5 @@
             android:background="@drawable/button_background"
             android:elevation="6dp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
