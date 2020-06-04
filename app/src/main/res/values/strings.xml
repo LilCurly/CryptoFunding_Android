@@ -17,4 +17,7 @@
     <string name="import_text">Importer</string>
     <string name="walletprivatekey_hint">Clé privée</string>
     <string name="error_occured">Une erreur est survenue</string>
+    <string name="categories_info">Catégories</string>
+    <string name="categoryContentDesc">Category Logo</string>
+    <string name="trending">Populaires</string>
 </resources>

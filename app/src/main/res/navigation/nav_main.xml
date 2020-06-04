@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/walletListFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/walletListFragment"
@@ -29,4 +29,9 @@
         android:name="com.example.cryptofunding.ImportWalletFragment"
         android:label="fragment_import_wallet"
         tools:layout="@layout/fragment_import_wallet" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.cryptofunding.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>
