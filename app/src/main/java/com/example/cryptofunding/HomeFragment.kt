@@ -65,8 +65,8 @@ class HomeFragment : Fragment() {
             view?.let {
                 it.categoryCardView.animate()
                     .setDuration(75)
-                    .scaleX(1.07f)
-                    .scaleY(1.07f)
+                    .scaleX(1.08f)
+                    .scaleY(1.08f)
                     .setInterpolator(LinearInterpolator())
                     .withEndAction {
                         it.categoryCardView.animate()
