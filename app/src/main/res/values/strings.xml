@@ -20,4 +20,7 @@
     <string name="categories_info">Catégories</string>
     <string name="categoryContentDesc">Category Logo</string>
     <string name="trending">Populaires</string>
+    <string name="homeBottomNav">Accueil</string>
+    <string name="homeBottomFav">Favoris</string>
+    <string name="homeBottomProjects">Projets</string>
 </resources>

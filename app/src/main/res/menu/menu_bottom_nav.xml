@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottomNavMain"
+        android:enabled="true"
+        android:icon="@drawable/login_unselected"
+        android:title="@string/homeBottomNav" />
+
+    <item
+        android:id="@+id/bottomNavFav"
+        android:enabled="true"
+        android:icon="@drawable/login_unselected"
+        android:title="@string/homeBottomFav" />
+
+    <item
+        android:id="@+id/bottomNavProjects"
+        android:enabled="true"
+        android:icon="@drawable/login_unselected"
+        android:title="@string/homeBottomProjects" />
+
+</menu>
