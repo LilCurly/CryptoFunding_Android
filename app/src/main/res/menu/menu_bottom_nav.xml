@@ -5,19 +5,19 @@
     <item
         android:id="@+id/bottomNavMain"
         android:enabled="true"
-        android:icon="@drawable/login_unselected"
+        android:icon="@drawable/home"
         android:title="@string/homeBottomNav" />
 
     <item
         android:id="@+id/bottomNavFav"
         android:enabled="true"
-        android:icon="@drawable/login_unselected"
+        android:icon="@drawable/fav"
         android:title="@string/homeBottomFav" />
 
     <item
         android:id="@+id/bottomNavProjects"
         android:enabled="true"
-        android:icon="@drawable/login_unselected"
+        android:icon="@drawable/projects"
         android:title="@string/homeBottomProjects" />
 
 </menu>
