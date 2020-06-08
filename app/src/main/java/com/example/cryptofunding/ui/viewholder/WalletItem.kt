@@ -35,7 +35,7 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
         private val animation: LottieAnimationView = view.loading_item_amount_animation
         private val currency: TextView = view.walletitem_currency
 
-        override fun bindView(item: WalletItem, payloads: MutableList<Any>) {
+        override fun bindView(item: WalletItem, payloads: List<Any>) {
             address.text = item.address
             name.text = item.name
             item.wallet.amount.observe(view.context as LifecycleOwner) {

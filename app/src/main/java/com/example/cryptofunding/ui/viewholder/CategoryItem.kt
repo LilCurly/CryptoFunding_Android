@@ -24,7 +24,7 @@ class CategoryItem(val category: Category): AbstractItem<CategoryItem.ViewHolder
         private val title: TextView = view.categoryName
         private val image: ImageView = view.categoryImage
 
-        override fun bindView(item: CategoryItem, payloads: MutableList<Any>) {
+        override fun bindView(item: CategoryItem, payloads: List<Any>) {
             title.text = item.category.type.title
             image.setImageResource(item.category.img)
             if (item.isSelected) {

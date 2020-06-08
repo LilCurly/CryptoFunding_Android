@@ -32,7 +32,7 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
         val likeCardView: CardView = view.favCardView
         val lottieLikeAnimation: LottieAnimationView = view.projectLikeAnimationView
 
-        override fun bindView(item: ProjectItem, payloads: MutableList<Any>) {
+        override fun bindView(item: ProjectItem, payloads: List<Any>) {
             title.text = item.project.name
             category.text = item.project.category.title
             percentFunded.text = "${item.project.percentFunded}% financé"
