@@ -1,10 +1,14 @@
 package com.example.cryptofunding.ui.viewholder
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Project
+import com.example.cryptofunding.utils.DEBUG
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_project.view.*
@@ -25,6 +29,8 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
         private val category: TextView = view.projectCategoryTextView
         private val percentFunded: TextView = view.fundedPercentTextView
         private val background: ImageView = view.projectImageView
+        val likeCardView: CardView = view.favCardView
+        val lottieLikeAnimation: LottieAnimationView = view.projectLikeAnimationView
 
         override fun bindView(item: ProjectItem, payloads: MutableList<Any>) {
             title.text = item.project.name
@@ -32,6 +38,9 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
             percentFunded.text = "${item.project.percentFunded}% financé"
 
             background.setImageResource(item.project.img)
+            if (item.project.isFavorite) {
+                lottieLikeAnimation.progress = 0.5f
+            }
         }
 
         override fun unbindView(item: ProjectItem) {
@@ -39,6 +48,13 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
             category.text = null
             percentFunded.text = null
             background.setImageDrawable(null)
+
+            lottieLikeAnimation.cancelAnimation()
+            lottieLikeAnimation.removeAllAnimatorListeners()
+            lottieLikeAnimation.removeAllUpdateListeners()
+            lottieLikeAnimation.removeAllLottieOnCompositionLoadedListener()
+            lottieLikeAnimation.setMinAndMaxProgress(0.0f, 1.0f)
+            lottieLikeAnimation.progress = 0.0f
         }
 
     }

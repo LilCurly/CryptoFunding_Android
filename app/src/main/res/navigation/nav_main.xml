@@ -34,4 +34,9 @@
         android:name="com.example.cryptofunding.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.cryptofunding.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
 </navigation>
