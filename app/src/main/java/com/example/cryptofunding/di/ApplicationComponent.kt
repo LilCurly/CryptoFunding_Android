@@ -1,6 +1,7 @@
 package com.example.cryptofunding.di
 
 import android.content.Context
+import com.example.cryptofunding.viewmodel.DetailedProjectListViewModel
 import com.example.cryptofunding.viewmodel.HomeViewModel
 import com.example.cryptofunding.viewmodel.NewWalletViewModel
 import com.example.cryptofunding.viewmodel.WalletListViewModel
@@ -22,4 +23,5 @@ interface ApplicationComponent {
     val walletListViewModel: WalletListViewModel
     val newWalletViewModel: NewWalletViewModel
     val homeViewModel: HomeViewModel
+    val detailedProjectListViewModel: DetailedProjectListViewModel
 }

@@ -3,31 +3,30 @@ package com.example.cryptofunding.ui.viewholder
 import android.graphics.PorterDuff
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Category
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_category.view.*
+import kotlinx.android.synthetic.main.item_category_small.view.*
 
-class CategoryItem(val category: Category): AbstractItem<CategoryItem.ViewHolder>() {
+class CategorySmallItem(val category: Category): AbstractItem<CategorySmallItem.ViewHolder>() {
     override val layoutRes: Int
-        get() = R.layout.item_category
+        get() = R.layout.item_category_small
     override val type: Int
-        get() = R.id.categoryName
+        get() = R.id.itemCategorySmallId
 
     override fun getViewHolder(v: View): ViewHolder {
         return ViewHolder(v)
     }
 
-    class ViewHolder(private val view: View): FastAdapter.ViewHolder<CategoryItem>(view) {
-        private val title: TextView = view.categoryName
-        private val image: ImageView = view.categoryImage
+    class ViewHolder(private val view: View): FastAdapter.ViewHolder<CategorySmallItem>(view) {
+        private val image: ImageView = view.categoryImageView
 
-        override fun bindView(item: CategoryItem, payloads: List<Any>) {
-            title.text = item.category.type.title
+        override fun bindView(item: CategorySmallItem, payloads: List<Any>) {
             image.setImageResource(item.category.img)
+
             if (item.isSelected) {
                 setSelected()
             } else {
@@ -35,21 +34,21 @@ class CategoryItem(val category: Category): AbstractItem<CategoryItem.ViewHolder
             }
         }
 
-        override fun unbindView(item: CategoryItem) {
-            title.text = null
+        override fun unbindView(item: CategorySmallItem) {
             image.setImageDrawable(null)
+
             if (item.isSelected) {
                 setUnselected()
             }
         }
 
         private fun setSelected() {
-            view.categoryCardView.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.colorBackgroundDarkApp))
+            view.categorySmallCardView.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.colorBackgroundDarkApp))
             image.drawable.mutate().setColorFilter(ContextCompat.getColor(view.context, R.color.colorBackgroundWhiteApp), PorterDuff.Mode.SRC_IN)
         }
 
         private fun setUnselected() {
-            view.categoryCardView.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.colorBackgroundWhiteApp))
+            view.categorySmallCardView.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.colorBackgroundWhiteApp))
             image.drawable.mutate().setColorFilter(ContextCompat.getColor(view.context, R.color.colorBackgroundDarkApp), PorterDuff.Mode.SRC_IN)
         }
     }
