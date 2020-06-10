@@ -20,6 +20,7 @@ class ProjectSmallItem(val project: Project): AbstractItem<ProjectSmallItem.View
     class ViewHolder(private val view: View): FastAdapter.ViewHolder<ProjectSmallItem>(view) {
         private val poster = view.projectImageView
         private val favAnimation = view.projectLikeAnimationView
+        val favCardView = view.favCardView
         private val category = view.categoryTextView
         private val percent = view.percentDoneTextView
         private val title = view.titleTextView
@@ -41,6 +42,10 @@ class ProjectSmallItem(val project: Project): AbstractItem<ProjectSmallItem.View
             percent.text = null
             title.text = null
 
+            favAnimation.cancelAnimation()
+            favAnimation.removeAllAnimatorListeners()
+            favAnimation.removeAllUpdateListeners()
+            favAnimation.removeAllLottieOnCompositionLoadedListener()
             favAnimation.setMinAndMaxProgress(0.0f, 1.0f)
             favAnimation.progress = 0.0f
         }

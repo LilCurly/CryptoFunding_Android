@@ -10,16 +10,20 @@ import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.viewholder.CategorySmallItem
+import com.example.cryptofunding.ui.viewholder.ProjectItem
 import com.example.cryptofunding.ui.viewholder.ProjectSmallItem
 import com.example.cryptofunding.viewmodel.viewModel
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.fastadapter.select.selectExtension
 import kotlinx.android.synthetic.main.fragment_detailed_project_list.*
 import kotlinx.android.synthetic.main.item_category.view.*
 import kotlinx.android.synthetic.main.item_category_small.view.*
+import kotlinx.android.synthetic.main.item_project.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -53,6 +57,32 @@ class DetailedProjectListFragment : Fragment() {
     private fun setupProjectsRecyclerView() {
         projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         projectsRecyclerView.adapter = projectFastAdapter
+
+        projectFastAdapter.addEventHook(object: ClickEventHook<ProjectSmallItem>() {
+            override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
+                return if (viewHolder is ProjectSmallItem.ViewHolder) {
+                    viewHolder.favCardView
+                } else {
+                    null
+                }
+            }
+
+            override fun onClick(
+                v: View,
+                position: Int,
+                fastAdapter: FastAdapter<ProjectSmallItem>,
+                item: ProjectSmallItem
+            ) {
+                if (viewModel.isFavorite(position)) {
+                    v.projectLikeAnimationView.setMinAndMaxProgress(0.5f, 1.0f)
+                } else {
+                    v.projectLikeAnimationView.setMinAndMaxProgress(0.0f, 0.5f)
+                }
+                v.projectLikeAnimationView.playAnimation()
+                viewModel.toggleFavorite(position)
+            }
+
+        })
 
         projectItemAdapter.add(viewModel.projects.map {
             ProjectSmallItem(it)
