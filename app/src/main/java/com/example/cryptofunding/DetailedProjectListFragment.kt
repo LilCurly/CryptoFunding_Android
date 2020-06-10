@@ -8,15 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.viewholder.CategorySmallItem
+import com.example.cryptofunding.ui.viewholder.ProjectSmallItem
 import com.example.cryptofunding.viewmodel.viewModel
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.select.selectExtension
 import kotlinx.android.synthetic.main.fragment_detailed_project_list.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_category.view.*
 import kotlinx.android.synthetic.main.item_category_small.view.*
 
@@ -30,6 +31,8 @@ class DetailedProjectListFragment : Fragment() {
 
     private val categoryItemAdapter = ItemAdapter<CategorySmallItem>()
     private val categoryFastAdapter = FastAdapter.with(categoryItemAdapter)
+    private val projectItemAdapter = ItemAdapter<ProjectSmallItem>()
+    private val projectFastAdapter = FastAdapter.with(projectItemAdapter)
     private var currentItemPosition: Int? = null
 
     override fun onCreateView(
@@ -43,10 +46,20 @@ class DetailedProjectListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
+        setupCategoriesRecyclerView()
+        setupProjectsRecyclerView()
     }
 
-    private fun setupRecyclerView() {
+    private fun setupProjectsRecyclerView() {
+        projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+        projectsRecyclerView.adapter = projectFastAdapter
+
+        projectItemAdapter.add(viewModel.projects.map {
+            ProjectSmallItem(it)
+        })
+    }
+
+    private fun setupCategoriesRecyclerView() {
         setCategoryOnClickListener()
 
         categoriesReyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

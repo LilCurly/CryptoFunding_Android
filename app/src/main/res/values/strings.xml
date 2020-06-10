@@ -24,4 +24,5 @@
     <string name="homeBottomFav">Favoris</string>
     <string name="homeBottomProjects">Projets</string>
     <string name="seeMore">Voir plus</string>
+    <string name="percentDone">%1$d%% financé</string>
 </resources>
