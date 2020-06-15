@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
     private var currentItemPosition: Int? = null
 
     private val viewModel by viewModel {
-        activity!!.injector.homeViewModel
+        activity!!.injector.projectsViewModel
     }
 
     override fun onCreateView(

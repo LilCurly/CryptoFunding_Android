@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.item_project.view.*
  */
 class DetailedProjectListFragment : Fragment() {
     private val viewModel by viewModel {
-        activity!!.injector.detailedProjectListViewModel
+        activity!!.injector.projectsViewModel
     }
 
     private val categoryItemAdapter = ItemAdapter<CategorySmallItem>()
