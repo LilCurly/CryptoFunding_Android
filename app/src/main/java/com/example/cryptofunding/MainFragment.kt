@@ -23,8 +23,28 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, HomeFragment()).commit()
+
+        bottomNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.bottomNavMain -> {
+                    childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, HomeFragment()).commit()
+                    true
+                }
+                R.id.bottomNavFav -> {
+                    childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, FavoritesFragment()).commit()
+                    true
+                }
+                else -> {
+                    childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, HomeFragment()).commit()
+                    true
+                }
+            }
+        }
+    }
+
+    fun goToSeeDetailedList() {
+        childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, DetailedProjectListFragment()).addToBackStack("test").commit()
     }
 
 }

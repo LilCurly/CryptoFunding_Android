@@ -84,7 +84,7 @@ class DetailedProjectListFragment : Fragment() {
 
         })
 
-        projectItemAdapter.add(viewModel.projects.map {
+        projectItemAdapter.add(viewModel.getProjects().map {
             ProjectSmallItem(it)
         })
     }
@@ -101,7 +101,7 @@ class DetailedProjectListFragment : Fragment() {
             selectWithItemUpdate = true
         }
 
-        categoryItemAdapter.add(viewModel.categories.map {
+        categoryItemAdapter.add(viewModel.getCategories().map {
             CategorySmallItem(it)
         })
     }

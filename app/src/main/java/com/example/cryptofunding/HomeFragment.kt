@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptofunding.data.Category
@@ -51,11 +52,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val categories = viewModel.categories
-        val projects = viewModel.projects
+        val categories = viewModel.getCategories()
+        val projects = viewModel.getProjects()
 
         setupCategoriesList(categories)
         setupProjectsList(projects)
+        handleSeeMoreClickListener()
+    }
+
+    private fun handleSeeMoreClickListener() {
+        seeMoreTextView.setOnClickListener {
+            (parentFragment as MainFragment).goToSeeDetailedList()
+        }
     }
 
     private fun setupProjectsList(projects: List<Project>) {

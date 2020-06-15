@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/detailedProjectListFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/walletListFragment"
@@ -33,7 +33,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.cryptofunding.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailedProjectListFragment"
+            app:destination="@id/detailedProjectListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.cryptofunding.MainFragment"
@@ -44,4 +48,9 @@
         android:name="com.example.cryptofunding.DetailedProjectListFragment"
         android:label="fragment_detailed_project_list"
         tools:layout="@layout/fragment_detailed_project_list" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.cryptofunding.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>
