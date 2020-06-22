@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_new_wallet_animated.*
 import kotlin.math.roundToInt
 
 class ImportWalletFragment : Fragment() {
-    lateinit var binding: FragmentImportWalletBinding
+    private lateinit var binding: FragmentImportWalletBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,19 +67,19 @@ class ImportWalletFragment : Fragment() {
         val density = resources.displayMetrics.density
         val size = (20 * density).roundToInt()
 
-        val loginDrawable = ContextCompat.getDrawable(context!!, R.drawable.login_drawable_selector)
+        val loginDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.login_drawable_selector)
         loginDrawable?.let {
             it.setBounds(0, 0, size, size)
             importwallet_login.setCompoundDrawables(it, null, null, null)
         }
 
-        val passwordDrawable = ContextCompat.getDrawable(context!!, R.drawable.password_drawable_selector)
+        val passwordDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.password_drawable_selector)
         passwordDrawable?.let {
             it.setBounds(0, 0, size, size)
             importwallet_password.setCompoundDrawables(it, null, null, null)
         }
 
-        val keyDrawable = ContextCompat.getDrawable(context!!, R.drawable.key_drawable_selector)
+        val keyDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.key_drawable_selector)
         keyDrawable?.let {
             it.setBounds(0, 0, size, size)
             importwallet_privatekey.setCompoundDrawables(it, null, null, null)

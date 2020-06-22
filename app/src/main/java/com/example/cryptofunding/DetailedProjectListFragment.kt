@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.item_project.view.*
  */
 class DetailedProjectListFragment : Fragment() {
     private val viewModel by viewModel {
-        activity!!.injector.projectsViewModel
+        requireActivity().injector.projectsViewModel
     }
 
     private val categoryItemAdapter = ItemAdapter<CategorySmallItem>()
@@ -145,8 +145,8 @@ class DetailedProjectListFragment : Fragment() {
     private fun deselectCategory() {
         currentItemPosition?.let {
             categoriesReyclerView.layoutManager?.findViewByPosition(it)?.let { view ->
-                view.categorySmallCardView.setCardBackgroundColor(ContextCompat.getColor(context!!, R.color.colorBackgroundWhiteApp))
-                view.categoryImageView.drawable.mutate().setColorFilter(ContextCompat.getColor(context!!, R.color.colorBackgroundDarkApp), PorterDuff.Mode.SRC_IN)
+                view.categorySmallCardView.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundWhiteApp))
+                view.categoryImageView.drawable.mutate().setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDarkApp), PorterDuff.Mode.SRC_IN)
             }
         }
     }
@@ -154,8 +154,8 @@ class DetailedProjectListFragment : Fragment() {
     private fun selectCategory() {
         currentItemPosition?.let {
             categoriesReyclerView.layoutManager?.findViewByPosition(it)?.let { view ->
-                view.categorySmallCardView.setCardBackgroundColor(ContextCompat.getColor(context!!, R.color.colorBackgroundDarkApp))
-                view.categoryImageView.drawable.mutate().setColorFilter(ContextCompat.getColor(context!!, R.color.colorBackgroundWhiteApp), PorterDuff.Mode.SRC_IN)
+                view.categorySmallCardView.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDarkApp))
+                view.categoryImageView.drawable.mutate().setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorBackgroundWhiteApp), PorterDuff.Mode.SRC_IN)
             }
         }
     }

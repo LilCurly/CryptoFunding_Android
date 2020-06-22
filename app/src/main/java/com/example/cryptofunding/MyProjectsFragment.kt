@@ -21,7 +21,7 @@ class MyProjectsFragment : Fragment() {
     private val fastAdapter = FastAdapter.with(itemAdapter)
 
     private val viewModel by viewModel {
-        activity!!.injector.projectsViewModel
+        requireActivity().injector.projectsViewModel
     }
 
     override fun onCreateView(

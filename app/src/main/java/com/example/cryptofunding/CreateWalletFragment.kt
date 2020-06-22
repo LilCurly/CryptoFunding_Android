@@ -71,13 +71,13 @@ class CreateWalletFragment : Fragment() {
         val density = resources.displayMetrics.density
         val size = (20 * density).roundToInt()
 
-        val loginDrawable = ContextCompat.getDrawable(context!!, R.drawable.login_drawable_selector)
+        val loginDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.login_drawable_selector)
         loginDrawable?.let {
             it.setBounds(0, 0, size, size)
             createwallet_login.setCompoundDrawables(it, null, null, null)
         }
 
-        val passwordDrawable = ContextCompat.getDrawable(context!!, R.drawable.password_drawable_selector)
+        val passwordDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.password_drawable_selector)
         passwordDrawable?.let {
             it.setBounds(0, 0, size, size)
             createwallet_password.setCompoundDrawables(it, null, null, null)
@@ -98,13 +98,13 @@ class CreateWalletFragment : Fragment() {
 
     private fun animateView() {
         val parentFragment = (parentFragment as NewWalletFragment)
-        val display = activity!!.windowManager.defaultDisplay
+        val display = requireActivity().windowManager.defaultDisplay
         val size = Point()
         val loginOrigin = createwallet_login.x
         val passwordOrigin = createwallet_password.x
         val tabOrigin = parentFragment.newWallet_tablayout.y
         val buttonHeightOrigin = button_createwallet.height
-        val buttonHeightDest = ((view!!.height / 2) + 250) - (buttonHeightOrigin / 2)
+        val buttonHeightDest = ((requireView().height / 2) + 250) - (buttonHeightOrigin / 2)
         val buttonYOrigin = button_createwallet.y
         val buttonYDest = ((size.y / 2) - 250) + (buttonHeightDest / 2)
         display.getSize(size)
@@ -117,7 +117,7 @@ class CreateWalletFragment : Fragment() {
             val params = button_createwallet.layoutParams as ConstraintLayout.LayoutParams
             params.height = newHeight
             button_createwallet.layoutParams = params
-            activity!!.toolbar.alpha = (1 + (0 - 1) * progress)
+            requireActivity().toolbar.alpha = (1 + (0 - 1) * progress)
         }
 
         animator.doOnStart {
@@ -126,7 +126,7 @@ class CreateWalletFragment : Fragment() {
         }
 
         animator.doOnEnd {
-            activity!!.toolbar.visibility = View.GONE
+            requireActivity().toolbar.visibility = View.GONE
         }
 
         animator.start()

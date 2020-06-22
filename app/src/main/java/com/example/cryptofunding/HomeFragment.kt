@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
     private var currentItemPosition: Int? = null
 
     private val viewModel by viewModel {
-        activity!!.injector.projectsViewModel
+        requireActivity().injector.projectsViewModel
     }
 
     override fun onCreateView(
@@ -163,8 +163,8 @@ class HomeFragment : Fragment() {
     private fun deselectCategory() {
         currentItemPosition?.let {
             homeCategoryRecyclerView.layoutManager?.findViewByPosition(it)?.let { view ->
-                view.categoryCardView.setCardBackgroundColor(ContextCompat.getColor(context!!, R.color.colorBackgroundWhiteApp))
-                view.categoryImage.drawable.mutate().setColorFilter(ContextCompat.getColor(context!!, R.color.colorBackgroundDarkApp), PorterDuff.Mode.SRC_IN)
+                view.categoryCardView.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundWhiteApp))
+                view.categoryImage.drawable.mutate().setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDarkApp), PorterDuff.Mode.SRC_IN)
             }
         }
     }
@@ -172,8 +172,8 @@ class HomeFragment : Fragment() {
     private fun selectCategory() {
         currentItemPosition?.let {
             homeCategoryRecyclerView.layoutManager?.findViewByPosition(it)?.let { view ->
-                view.categoryCardView.setCardBackgroundColor(ContextCompat.getColor(context!!, R.color.colorBackgroundDarkApp))
-                view.categoryImage.drawable.mutate().setColorFilter(ContextCompat.getColor(context!!, R.color.colorBackgroundWhiteApp), PorterDuff.Mode.SRC_IN)
+                view.categoryCardView.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDarkApp))
+                view.categoryImage.drawable.mutate().setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorBackgroundWhiteApp), PorterDuff.Mode.SRC_IN)
             }
         }
     }

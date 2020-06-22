@@ -43,7 +43,7 @@ class WalletListFragment : Fragment() {
     private var currentItemPosition: Int? = null
 
     private val viewModel by viewModel {
-        activity!!.injector.walletListViewModel
+        requireActivity().injector.walletListViewModel
     }
 
     override fun onCreateView(
@@ -60,7 +60,7 @@ class WalletListFragment : Fragment() {
 
         wallet_list_recyclerview.itemAnimator = null
 
-        viewModel.wallets.observe(this) {
+        viewModel.wallets.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 wallet_list_nowallet.visibility = View.GONE
                 wallet_list_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -73,12 +73,12 @@ class WalletListFragment : Fragment() {
             }
         }
 
-        viewModel.currentWallet.observe(this) {
+        viewModel.currentWallet.observe(viewLifecycleOwner) {
             showDetails()
 
             wallet_list_detailname.text = it.name
             wallet_list_notifamount.text = "0"
-            it.amount.observe(this) { currentAmount ->
+            it.amount.observe(viewLifecycleOwner) { currentAmount ->
                 wallet_list_amount.text = currentAmount
             }
         }

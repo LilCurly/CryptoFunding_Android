@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_wallet_list.*
 class NewWalletFragment : Fragment() {
 
     val viewModel by viewModel {
-        activity!!.injector.newWalletViewModel
+        requireActivity().injector.newWalletViewModel
     }
 
     override fun onCreateView(

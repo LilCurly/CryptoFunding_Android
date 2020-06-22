@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.item_project.view.*
  */
 class FavoritesFragment : Fragment() {
     private val viewModel by viewModel {
-        activity!!.injector.projectsViewModel
+        requireActivity().injector.projectsViewModel
     }
 
     private val itemAdapter = ItemAdapter<ProjectSmallItem>()
