@@ -31,6 +31,10 @@ class MainFragment : Fragment() {
 
         setupToolbar()
 
+        if (childFragmentManager.fragments.size == 0) {
+            childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, HomeFragment()).commit()
+        }
+
         bottomNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.bottomNavMain -> {
