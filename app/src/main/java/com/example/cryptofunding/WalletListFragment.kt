@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
