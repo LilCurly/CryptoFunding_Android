@@ -53,4 +53,19 @@
         android:name="com.example.cryptofunding.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/myProjectsFragment"
+        android:name="com.example.cryptofunding.MyProjectsFragment"
+        android:label="fragment_my_projects"
+        tools:layout="@layout/fragment_my_projects" />
+    <fragment
+        android:id="@+id/projectsFragment"
+        android:name="com.example.cryptofunding.ProjectsFragment"
+        android:label="fragment_projects"
+        tools:layout="@layout/fragment_projects" />
+    <fragment
+        android:id="@+id/fundedProjectsFragment"
+        android:name="com.example.cryptofunding.FundedProjectsFragment"
+        android:label="fragment_funded_projects"
+        tools:layout="@layout/fragment_funded_projects" />
 </navigation>

@@ -23,6 +23,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.fastadapter.select.selectExtension
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_category.view.*
 import kotlinx.android.synthetic.main.item_project.*
@@ -52,12 +53,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupToolBar()
+
         val categories = viewModel.getCategories()
         val projects = viewModel.getProjects()
 
         setupCategoriesList(categories)
         setupProjectsList(projects)
         handleSeeMoreClickListener()
+    }
+
+    private fun setupToolBar() {
+        activity?.toolbarTitle?.text = getString(R.string.app_name)
     }
 
     private fun handleSeeMoreClickListener() {

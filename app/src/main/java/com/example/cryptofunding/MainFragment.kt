@@ -35,6 +35,10 @@ class MainFragment : Fragment() {
                     childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, FavoritesFragment()).commit()
                     true
                 }
+                R.id.bottomNavProjects -> {
+                    childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, ProjectsFragment()).commit()
+                    true
+                }
                 else -> {
                     childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, HomeFragment()).commit()
                     true

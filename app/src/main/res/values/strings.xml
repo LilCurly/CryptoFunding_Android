@@ -25,4 +25,6 @@
     <string name="homeBottomProjects">Projets</string>
     <string name="seeMore">Voir plus</string>
     <string name="percentDone">%1$d%% financé</string>
+    <string name="funded_projects">Projets financés</string>
+    <string name="my_projects">Mes projets</string>
 </resources>

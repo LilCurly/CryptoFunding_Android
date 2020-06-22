@@ -151,7 +151,7 @@ class WalletListFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        activity?.toolbar_title?.text = getString(R.string.my_wallets)
+        activity?.toolbarTitle?.text = getString(R.string.my_wallets)
     }
 
     /**

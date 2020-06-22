@@ -14,6 +14,7 @@ import com.example.cryptofunding.viewmodel.viewModel
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.listeners.ClickEventHook
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.item_project.view.*
 
@@ -38,6 +39,8 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupToolBar()
 
         projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         projectsRecyclerView.adapter = fastAdapter
@@ -71,6 +74,10 @@ class FavoritesFragment : Fragment() {
         itemAdapter.add(ProjectRepository.projects.map {
             ProjectSmallItem(it)
         })
+    }
+
+    private fun setupToolBar() {
+        activity?.toolbarTitle?.text = getString(R.string.homeBottomFav)
     }
 
 }
