@@ -21,13 +21,7 @@ import kotlinx.android.synthetic.main.item_project.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class FavoritesFragment : Fragment() {
-    private val viewModel by viewModel {
-        requireActivity().injector.projectsViewModel
-    }
-
-    private val itemAdapter = ItemAdapter<ProjectSmallItem>()
-    private val fastAdapter = FastAdapter.with(itemAdapter)
+class FavoritesFragment : BaseProjectsFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,32 +38,6 @@ class FavoritesFragment : Fragment() {
 
         projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         projectsRecyclerView.adapter = fastAdapter
-
-        fastAdapter.addEventHook(object: ClickEventHook<ProjectSmallItem>() {
-            override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
-                return if (viewHolder is ProjectSmallItem.ViewHolder) {
-                    viewHolder.favCardView
-                } else {
-                    null
-                }
-            }
-
-            override fun onClick(
-                v: View,
-                position: Int,
-                fastAdapter: FastAdapter<ProjectSmallItem>,
-                item: ProjectSmallItem
-            ) {
-                if (viewModel.isFavorite(position)) {
-                    v.projectLikeAnimationView.setMinAndMaxProgress(0.5f, 1.0f)
-                } else {
-                    v.projectLikeAnimationView.setMinAndMaxProgress(0.0f, 0.5f)
-                }
-                v.projectLikeAnimationView.playAnimation()
-                viewModel.toggleFavorite(position)
-            }
-
-        })
 
         itemAdapter.add(ProjectRepository.projects.map {
             ProjectSmallItem(it)

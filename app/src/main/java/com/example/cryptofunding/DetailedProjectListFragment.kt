@@ -28,15 +28,10 @@ import kotlinx.android.synthetic.main.item_project.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class DetailedProjectListFragment : Fragment() {
-    private val viewModel by viewModel {
-        requireActivity().injector.projectsViewModel
-    }
+class DetailedProjectListFragment : BaseProjectsFragment() {
 
     private val categoryItemAdapter = ItemAdapter<CategorySmallItem>()
     private val categoryFastAdapter = FastAdapter.with(categoryItemAdapter)
-    private val projectItemAdapter = ItemAdapter<ProjectSmallItem>()
-    private val projectFastAdapter = FastAdapter.with(projectItemAdapter)
     private var currentItemPosition: Int? = null
 
     override fun onCreateView(
@@ -56,35 +51,9 @@ class DetailedProjectListFragment : Fragment() {
 
     private fun setupProjectsRecyclerView() {
         projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-        projectsRecyclerView.adapter = projectFastAdapter
+        projectsRecyclerView.adapter = fastAdapter
 
-        projectFastAdapter.addEventHook(object: ClickEventHook<ProjectSmallItem>() {
-            override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
-                return if (viewHolder is ProjectSmallItem.ViewHolder) {
-                    viewHolder.favCardView
-                } else {
-                    null
-                }
-            }
-
-            override fun onClick(
-                v: View,
-                position: Int,
-                fastAdapter: FastAdapter<ProjectSmallItem>,
-                item: ProjectSmallItem
-            ) {
-                if (viewModel.isFavorite(position)) {
-                    v.projectLikeAnimationView.setMinAndMaxProgress(0.5f, 1.0f)
-                } else {
-                    v.projectLikeAnimationView.setMinAndMaxProgress(0.0f, 0.5f)
-                }
-                v.projectLikeAnimationView.playAnimation()
-                viewModel.toggleFavorite(position)
-            }
-
-        })
-
-        projectItemAdapter.add(viewModel.getProjects().map {
+        itemAdapter.add(viewModel.getProjects().map {
             ProjectSmallItem(it)
         })
     }

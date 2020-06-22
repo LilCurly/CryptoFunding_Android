@@ -16,13 +16,7 @@ import kotlinx.android.synthetic.main.fragment_funded_projects.*
 /**
  * A simple [Fragment] subclass.
  */
-class FundedProjectsFragment : Fragment() {
-    private val itemAdapter = ItemAdapter<ProjectSmallItem>()
-    private val fastAdapter = FastAdapter.with(itemAdapter)
-
-    private val viewModel by viewModel {
-        requireActivity().injector.projectsViewModel
-    }
+class FundedProjectsFragment : BaseProjectsFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,5 +36,4 @@ class FundedProjectsFragment : Fragment() {
             ProjectSmallItem(it)
         })
     }
-
 }
