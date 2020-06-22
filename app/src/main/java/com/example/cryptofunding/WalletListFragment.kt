@@ -152,6 +152,7 @@ class WalletListFragment : Fragment() {
 
     private fun setupToolbar() {
         activity?.toolbarTitle?.text = getString(R.string.my_wallets)
+        activity?.walletImageView?.visibility = View.GONE
     }
 
     /**

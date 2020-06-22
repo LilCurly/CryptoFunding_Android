@@ -16,6 +16,7 @@ import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.utils.isKeyboardOpen
 import com.example.cryptofunding.viewmodel.viewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_new_wallet.*
 import kotlinx.android.synthetic.main.fragment_wallet_list.*
 
@@ -38,6 +39,8 @@ class NewWalletFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupToolbar()
 
         val viewPagerAdapter = NewWalletAdapter(this)
         newWallet_pager.adapter = viewPagerAdapter
@@ -91,6 +94,10 @@ class NewWalletFragment : Fragment() {
                     opened = false
                 }
             }
+    }
+
+    private fun setupToolbar() {
+        activity?.toolbarTitle?.text = resources.getString(R.string.create_wallet)
     }
 
 }
