@@ -14,6 +14,7 @@ import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -153,6 +154,10 @@ class WalletListFragment : Fragment() {
     private fun setupToolbar() {
         activity?.toolbarTitle?.text = getString(R.string.my_wallets)
         activity?.walletImageView?.visibility = View.GONE
+        activity?.closeImageView?.visibility = View.VISIBLE
+        activity?.closeImageView?.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     /**

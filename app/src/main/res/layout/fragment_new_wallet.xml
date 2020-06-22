@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".NewWalletFragment"
-    android:background="@color/colorPrimaryApp" >
+    android:background="@color/colorSecondaryApp" >
     
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/newWallet_tablayout"
@@ -17,7 +17,7 @@
         app:tabTextColor="@color/colorBackgroundWhiteApp"
         app:tabBackground="@color/colorSecondaryApp"
         app:tabIndicatorColor="@color/colorBackgroundDarkApp"
-        app:tabIndicatorHeight="48dp"
+        app:tabIndicatorHeight="3dp"
         android:elevation="10dp" />
 
     <androidx.viewpager2.widget.ViewPager2

@@ -81,11 +81,11 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$dagger2_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
 
     // FastAdpater
-    implementation "com.mikepenz:fastadapter:5.0.2"
+    implementation "com.mikepenz:fastadapter:5.1.0"
 
     // Lottie
     implementation 'com.airbnb.android:lottie:3.4.0'

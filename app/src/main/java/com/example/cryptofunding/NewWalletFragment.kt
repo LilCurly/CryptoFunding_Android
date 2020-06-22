@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.animation.LinearInterpolator
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.adapter.NewWalletAdapter
@@ -98,6 +99,12 @@ class NewWalletFragment : Fragment() {
 
     private fun setupToolbar() {
         activity?.toolbarTitle?.text = resources.getString(R.string.create_wallet)
+        activity?.walletImageView?.visibility = View.GONE
+        activity?.closeImageView?.visibility = View.VISIBLE
+        activity?.closeImageView?.setOnClickListener {
+            findNavController().popBackStack()
+            findNavController().popBackStack()
+        }
     }
 
 }
