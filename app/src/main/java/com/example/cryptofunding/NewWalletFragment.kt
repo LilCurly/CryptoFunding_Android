@@ -63,4 +63,8 @@ class NewWalletFragment : Fragment() {
         }
     }
 
+    fun popToWalletList() {
+        findNavController().popBackStack()
+    }
+
 }

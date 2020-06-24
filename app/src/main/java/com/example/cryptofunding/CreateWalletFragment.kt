@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.animation.doOnEnd
@@ -18,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.transition.addListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.cryptofunding.data.Result
 import com.example.cryptofunding.databinding.FragmentCreateWalletBinding
 import com.example.cryptofunding.utils.DEBUG
@@ -26,6 +28,13 @@ import com.example.cryptofunding.viewmodel.NewWalletViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_wallet.*
 import kotlinx.android.synthetic.main.fragment_new_wallet.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.concurrent.schedule
+import kotlin.concurrent.timerTask
 import kotlin.math.roundToInt
 
 /**
@@ -89,8 +98,24 @@ class CreateWalletFragment : BaseNewWalletFragment() {
             viewModel.createWallet(it.filesDir.absolutePath)?.observe(viewLifecycleOwner, Observer { result ->
                 when (result.status) {
                     Result.Status.LOADING -> setButtonLoading()
-                    Result.Status.SUCCESS -> setButtonSuccess()
-                    Result.Status.ERROR -> setButtonFailure()
+                    Result.Status.SUCCESS -> {
+                        setButtonSuccess()
+                        Timer("Success", false).schedule(1000) {
+                            (parentFragment as NewWalletFragment).popToWalletList()
+                        }
+                    }
+                    Result.Status.ERROR -> {
+                        setButtonFailure()
+                        Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                        Timer("Failure", false).schedule(1000) {
+                            runBlocking {
+                                withContext(Dispatchers.Main) {
+                                    setButtonBase()
+                                    enableNavigation()
+                                }
+                            }
+                        }
+                    }
                 }
             })
         }
@@ -116,5 +141,12 @@ class CreateWalletFragment : BaseNewWalletFragment() {
         loadingAnimation.cancelAnimation()
         failureAnimation.visibility = View.VISIBLE
         failureAnimation.playAnimation()
+    }
+
+    private fun setButtonBase() {
+        button_createwallet.isEnabled = true
+        button_createwallet.text = resources.getString(R.string.create)
+        successAnimation.visibility = View.GONE
+        failureAnimation.visibility = View.GONE
     }
 }
