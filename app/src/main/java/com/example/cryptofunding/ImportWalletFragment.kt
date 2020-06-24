@@ -88,7 +88,7 @@ class ImportWalletFragment : Fragment() {
 
     private fun subscribeUiForCoroutine(viewModel: NewWalletViewModel) {
         context?.let {
-            viewModel.createWallet(it.filesDir.absolutePath)?.observe(viewLifecycleOwner, Observer { result ->
+            viewModel.importWallet(it.filesDir.absolutePath)?.observe(viewLifecycleOwner, Observer { result ->
                 when (result.status) {
                     Result.Status.LOADING -> Log.d(DEBUG, "Loading")
                     Result.Status.SUCCESS -> Log.d(DEBUG, "Success")

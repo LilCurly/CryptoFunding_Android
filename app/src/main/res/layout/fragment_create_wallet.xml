@@ -17,14 +17,14 @@
 
         <LinearLayout
             android:id="@+id/createwallet_linear"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/button_createwallet"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:weightSum="10"
-            android:gravity="center"
+            android:paddingTop="43dp"
             android:orientation="vertical" >
 
             <EditText
@@ -49,9 +49,9 @@
                 fadeVisible="@{viewModel.nameError}"
                 android:layout_gravity="start"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 tools:text="error"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="@color/colorWarning"
                 android:fontFamily="@font/opensans_regular"
                 android:textSize="12sp"
                 android:visibility="gone"/>
@@ -73,7 +73,6 @@
                 android:fontFamily="@font/opensans_regular"
                 android:paddingStart="27dp"
                 android:paddingEnd="20dp"
-                android:layout_marginBottom="5dp"
                 android:textColor="@color/colorBackgroundWhiteApp"
                 android:text="@={viewModel.password}"
                 android:inputType="textPassword"/>
@@ -85,16 +84,16 @@
                 fadeVisible="@{viewModel.passwordError}"
                 android:layout_gravity="start"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 tools:text="error"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="@color/colorWarning"
                 android:fontFamily="@font/opensans_regular"
                 android:textSize="12sp"
                 android:visibility="gone"/>
 
         </LinearLayout>
 
-        <View
+        <Button
             android:id="@+id/button_createwallet"
             android:layout_width="match_parent"
             android:layout_height="45dp"

@@ -88,48 +88,12 @@ class CreateWalletFragment : Fragment() {
         context?.let {
             viewModel.createWallet(it.filesDir.absolutePath)?.observe(viewLifecycleOwner, Observer { result ->
                 when (result.status) {
-                    Result.Status.LOADING -> animateView()
+                    Result.Status.LOADING -> Log.d(DEBUG, "Loading")
                     Result.Status.SUCCESS -> Log.d(DEBUG, "Success")
                     Result.Status.ERROR -> Log.d(DEBUG, "Error")
                 }
             })
         }
-    }
-
-    private fun animateView() {
-        val parentFragment = (parentFragment as NewWalletFragment)
-        val display = requireActivity().windowManager.defaultDisplay
-        val size = Point()
-        val loginOrigin = createwallet_login.x
-        val passwordOrigin = createwallet_password.x
-        val tabOrigin = parentFragment.newWallet_tablayout.y
-        val buttonHeightOrigin = button_createwallet.height
-        val buttonHeightDest = ((requireView().height / 2) + 250) - (buttonHeightOrigin / 2)
-        val buttonYOrigin = button_createwallet.y
-        val buttonYDest = ((size.y / 2) - 250) + (buttonHeightDest / 2)
-        display.getSize(size)
-        val animator = getValueAnimator(true, 700, AccelerateDecelerateInterpolator()) { progress ->
-            createwallet_login.x = (loginOrigin - (size.x - loginOrigin) * progress)
-            createwallet_password.x = (passwordOrigin + (size.x - passwordOrigin) * progress)
-            parentFragment.newWallet_tablayout.y = (tabOrigin - (size.y - tabOrigin) * progress)
-            button_createwallet.y = (buttonYOrigin + (buttonYDest - buttonYOrigin) * (progress * progress * progress))
-            val newHeight = ((buttonHeightOrigin + (buttonHeightDest - buttonHeightOrigin) * progress)).toInt()
-            val params = button_createwallet.layoutParams as ConstraintLayout.LayoutParams
-            params.height = newHeight
-            button_createwallet.layoutParams = params
-            requireActivity().toolbar.alpha = (1 + (0 - 1) * progress)
-        }
-
-        animator.doOnStart {
-            parentFragment.newWallet_pager.isUserInputEnabled = false
-            button_createwallet.setOnClickListener(null)
-        }
-
-        animator.doOnEnd {
-            requireActivity().toolbar.visibility = View.GONE
-        }
-
-        animator.start()
     }
 
 }

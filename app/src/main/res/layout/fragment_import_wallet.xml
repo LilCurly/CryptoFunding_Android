@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:weightSum="10"
-            android:gravity="center"
+            android:paddingTop="40dp"
             android:orientation="vertical" >
 
             <EditText
@@ -49,9 +49,9 @@
                 fadeVisible="@{viewModel.nameError}"
                 android:layout_gravity="start"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="6dp"
                 tools:text="error"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="@color/colorWarning"
                 android:fontFamily="@font/opensans_regular"
                 android:textSize="12sp"
                 android:visibility="gone"/>
@@ -83,9 +83,9 @@
                 fadeVisible="@{viewModel.privateKeyError}"
                 android:layout_gravity="start"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 tools:text="error"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="@color/colorWarning"
                 android:fontFamily="@font/opensans_regular"
                 android:textSize="12sp"
                 android:visibility="gone"/>
@@ -107,7 +107,6 @@
                 android:fontFamily="@font/opensans_regular"
                 android:paddingStart="27dp"
                 android:paddingEnd="20dp"
-                android:layout_marginBottom="5dp"
                 android:textColor="@color/colorBackgroundWhiteApp"
                 android:text="@={viewModel.password}"
                 android:inputType="textPassword"/>
@@ -119,9 +118,9 @@
                 fadeVisible="@{viewModel.passwordError}"
                 android:layout_gravity="start"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 tools:text="error"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="@color/colorWarning"
                 android:fontFamily="@font/opensans_regular"
                 android:textSize="12sp"
                 android:visibility="gone"/>
