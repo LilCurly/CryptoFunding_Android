@@ -144,8 +144,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loadingAnimation"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             app:layout_constraintTop_toTopOf="@id/button_importwallet"
             app:layout_constraintBottom_toBottomOf="@id/button_importwallet"
             app:layout_constraintStart_toStartOf="@id/button_importwallet"
@@ -158,8 +158,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/successAnimation"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:layout_constraintTop_toTopOf="@id/button_importwallet"
             app:layout_constraintBottom_toBottomOf="@id/button_importwallet"
             app:layout_constraintStart_toStartOf="@id/button_importwallet"

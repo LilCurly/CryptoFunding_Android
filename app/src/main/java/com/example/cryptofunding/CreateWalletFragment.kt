@@ -88,12 +88,32 @@ class CreateWalletFragment : Fragment() {
         context?.let {
             viewModel.createWallet(it.filesDir.absolutePath)?.observe(viewLifecycleOwner, Observer { result ->
                 when (result.status) {
-                    Result.Status.LOADING -> Log.d(DEBUG, "Loading")
-                    Result.Status.SUCCESS -> Log.d(DEBUG, "Success")
-                    Result.Status.ERROR -> Log.d(DEBUG, "Error")
+                    Result.Status.LOADING -> setButtonLoading()
+                    Result.Status.SUCCESS -> setButtonSuccess()
+                    Result.Status.ERROR -> setButtonFailure()
                 }
             })
         }
     }
 
+    private fun setButtonLoading() {
+        button_createwallet.isEnabled = false
+        button_createwallet.text = null
+        loadingAnimation.visibility = View.VISIBLE
+        loadingAnimation.playAnimation()
+    }
+
+    private fun setButtonSuccess() {
+        loadingAnimation.visibility = View.GONE
+        loadingAnimation.cancelAnimation()
+        successAnimation.visibility = View.VISIBLE
+        successAnimation.playAnimation()
+    }
+
+    private fun setButtonFailure() {
+        loadingAnimation.visibility = View.GONE
+        loadingAnimation.cancelAnimation()
+        failureAnimation.visibility = View.VISIBLE
+        failureAnimation.playAnimation()
+    }
 }
