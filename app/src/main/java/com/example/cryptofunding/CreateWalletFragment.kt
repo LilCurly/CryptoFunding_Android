@@ -107,7 +107,7 @@ class CreateWalletFragment : BaseNewWalletFragment() {
                     Result.Status.ERROR -> {
                         setButtonFailure()
                         Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
-                        Timer("Failure", false).schedule(1000) {
+                        Timer("Failure", false).schedule(2000) {
                             runBlocking {
                                 withContext(Dispatchers.Main) {
                                     setButtonBase()
