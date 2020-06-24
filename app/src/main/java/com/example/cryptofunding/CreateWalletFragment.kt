@@ -31,7 +31,7 @@ import kotlin.math.roundToInt
 /**
  * A simple [Fragment] subclass.
  */
-class CreateWalletFragment : Fragment() {
+class CreateWalletFragment : BaseNewWalletFragment() {
     lateinit var binding: FragmentCreateWalletBinding
 
     override fun onCreateView(
@@ -101,6 +101,7 @@ class CreateWalletFragment : Fragment() {
         button_createwallet.text = null
         loadingAnimation.visibility = View.VISIBLE
         loadingAnimation.playAnimation()
+        disableNavigation()
     }
 
     private fun setButtonSuccess() {
