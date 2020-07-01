@@ -61,7 +61,7 @@ open class WalletAdapter(val context: Context,
         viewHolder.address.text = wallet.publicKey
         viewHolder.name.text = wallet.name
 
-        viewHolder.swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
+        viewHolder.swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
         viewHolder.swipeLayout.setOnClickListener {
             if (viewHolder.swipeLayout.openStatus == SwipeLayout.Status.Close) {
                 clickedPosition = if (clickedPosition == position) -1 else position

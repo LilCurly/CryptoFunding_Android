@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.fragment_wallet_list.*
  * A simple [Fragment] subclass.
  */
 class WalletListFragment : Fragment() {
-    lateinit var adapter: FastAdapter<WalletItem>
     lateinit var oAdapter: RecyclerSwipeAdapter<WalletAdapter.ViewHolder>
     private var currentItemPosition: Int? = null
 
