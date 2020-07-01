@@ -42,12 +42,12 @@ class MainActivity : AppCompatActivity() {
         val wallet = repo.getByName("myWallet")
 
         //val credentials = WalletUtils.loadCredentials("test", wallet?.jsonPath)
-        val contract = Contract.getInstance()
+//        val contract = Contract.getInstance()
 //        val result = contract.launchFundingProject(BigInteger.valueOf(1), mutableListOf(BigInteger.valueOf(10000000000000)), mutableListOf(BigInteger.valueOf(500)))
 //        val receipt = result.sendAsync().join()
 //        Log.d("CryptoDebug: ", receipt.gasUsed.toString())
-        val result = contract.getDeadlineForCurrentTask(BigInteger.valueOf(0)).sendAsync().join()
-        Log.d(DEBUG, result.toString())
+//        val result = contract.getDeadlineForCurrentTask(BigInteger.valueOf(0)).sendAsync().join()
+//        Log.d(DEBUG, result.toString())
     }
 
     private fun setupBouncyCastle() {

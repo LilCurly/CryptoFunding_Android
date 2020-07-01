@@ -136,6 +136,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingTop="235dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

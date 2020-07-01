@@ -1,7 +1,5 @@
 package com.example.cryptofunding.ui.viewholder
 
-import android.opengl.Visibility
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
@@ -9,6 +7,7 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.observe
 import com.airbnb.lottie.LottieAnimationView
+import com.daimajia.swipe.SwipeLayout
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Wallet
 import com.mikepenz.fastadapter.FastAdapter
@@ -28,7 +27,7 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
         return ViewHolder(v)
     }
 
-    class ViewHolder(private val view: View): FastAdapter.ViewHolder<WalletItem>(view) {
+    class ViewHolder(val view: View): FastAdapter.ViewHolder<WalletItem>(view) {
         private val address: TextView = view.walletitem_address
         private val amount: TextView = view.walletitem_amount
         private val name: TextView = view.walletitem_name
@@ -46,6 +45,8 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
             if (item.isSelected) {
                 scaleUpView()
             }
+
+            view.swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
         }
 
         override fun unbindView(item: WalletItem) {

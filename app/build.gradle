@@ -90,4 +90,6 @@ dependencies {
 
     // Lottie
     implementation 'com.airbnb.android:lottie:3.4.0'
+
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
 }

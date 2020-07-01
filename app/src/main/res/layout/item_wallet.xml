@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/cardView"
+<com.daimajia.swipe.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:layout_marginStart="22dp"
-    android:layout_marginEnd="22dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/colorSecondaryApp">
+    android:clipToPadding="false"
+    android:background="@drawable/background_wallet_options">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:elevation="-1dp"
+        android:background="@color/colorWarning">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.example.cryptofunding.ui.custom.ClippingConstraintLayout
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@drawable/background_wallet_options"
+        app:topLeftCornerRadius="12dp"
+        app:bottomLeftCornerRadius="12dp"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:elevation="0dp">
 
         <TextView
             android:id="@+id/walletitem_name"
@@ -98,7 +110,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.65" />
 
+    </com.example.cryptofunding.ui.custom.ClippingConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+</com.daimajia.swipe.SwipeLayout>

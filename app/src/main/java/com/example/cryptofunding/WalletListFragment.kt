@@ -3,44 +3,32 @@ package com.example.cryptofunding
 
 import android.animation.Animator
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
-import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.di.injector
+import com.example.cryptofunding.ui.viewholder.WalletAdapter
 import com.example.cryptofunding.ui.viewholder.WalletItem
-import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.viewmodel.viewModel
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.ISelectionListener
-import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.fastadapter.listeners.OnBindViewHolderListener
-import com.mikepenz.fastadapter.select.SelectExtension
-import com.mikepenz.fastadapter.select.getSelectExtension
-import com.mikepenz.fastadapter.select.selectExtension
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_wallet_list.*
-import kotlinx.android.synthetic.main.fragment_wallet_list.view.*
-import kotlinx.android.synthetic.main.item_wallet.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class WalletListFragment : Fragment() {
     lateinit var adapter: FastAdapter<WalletItem>
+    lateinit var oAdapter: RecyclerSwipeAdapter<WalletAdapter.ViewHolder>
     private var currentItemPosition: Int? = null
 
     private val viewModel by viewModel {
@@ -66,8 +54,7 @@ class WalletListFragment : Fragment() {
                 wallet_list_nowallet.visibility = View.GONE
                 wallet_list_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 setupWalletList(it)
-                handleClickListener()
-                wallet_list_recyclerview.adapter = this.adapter
+                wallet_list_recyclerview.adapter = oAdapter
             }
             else {
                 wallet_list_recyclerview.visibility = View.GONE
@@ -91,35 +78,23 @@ class WalletListFragment : Fragment() {
     }
 
     private fun setupWalletList(wallets: List<Wallet>) {
-        val itemAdapter = ItemAdapter<WalletItem>()
-        adapter = FastAdapter.with(itemAdapter)
-        adapter.selectExtension {
-            isSelectable = true
-        }
-
-        itemAdapter.add(wallets.map {
-            viewModel.loadAmountIfNeeded(it)
-            val item = WalletItem(it)
-            if (viewModel.isCurrentWallet(it)) {
-                item.isSelected = true
-            }
-            item
-        })
-    }
-
-    /**
-     * Click listener for the items in the recyclerview
-     */
-    private fun handleClickListener() {
-        adapter.onClickListener = { view, _, item, index ->
-            if (!viewModel.isCurrentWallet(item.wallet)) {
-                viewModel.setCurrentWallet(item.wallet)
-                deselectRow()
+        oAdapter = WalletAdapter(requireContext(), wallets.mapIndexed { index, wallet ->
+            viewModel.loadAmountIfNeeded(wallet)
+            if (viewModel.isCurrentWallet(wallet)) {
                 currentItemPosition = index
+                viewModel.currentWallet.postValue(wallet)
+            }
+            wallet
+        }) { view, _, item, position ->
+            if (!viewModel.isCurrentWallet(item)) {
+                viewModel.setCurrentWallet(item)
+                deselectRow()
+                currentItemPosition = position
                 launchScaleAnimation(view)
             }
-
-            true
+        }
+        currentItemPosition?.let {
+            (oAdapter as WalletAdapter).clickedPosition = it
         }
     }
 
