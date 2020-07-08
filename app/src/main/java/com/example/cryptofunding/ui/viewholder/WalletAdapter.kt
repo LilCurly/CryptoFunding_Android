@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.observe
@@ -19,8 +20,10 @@ import com.example.cryptofunding.data.Wallet
 import kotlinx.android.synthetic.main.item_wallet.view.*
 
 open class WalletAdapter(val context: Context,
-                         private val walletList: List<Wallet>,
-                         val onClickListener: (view: View, viewHolder: ViewHolder, item: Wallet, index: Int) -> Unit
+                         var walletList: MutableList<Wallet>,
+                         val onClickListener: (view: View, viewHolder: ViewHolder, item: Wallet, index: Int) -> Unit,
+                         val onDeleteListener: (item: Wallet, index: Int) -> Unit,
+                         val onShowKeyListener: (item: Wallet) -> Unit
 ): RecyclerSwipeAdapter<WalletAdapter.ViewHolder>() {
     var clickedPosition: Int = -1
 
@@ -68,6 +71,14 @@ open class WalletAdapter(val context: Context,
                 onClickListener(viewHolder.itemView, viewHolder, walletList[position], position)
             }
         }
+
+        viewHolder.deleteButton.setOnClickListener {
+            onDeleteListener(walletList[position], position)
+            mItemManger.closeAllItems()
+        }
+        viewHolder.showKeyButton.setOnClickListener {
+            onShowKeyListener(walletList[position])
+        }
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
@@ -85,6 +96,9 @@ open class WalletAdapter(val context: Context,
         val name: TextView = view.walletitem_name
         val currency: TextView = view.walletitem_currency
         val animation: LottieAnimationView = view.loading_item_amount_animation
+
+        val deleteButton: FrameLayout = view.deleteButton
+        val showKeyButton: FrameLayout = view.showKeyButton
 
         fun scaleUpView() {
             itemView.animate()

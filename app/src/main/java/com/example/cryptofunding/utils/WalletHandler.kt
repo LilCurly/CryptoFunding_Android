@@ -13,6 +13,7 @@ import org.web3j.crypto.Keys
 import org.web3j.crypto.WalletUtils
 import java.io.File
 import java.lang.Exception
+import java.util.*
 
 object WalletHandler {
 
@@ -82,6 +83,18 @@ object WalletHandler {
     fun getCurrentWallet(repository: DefaultWalletRepository): Wallet? {
         return repository.currentWallet
     }
-}
+
+    fun getPrivateKey(password: String, path: String): LiveData<Result<String>> =
+        liveData(Dispatchers.IO) {
+            emit(Result.loading())
+            try {
+                val credentials = WalletUtils.loadCredentials(password, path)
+                val pk = credentials.ecKeyPair.privateKey.toString(16).toUpperCase(Locale.ROOT)
+                emit(Result.success(pk))
+            } catch (ex: CipherException) {
+                emit(Result.error("Wrong password"))
+            }
+        }
+    }
 
 class WalletHandlerException(error: String = ""): Exception(error)

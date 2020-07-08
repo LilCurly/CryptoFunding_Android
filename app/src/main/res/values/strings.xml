@@ -28,4 +28,13 @@
     <string name="funded_projects">Projets financés</string>
     <string name="my_projects">Mes projets</string>
     <string name="create_wallet">Nouveau portefeuille</string>
+    <string name="enter_password">Entrez votre mot de passe</string>
+    <string name="export_key">Exporter ma clé privée</string>
+    <string name="export">Exporter</string>
+    <string name="incorrect_password">Mauvais mot de passe</string>
+    <string name="private_key_warning">Conservez cette clé privée dans un lieu sécurisé et ne la divulguez à personne !</string>
+    <string name="copy">Copier</string>
+    <string name="copied">Votre clé privée a été copiée dans votre presse-papier</string>
+    <string name="wallet_deleted">Le portefeuille a été supprimé</string>
+    <string name="cancel">Annuler</string>
 </resources>

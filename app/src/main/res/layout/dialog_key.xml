@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+
+    <FrameLayout
+        android:id="@+id/topDialog"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorBackgroundGradientApp">
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/key_wallet"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/topDialog"
+        android:background="@color/colorSecondaryApp">
+
+        <TextView
+            android:id="@+id/warningTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/private_key_warning"
+            android:fontFamily="@font/opensans_semibold"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:visibility="gone"/>
+
+        <FrameLayout
+            android:id="@+id/privateKeyFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/warningTextView"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/background_frame"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/privateKeyTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/colorBackgroundWhiteApp"/>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/exportTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/export_key"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/opensans_semibold"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:textSize="16sp"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/exportTextView"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:inputType="textPassword"
+            android:hint="@string/enter_password"
+            app:met_floatingLabel="normal"
+            app:met_clearButton="true"
+            app:met_baseColor="@color/colorBackgroundWhiteApp"
+            app:met_primaryColor="@color/colorBackgroundGradientApp"/>
+
+        <Button
+            android:id="@+id/exportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/passwordEditText"
+            android:layout_marginTop="10dp"
+            android:text="@string/export"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:background="@drawable/selector_button_state_rect" />
+
+        <Button
+            android:id="@+id/copyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/privateKeyFrame"
+            android:layout_marginTop="10dp"
+            android:text="@string/copy"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:background="@drawable/selector_button_state_rect"
+            android:visibility="gone"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loadingAnimation"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="@id/exportButton"
+            app:layout_constraintBottom_toBottomOf="@id/exportButton"
+            app:layout_constraintStart_toStartOf="@id/exportButton"
+            app:layout_constraintEnd_toEndOf="@id/exportButton"
+            android:elevation="100dp"
+            app:lottie_fileName="loadingn.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

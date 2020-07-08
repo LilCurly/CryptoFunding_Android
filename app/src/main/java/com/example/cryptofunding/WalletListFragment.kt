@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.di.injector
+import com.example.cryptofunding.ui.custom.CustomDialog
 import com.example.cryptofunding.ui.viewholder.WalletAdapter
-import com.example.cryptofunding.ui.viewholder.WalletItem
 import com.example.cryptofunding.viewmodel.viewModel
-import com.mikepenz.fastadapter.FastAdapter
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_wallet_list.*
 
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_wallet_list.*
  * A simple [Fragment] subclass.
  */
 class WalletListFragment : Fragment() {
-    lateinit var oAdapter: RecyclerSwipeAdapter<WalletAdapter.ViewHolder>
+    private lateinit var oAdapter: RecyclerSwipeAdapter<WalletAdapter.ViewHolder>
     private var currentItemPosition: Int? = null
 
     private val viewModel by viewModel {
@@ -49,24 +49,30 @@ class WalletListFragment : Fragment() {
         wallet_list_recyclerview.itemAnimator = null
 
         viewModel.wallets.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                wallet_list_nowallet.visibility = View.GONE
-                wallet_list_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                setupWalletList(it)
-                wallet_list_recyclerview.adapter = oAdapter
-            }
-            else {
-                wallet_list_recyclerview.visibility = View.GONE
+            if (wallet_list_recyclerview.adapter == null) {
+                if (it.isNotEmpty()) {
+                    wallet_list_nowallet.visibility = View.GONE
+                    wallet_list_recyclerview.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    setupWalletList(it)
+                    wallet_list_recyclerview.adapter = oAdapter
+                } else {
+                    wallet_list_recyclerview.visibility = View.GONE
+                }
             }
         }
 
         viewModel.currentWallet.observe(viewLifecycleOwner) {
-            showDetails()
+            if (it != null) {
+                showDetails()
 
-            wallet_list_detailname.text = it.name
-            wallet_list_notifamount.text = "0"
-            it.amount.observe(viewLifecycleOwner) { currentAmount ->
-                wallet_list_amount.text = currentAmount
+                wallet_list_detailname.text = it.name
+                wallet_list_notifamount.text = "0"
+                it.amount.observe(viewLifecycleOwner) { currentAmount ->
+                    wallet_list_amount.text = currentAmount
+                }
+            } else {
+                hideDetails()
             }
         }
 
@@ -84,14 +90,42 @@ class WalletListFragment : Fragment() {
                 viewModel.currentWallet.postValue(wallet)
             }
             wallet
-        }) { view, _, item, position ->
+        }.toMutableList(), { view, _, item, position ->
             if (!viewModel.isCurrentWallet(item)) {
                 viewModel.setCurrentWallet(item)
                 deselectRow()
                 currentItemPosition = position
                 launchScaleAnimation(view)
             }
-        }
+        }, { item, position ->
+            viewModel.wallets.value?.let {
+                (oAdapter as WalletAdapter).walletList.removeAt(position)
+                wallet_list_recyclerview.removeViewAt(position)
+                oAdapter.notifyItemRemoved(position)
+                oAdapter.notifyItemRangeChanged(position, it.size - 1)
+                currentItemPosition?.let { itemPosition ->
+                    if (position == itemPosition) {
+                        currentItemPosition = null
+                        (oAdapter as WalletAdapter).clickedPosition = -1
+                        viewModel.setCurrentWallet(null)
+                    } else if (position < itemPosition) {
+                        currentItemPosition!!.dec()
+                        (oAdapter as WalletAdapter).clickedPosition = currentItemPosition!!
+                    }
+                }
+                viewModel.deleteWallet(item)
+
+                Snackbar.make(requireView(), R.string.wallet_deleted, Snackbar.LENGTH_SHORT)
+                    .setAction(R.string.cancel) { _ ->
+                        (oAdapter as WalletAdapter).walletList.add(position, item)
+                        oAdapter.notifyItemInserted(position)
+                        oAdapter.notifyItemRangeChanged(position, it.size - 1)
+                        viewModel.addWallet(item)
+                    }.show()
+            }
+        }, {
+            CustomDialog().showExportDialog(this, it)
+        })
         currentItemPosition?.let {
             (oAdapter as WalletAdapter).clickedPosition = it
         }

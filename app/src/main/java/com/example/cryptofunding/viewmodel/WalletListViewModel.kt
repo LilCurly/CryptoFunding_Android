@@ -5,16 +5,16 @@ import android.animation.Animator.AnimatorListener
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.view.animation.ScaleAnimation
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.observe
+import androidx.lifecycle.*
 import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.data.WalletRepository
 import com.example.cryptofunding.ui.viewholder.WalletItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.select.getSelectExtension
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class WalletListViewModel @Inject  constructor(private val repo: WalletRepository) : ViewModel() {
@@ -30,7 +30,7 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
         return false
     }
 
-    fun setCurrentWallet(wallet: Wallet) {
+    fun setCurrentWallet(wallet: Wallet?) {
         repo.currentWallet = wallet
         currentWallet.value = wallet
     }
@@ -38,6 +38,18 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
     fun loadAmountIfNeeded(wallet: Wallet) {
         if (wallet.amount.value == null) {
             wallet.loadAmount()
+        }
+    }
+
+    fun deleteWallet(wallet: Wallet) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.deleteWallet(wallet)
+        }
+    }
+
+    fun addWallet(wallet: Wallet) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.insertWallet(wallet)
         }
     }
 }
