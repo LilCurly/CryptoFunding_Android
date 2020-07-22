@@ -6,4 +6,7 @@
         <attr name="bottomLeftCornerRadius" format="dimension"/>
         <attr name="bottomRightCornerRadius" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="ProgressBar">
+        <attr name="percent" format="integer"/>
+    </declare-styleable>
 </resources>

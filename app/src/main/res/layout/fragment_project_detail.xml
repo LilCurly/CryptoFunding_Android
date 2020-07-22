@@ -22,10 +22,119 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/posterGuideline"
         android:background="@drawable/background_project_detail"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="24dp">
+
+        <TextView
+            android:id="@+id/textType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Film"
+            android:text="Film"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:fontFamily="@font/opensans_regular" />
+
+        <TextView
+            android:id="@+id/textNextVote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Next vote in 15 days"
+            android:text="Next vote in 15 days"
+            android:textColor="@color/colorSecondaryAppLighter"
+            android:fontFamily="@font/opensans_regular"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/titleGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".6" />
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textType"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/titleGuideline"
+            android:layout_marginTop="13dp"
+            tools:text="The Avengers | New Movies in 4k"
+            android:text="The Avengers | New Movies in 4k"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:fontFamily="@font/opensans_semibold"
+            android:textSize="18sp"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/favCardView"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintTop_toTopOf="@id/textTitle"
+            app:layout_constraintBottom_toBottomOf="@id/textTitle"
+            app:layout_constraintStart_toStartOf="@id/titleGuideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="6dp"
+            app:cardCornerRadius="100dp"
+            app:cardBackgroundColor="@android:color/transparent" >
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/projectLikeAnimationView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_fileName="like.json"
+                app:lottie_loop="false"
+                app:lottie_autoPlay="false" />
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@id/textTitle"
+            android:layout_marginTop="3dp"
+            android:background="@color/colorSecondaryAppLighter" />
+
+        <TextView
+            android:id="@+id/textCurrentlyCollected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/topBar"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="3dp"
+            tools:text="46.25 ETH"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:fontFamily="@font/opensans_regular"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textToCollect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/topBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="3dp"
+            tools:text="100.5 ETH"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:fontFamily="@font/opensans_regular"
+            android:textSize="15sp" />
+
+        <com.example.cryptofunding.ui.custom.ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="17dp"
+            app:layout_constraintTop_toBottomOf="@id/textCurrentlyCollected"
+            android:layout_marginTop="3dp"
+            app:percent="75"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
