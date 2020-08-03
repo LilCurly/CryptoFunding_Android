@@ -74,7 +74,7 @@
         tools:layout="@layout/fragment_funded_projects" />
     <fragment
         android:id="@+id/projectDetailFragment"
-        android:name="com.example.cryptofunding.projectDetailFragment"
+        android:name="com.example.cryptofunding.ProjectDetailFragment"
         android:label="fragment_project_detail"
         tools:layout="@layout/fragment_project_detail" />
 </navigation>

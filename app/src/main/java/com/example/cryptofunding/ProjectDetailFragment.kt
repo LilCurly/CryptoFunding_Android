@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_project_detail.*
 /**
  * A simple [Fragment] subclass.
  */
-class projectDetailFragment : Fragment() {
+class ProjectDetailFragment : Fragment() {
     lateinit var imageList: List<SlideModel>
 
     override fun onCreateView(

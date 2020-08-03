@@ -37,4 +37,6 @@
     <string name="copied">Votre clé privée a été copiée dans votre presse-papier</string>
     <string name="wallet_deleted">Le portefeuille a été supprimé</string>
     <string name="cancel">Annuler</string>
+    <string name="collected">Collecté</string>
+    <string name="steps">Étapes</string>
 </resources>
