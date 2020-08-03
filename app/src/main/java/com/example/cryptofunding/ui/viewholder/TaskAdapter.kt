@@ -23,6 +23,10 @@ class TaskAdapter(val context: Context, var tasksList: MutableList<Task>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentTask = tasksList[position]
+        holder.baseLayout.setOnClickListener {
+            currentTask.expanded = !currentTask.expanded
+            notifyItemChanged(position)
+        }
         holder.setupHolder(currentTask)
     }
 
@@ -32,7 +36,7 @@ class TaskAdapter(val context: Context, var tasksList: MutableList<Task>):
         private val date = view.monthYearTextView
         private val amount = view.amountTextView
         private val summary = view.taskSummaryTextView
-        private val baseLayout = view.baseLayout
+        val baseLayout = view.baseLayout
         private val expandableLayout = view.expandableLayout
 
         fun setupHolder(task: Task) {
@@ -40,15 +44,9 @@ class TaskAdapter(val context: Context, var tasksList: MutableList<Task>):
             amount.text = task.amount.toString()
             summary.text = task.summary
             day.text = task.limitDate.subSequence(0, 2)
-            date.text = task.limitDate.subSequence(3, task.limitDate.count()-1)
+            date.text = task.limitDate.subSequence(3, task.limitDate.count())
 
             if (task.expanded) expandableLayout.visibility = View.VISIBLE else expandableLayout.visibility = View.GONE
-
-            baseLayout.setOnClickListener {
-                val isExpanded = !task.expanded
-                task.expanded = isExpanded
-                if (isExpanded) expandableLayout.visibility = View.VISIBLE else expandableLayout.visibility = View.GONE
-            }
         }
     }
 }

@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="13dp"
     android:layout_marginEnd="13dp"
+    android:layout_marginBottom="13dp"
     android:background="@drawable/background_task">
 
 
@@ -62,7 +63,7 @@
         android:fontFamily="@font/roboto_bold"
         android:text="Ecrire le scénario"
         android:textColor="@color/colorBackgroundWhiteApp"
-        android:textSize="20sp"/>
+        android:textSize="18sp"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
