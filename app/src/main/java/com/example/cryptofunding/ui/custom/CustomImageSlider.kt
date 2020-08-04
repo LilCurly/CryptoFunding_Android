@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -42,6 +43,8 @@ class CustomImageSlider @JvmOverloads constructor(context: Context, attrs: Attri
     private var textAlign = "LEFT"
     private var swipeTimer = Timer()
 
+    var isTouchable: Boolean = true
+
     init {
         LayoutInflater.from(getContext()).inflate(R.layout.image_slider, this, true)
         viewPager = findViewById(R.id.view_pager)
@@ -61,6 +64,13 @@ class CustomImageSlider @JvmOverloads constructor(context: Context, attrs: Attri
         if (typedArray.getString(R.styleable.ImageSlider_iss_text_align) != null){
             textAlign = typedArray.getString(R.styleable.ImageSlider_iss_text_align)
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (isTouchable) {
+            return super.dispatchTouchEvent(ev)
+        }
+        return true
     }
 
     /**
