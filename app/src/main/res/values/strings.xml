@@ -39,4 +39,9 @@
     <string name="cancel">Annuler</string>
     <string name="collected">Collecté</string>
     <string name="steps">Étapes</string>
+    <string name="projectNameHint">Nom du projet</string>
+    <string name="projectSummaryHint">Décrivez votre projet en quelques lignes</string>
+    <string name="chooseCategory">Choisissez une catégorie</string>
+    <string name="uploadImages">Importez vos images</string>
+    <string name="next">Suivant</string>
 </resources>
