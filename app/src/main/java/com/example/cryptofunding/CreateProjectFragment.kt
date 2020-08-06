@@ -9,15 +9,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.model.Image
 import com.example.cryptofunding.data.repository.ProjectRepository
+import com.example.cryptofunding.databinding.FragmentCreateProjectBinding
 import com.example.cryptofunding.ui.custom.FractionLinearLayoutManager
 import com.example.cryptofunding.ui.viewholder.CategoryItem
 import com.example.cryptofunding.ui.viewholder.SmallImageItem
 import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.viewmodel.NewProjectViewModel
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.fragment_create_project.*
@@ -34,23 +39,59 @@ class CreateProjectFragment : Fragment() {
     private val imageItemAdapter = ItemAdapter<SmallImageItem>()
     private val imageFastAdapter = FastAdapter.with(imageItemAdapter)
 
-    private val images: MutableList<Image> by lazy {
-        mutableListOf<Image>()
+    private val viewModel: NewProjectViewModel by lazy {
+        ViewModelProvider(CryptoFundingApplication(), defaultViewModelProviderFactory).get(NewProjectViewModel::class.java)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_project, container, false)
+        val binding: FragmentCreateProjectBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_project, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.updateCanProceed()
+        setupTypePicker()
+        setupImageRecyclerView()
 
+        viewModel.projectName.observe(viewLifecycleOwner) {
+            viewModel.updateCanProceed()
+        }
+
+        viewModel.projectSummary.observe(viewLifecycleOwner) {
+            viewModel.updateCanProceed()
+        }
+    }
+
+    private fun setupImageRecyclerView() {
+        imagesRecyclerView.adapter = imageFastAdapter
+        imagesRecyclerView.layoutManager = FractionLinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL,
+            0.2f,
+            false
+        )
+
+        imageItemAdapter.add(SmallImageItem(
+            SmallImageItem.Companion.ItemType.ADD_IMAGE,
+            null,
+            {
+                launchImagePicker()
+            }
+        )
+        )
+    }
+
+    private fun setupTypePicker() {
         typePicker.adapter = categoryFastAdapter
-        val pickerLayoutManager = PickerLayoutManager(requireContext(), PickerLayoutManager.HORIZONTAL, false)
+        val pickerLayoutManager =
+            PickerLayoutManager(requireContext(), PickerLayoutManager.HORIZONTAL, false)
         pickerLayoutManager.isChangeAlpha = true
         pickerLayoutManager.scaleDownBy = 0.65f
         pickerLayoutManager.scaleDownDistance = 0.8f
@@ -64,45 +105,64 @@ class CreateProjectFragment : Fragment() {
         })
 
         typePicker.smoothScrollBy(1, 0)
-
-        imagesRecyclerView.adapter = imageFastAdapter
-        imagesRecyclerView.layoutManager = FractionLinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, 0.2f, false)
-
-        imageItemAdapter.add(SmallImageItem(
-                SmallImageItem.Companion.ItemType.ADD_IMAGE,
-                null
-            ) {
-                ImagePicker.create(this)
-                    .limit(5 - images.size)
-                    .start()
-            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-            images.addAll(ImagePicker.getImages(data))
-            imageItemAdapter.clear()
-            imageItemAdapter.add(images.map {
-                val imgPath = File(it.path)
-                var bitmap: Bitmap? = null
-                if (imgPath.exists()) {
-                    bitmap = BitmapFactory.decodeFile(imgPath.absolutePath)
-                }
-                SmallImageItem(SmallImageItem.Companion.ItemType.SMALL_IMAGE, bitmap)
-            })
-
-            if (images.size < 5) {
-                imageItemAdapter.add(SmallImageItem(
-                    SmallImageItem.Companion.ItemType.ADD_IMAGE,
-                    null
-                ) {
-                    ImagePicker.create(this)
-                        .limit(5 - images.size)
-                        .start()
-                })
-            }
+            viewModel.projectImages.addAll(ImagePicker.getImages(data))
+            viewModel.updateCanProceed()
+            reloadImageData()
         }
 
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun reloadImageData() {
+        imageItemAdapter.clear()
+        imageItemAdapter.add(viewModel.projectImages.map {
+            val imgPath = File(it.path)
+            var bitmap: Bitmap? = null
+            if (imgPath.exists()) {
+                bitmap = BitmapFactory.decodeFile(imgPath.absolutePath)
+            }
+            SmallImageItem(SmallImageItem.Companion.ItemType.SMALL_IMAGE,
+                bitmap,
+                null,
+                { index ->
+                    viewModel.projectImages.removeAt(index)
+                    viewModel.updateCanProceed()
+                    imageItemAdapter.remove(index)
+                    imageFastAdapter.notifyAdapterItemRemoved(index)
+                    imageFastAdapter.notifyAdapterItemRangeChanged(index, imageFastAdapter.itemCount)
+
+                    if (viewModel.projectImages.size == 4) {
+                        imageItemAdapter.add(SmallImageItem(
+                                SmallImageItem.Companion.ItemType.ADD_IMAGE,
+                                null,
+                                {
+                                    launchImagePicker()
+                                }
+                            )
+                        )
+                    }
+                })
+        })
+
+        if (viewModel.projectImages.size < 5) {
+            imageItemAdapter.add(SmallImageItem(
+                    SmallImageItem.Companion.ItemType.ADD_IMAGE,
+                    null,
+                    {
+                        launchImagePicker()
+                    }
+                )
+            )
+        }
+    }
+
+    private fun launchImagePicker() {
+        ImagePicker.create(this)
+            .limit(5 - viewModel.projectImages.size)
+            .start()
     }
 }

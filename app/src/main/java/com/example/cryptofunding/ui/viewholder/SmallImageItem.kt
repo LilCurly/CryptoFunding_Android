@@ -10,7 +10,10 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_small_image.view.*
 
-class SmallImageItem(private val itemType: ItemType, val bitmap: Bitmap? = null, val notifyAddImageClicked: (() -> Unit)? = null): AbstractItem<FastAdapter.ViewHolder<SmallImageItem>>() {
+class SmallImageItem(private val itemType: ItemType,
+                     val bitmap: Bitmap? = null,
+                     val notifyAddImageClicked: (() -> Unit)? = null,
+                     val onLongClickListener: ((index: Int) -> Unit)? = null): AbstractItem<FastAdapter.ViewHolder<SmallImageItem>>() {
 
     companion object {
         enum class ItemType {
@@ -33,10 +36,17 @@ class SmallImageItem(private val itemType: ItemType, val bitmap: Bitmap? = null,
 
         override fun bindView(item: SmallImageItem, payloads: List<Any>) {
             image.setImageBitmap(item.bitmap)
+            image.setOnLongClickListener {
+                item.onLongClickListener?.let {
+                    it(adapterPosition)
+                }
+                true
+            }
         }
 
         override fun unbindView(item: SmallImageItem) {
             image.setImageBitmap(null)
+            image.setOnLongClickListener(null)
         }
     }
 

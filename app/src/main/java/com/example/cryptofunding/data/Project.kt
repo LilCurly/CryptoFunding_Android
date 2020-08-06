@@ -1,5 +1,24 @@
 package com.example.cryptofunding.data
 
-import androidx.annotation.IdRes
+import com.esafirm.imagepicker.model.Image
 
-data class Project(val name: String, val category: CategoryType, val percentFunded: Int, val img: Int, var isFavorite: Boolean = false)
+class Project {
+
+    constructor()
+
+    constructor(name: String, categoryType: CategoryType, percentFunded: Int, img: Int, isFavorite: Boolean = false) {
+        this.name = name
+        this.category = categoryType
+        this.img = img
+        this.isFavorite = isFavorite
+        this.percentFunded = percentFunded
+    }
+
+    lateinit var name: String
+    lateinit var summary: String
+    lateinit var category: CategoryType
+    var isFavorite: Boolean = false
+    var percentFunded: Int = 0
+    var img: Int = 0
+    var tempImages: List<Image>? = null
+}

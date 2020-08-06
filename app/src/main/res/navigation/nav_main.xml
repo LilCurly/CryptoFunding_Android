@@ -81,5 +81,14 @@
         android:id="@+id/createProjectFragment"
         android:name="com.example.cryptofunding.CreateProjectFragment"
         android:label="fragment_create_project"
-        tools:layout="@layout/fragment_create_project" />
+        tools:layout="@layout/fragment_create_project" >
+        <action
+            android:id="@+id/action_createProjectFragment_to_addTasksFragment"
+            app:destination="@id/addTasksFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTasksFragment"
+        android:name="com.example.cryptofunding.AddTasksFragment"
+        android:label="fragment_add_tasks"
+        tools:layout="@layout/fragment_add_tasks" />
 </navigation>

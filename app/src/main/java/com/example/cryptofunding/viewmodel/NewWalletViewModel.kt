@@ -8,6 +8,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.databinding.BaseObservable
 import androidx.databinding.BindingAdapter
+import androidx.databinding.Observable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

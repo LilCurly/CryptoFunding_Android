@@ -1,130 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimaryApp"
-    tools:context=".CreateProjectFragment">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/topBarGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="?attr/actionBarSize"/>
-
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.cryptofunding.viewmodel.NewProjectViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/textLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBarGuideline"
-        app:layout_constraintBottom_toTopOf="@id/uploadImagesText"
-        android:clipToPadding="false"
-        android:padding="15dp">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryApp"
+        tools:context=".CreateProjectFragment">
 
-        <EditText
-            android:id="@+id/projectNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/selector_edit_projectname"
-            android:elevation="4dp"
-            android:hint="@string/projectNameHint"
-            android:lines="1"
-            android:textColorHint="@color/colorSecondaryAppGradient"
-            android:fontFamily="@font/roboto_regular"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/colorBackgroundWhiteApp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topBarGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="?attr/actionBarSize"/>
 
-        <EditText
-            android:id="@+id/projectSummaryEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/textLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/projectNameEditText"
+            app:layout_constraintTop_toBottomOf="@id/topBarGuideline"
+            app:layout_constraintBottom_toTopOf="@id/uploadImagesText"
+            android:clipToPadding="false"
+            android:padding="15dp">
+
+            <EditText
+                android:id="@+id/projectNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/selector_edit_projectname"
+                android:elevation="4dp"
+                android:hint="@string/projectNameHint"
+                android:lines="1"
+                android:textColorHint="@color/colorSecondaryAppGradient"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/colorBackgroundWhiteApp"
+                android:text="@={viewModel.projectName}"/>
+
+            <EditText
+                android:id="@+id/projectSummaryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/projectNameEditText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="top"
+                android:background="@drawable/selector_edit_projectsummary"
+                android:elevation="4dp"
+                android:hint="@string/projectSummaryHint"
+                android:textColorHint="@color/colorSecondaryAppGradient"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:textColor="@color/colorBackgroundWhiteApp"
+                android:text="@={viewModel.projectSummary}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/uploadImagesText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:text="@string/uploadImages"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:fontFamily="@font/roboto_bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imagesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/uploadImagesText"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:padding="4dp"
+            android:background="@drawable/background_upload_images"/>
+
+        <TextView
+            android:id="@+id/chooseCategoryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/imagesRecyclerView"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/chooseCategory"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:fontFamily="@font/roboto_bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/typePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chooseCategoryText"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false"
+            android:paddingStart="183dp"
+            android:paddingEnd="183dp" />
+
+        <Button
+            android:id="@+id/buttonNext"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:gravity="top"
-            android:background="@drawable/selector_edit_projectsummary"
-            android:elevation="4dp"
-            android:hint="@string/projectSummaryHint"
-            android:textColorHint="@color/colorSecondaryAppGradient"
-            android:fontFamily="@font/roboto_regular"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:textColor="@color/colorBackgroundWhiteApp" />
+            app:layout_constraintTop_toBottomOf="@id/typePicker"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="13dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginStart="13dp"
+            android:textSize="21sp"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:fontFamily="@font/opensans_semibold"
+            android:background="@drawable/selector_button_state"
+            android:elevation="6dp"
+            android:text="@string/next"
+            android:enabled="@{viewModel.canProceed}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/uploadImagesText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:text="@string/uploadImages"
-        android:textColor="@color/colorBackgroundWhiteApp"
-        android:fontFamily="@font/roboto_bold" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/imagesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/uploadImagesText"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="10dp"
-        android:padding="4dp"
-        android:background="@drawable/background_upload_images"/>
-
-    <TextView
-        android:id="@+id/chooseCategoryText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/imagesRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/chooseCategory"
-        android:textColor="@color/colorBackgroundWhiteApp"
-        android:fontFamily="@font/roboto_bold" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/typePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chooseCategoryText"
-        android:layout_marginTop="10dp"
-        android:clipToPadding="false"
-        android:paddingStart="183dp"
-        android:paddingEnd="183dp" />
-
-    <Button
-        android:id="@+id/buttonNext"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/typePicker"
-        android:layout_marginTop="26dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginStart="13dp"
-        android:textSize="21sp"
-        android:textColor="@color/colorBackgroundWhiteApp"
-        android:fontFamily="@font/opensans_semibold"
-        android:background="@drawable/selector_button_state"
-        android:elevation="6dp"
-        android:text="@string/next"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
