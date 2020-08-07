@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.esafirm.imagepicker.features.ImagePicker
@@ -59,7 +60,15 @@ class CreateProjectFragment : Fragment() {
         viewModel.updateCanProceed()
         setupTypePicker()
         setupImageRecyclerView()
+        listenOnEditText()
 
+        buttonNext.setOnClickListener {
+            val action = CreateProjectFragmentDirections.actionCreateProjectFragmentToAddTasksFragment()
+            view.findNavController().navigate(action)
+        }
+    }
+
+    private fun listenOnEditText() {
         viewModel.projectName.observe(viewLifecycleOwner) {
             viewModel.updateCanProceed()
         }
@@ -78,14 +87,16 @@ class CreateProjectFragment : Fragment() {
             false
         )
 
-        imageItemAdapter.add(SmallImageItem(
-            SmallImageItem.Companion.ItemType.ADD_IMAGE,
-            null,
-            {
-                launchImagePicker()
-            }
-        )
-        )
+        if (imageItemAdapter.adapterItems.isEmpty()) {
+            imageItemAdapter.add(SmallImageItem(
+                    SmallImageItem.Companion.ItemType.ADD_IMAGE,
+                    null,
+                    {
+                        launchImagePicker()
+                    }
+                )
+            )
+        }
     }
 
     private fun setupTypePicker() {
@@ -100,9 +111,11 @@ class CreateProjectFragment : Fragment() {
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(typePicker)
 
-        categoryItemAdapter.add(ProjectRepository.categories.map {
-            CategoryItem(it)
-        })
+        if (categoryItemAdapter.adapterItems.isEmpty()) {
+            categoryItemAdapter.add(ProjectRepository.categories.map {
+                CategoryItem(it)
+            })
+        }
 
         typePicker.smoothScrollBy(1, 0)
     }

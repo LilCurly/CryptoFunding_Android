@@ -44,4 +44,6 @@
     <string name="chooseCategory">Choisissez une catégorie</string>
     <string name="uploadImages">Importez vos images</string>
     <string name="next">Suivant</string>
+    <string name="add_new_task">Ajouter une nouvelle tâche</string>
+    <string name="launch_project">Lancer le projet</string>
 </resources>
