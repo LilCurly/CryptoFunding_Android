@@ -16,19 +16,40 @@ import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Task
 import com.example.cryptofunding.ui.custom.ClippingConstraintLayout
 import com.example.cryptofunding.utils.DEBUG
+import kotlinx.android.synthetic.main.item_add_task.view.*
 import kotlinx.android.synthetic.main.item_new_task.view.*
+import kotlinx.android.synthetic.main.item_new_task.view.baseLayout
+import kotlinx.android.synthetic.main.item_new_task.view.titleTextView
 
 class NewTaskAdapter(val context: Context,
-                     var tasksList: MutableList<Task>):
-    RecyclerSwipeAdapter<NewTaskAdapter.ViewHolder>() {
+                     var tasksList: MutableList<Task>,
+                     val addNewTaskClicked: () -> Unit):
+    RecyclerSwipeAdapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        const val TYPE_NEW = 0
+        const val TYPE_TASK = 1
+    }
 
     init {
         mItemManger.mode = Attributes.Mode.Single
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_new_task, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_TASK) {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_new_task, parent, false)
+            TaskViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_task, parent, false)
+            NewTaskViewHolder(view)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        if (position == tasksList.size) {
+            return TYPE_NEW
+        }
+        return TYPE_TASK
     }
 
     override fun getSwipeLayoutResourceId(position: Int): Int {
@@ -36,39 +57,46 @@ class NewTaskAdapter(val context: Context,
     }
 
     override fun getItemCount(): Int {
-        return tasksList.size
+        return tasksList.size + 1
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val task = tasksList[position]
-        mItemManger.bindView(viewHolder.swipeLayout, position)
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        if (viewHolder is NewTaskViewHolder) {
+            viewHolder.baseLayout.setOnClickListener {
+                addNewTaskClicked()
+            }
+        } else {
+            viewHolder as TaskViewHolder
+            val task = tasksList[position]
+            mItemManger.bindView(viewHolder.swipeLayout, position)
 
-        viewHolder.amount.text = task.amount.toString()
-        viewHolder.title.text = task.title
-        viewHolder.day.text = task.limitDate.subSequence(0, 2)
-        viewHolder.monthYear.text = task.limitDate.subSequence(3, 8)
-        viewHolder.explanation.text = task.summary
+            viewHolder.amount.text = task.amount.toString()
+            viewHolder.title.text = task.title
+            viewHolder.day.text = task.limitDate.subSequence(0, 2)
+            viewHolder.monthYear.text = task.limitDate.subSequence(3, 8)
+            viewHolder.explanation.text = task.summary
 
-        viewHolder.swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
+            viewHolder.swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
 
-        if (mItemManger.isOpen(position)) {
-            viewHolder.swipeLayout.open(false)
+            if (mItemManger.isOpen(position)) {
+                viewHolder.swipeLayout.open(false)
+            }
+
+            if (!task.expanded) {
+                viewHolder.expandableLayout.visibility = View.GONE
+            }
+
+            if (task.expanded) {
+                viewHolder.swipeLayout.isRightSwipeEnabled = false
+            }
+
+            setupSwipeListener(viewHolder, position, task)
+            setupClickListener(viewHolder, position, task)
         }
-
-        if (!task.expanded) {
-            viewHolder.expandableLayout.visibility = View.GONE
-        }
-
-        if (task.expanded) {
-            viewHolder.swipeLayout.isRightSwipeEnabled = false
-        }
-
-        setupSwipeListener(viewHolder, position, task)
-        setupClickListener(viewHolder, position, task)
     }
 
     private fun setupSwipeListener(
-        viewHolder: ViewHolder,
+        viewHolder: TaskViewHolder,
         position: Int,
         task: Task
     ) {
@@ -101,7 +129,7 @@ class NewTaskAdapter(val context: Context,
     }
 
     private fun setupClickListener(
-        viewHolder: ViewHolder,
+        viewHolder: TaskViewHolder,
         position: Int,
         task: Task
     ) {
@@ -120,7 +148,7 @@ class NewTaskAdapter(val context: Context,
         }
     }
 
-    class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+    class TaskViewHolder(val view: View): RecyclerView.ViewHolder(view) {
         val baseLayout: ClippingConstraintLayout = view.baseLayout
         val swipeLayout: SwipeLayout = view.taskSwipeLayout
         val expandableLayout: ConstraintLayout = view.expandableLayout
@@ -132,5 +160,9 @@ class NewTaskAdapter(val context: Context,
 
         val deleteButton: FrameLayout = view.deleteButton
         val editButton: FrameLayout = view.editButton
+    }
+
+    class NewTaskViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+        val baseLayout: ConstraintLayout = view.addTaskLayout
     }
 }
