@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.sheet_add_task.*
 import java.util.*
 
 
-class AddTaskBottomSheet (val onDismiss: (task: Task) -> Unit): BottomSheetDialogFragment() {
+class AddTaskBottomSheet (val onDismiss: ((task: Task) -> Unit),
+                          var editableTask: Task? = null): BottomSheetDialogFragment() {
 
     val viewModel by lazy {
         requireActivity().injector.addTaskViewModel
@@ -40,6 +41,13 @@ class AddTaskBottomSheet (val onDismiss: (task: Task) -> Unit): BottomSheetDialo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        editableTask?.let {
+            viewModel.taskName.postValue(it.title)
+            viewModel.taskSummary.postValue(it.summary)
+            viewModel.taskAmount.postValue(it.amount.toString())
+            viewModel.taskFinalDate.postValue(it.limitDate)
+        }
 
         dateEditText.setOnClickListener {
             setupDatePicker()
@@ -73,15 +81,33 @@ class AddTaskBottomSheet (val onDismiss: (task: Task) -> Unit): BottomSheetDialo
 
     private fun setupDatePicker() {
         val now = Calendar.getInstance()
-        val datePicker = DatePickerDialog.newInstance(
-            { _, year, month, day ->
-                dateEditText.text =
-                    Editable.Factory.getInstance().newEditable(dateFormatIfNeeded(day, month, year))
-            },
-            now.get(Calendar.YEAR),
-            now.get(Calendar.MONTH),
-            now.get(Calendar.DAY_OF_MONTH)
-        )
+        lateinit var datePicker: DatePickerDialog
+        if (dateEditText.text.toString().isEmpty()) {
+            datePicker = DatePickerDialog.newInstance(
+                { _, year, month, day ->
+                    dateEditText.text =
+                        Editable.Factory.getInstance().newEditable(dateFormatIfNeeded(day, month, year))
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+            )
+        }
+        else {
+            val date = dateEditText.text.toString()
+            val day = date.subSequence(0, 2).toString().toInt()
+            val month = date.subSequence(3, 5).toString().toInt()
+            val year = date.subSequence(6, date.length).toString().toInt()
+            datePicker = DatePickerDialog.newInstance(
+                { _, year, month, day ->
+                    dateEditText.text =
+                        Editable.Factory.getInstance().newEditable(dateFormatIfNeeded(day, month, year))
+                },
+                year,
+                month - 1,
+                day
+            )
+        }
 
         datePicker.accentColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryApp)
         datePicker.isThemeDark = true
@@ -103,17 +129,17 @@ class AddTaskBottomSheet (val onDismiss: (task: Task) -> Unit): BottomSheetDialo
     }
 
     private fun dateFormatIfNeeded(day: Int, month: Int, year: Int): String {
-        var formatedDay = day.toString()
-        var formatedMonth = (month + 1).toString()
+        var formattedDay = day.toString()
+        var formattedMonth = (month + 1).toString()
 
-        if (formatedDay.length == 1) {
-            formatedDay = "0$formatedDay"
+        if (formattedDay.length == 1) {
+            formattedDay = "0$formattedDay"
         }
-        if (formatedMonth.length == 1) {
-            formatedMonth = "0$formatedMonth"
+        if (formattedMonth.length == 1) {
+            formattedMonth = "0$formattedMonth"
         }
 
-        return "$formatedDay/$formatedMonth/$year"
+        return "$formattedDay/$formattedMonth/$year"
     }
 
     override fun onStart() {

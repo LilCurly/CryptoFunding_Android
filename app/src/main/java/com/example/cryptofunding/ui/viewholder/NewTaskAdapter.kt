@@ -23,7 +23,9 @@ import kotlinx.android.synthetic.main.item_new_task.view.titleTextView
 
 class NewTaskAdapter(val context: Context,
                      var tasksList: MutableList<Task>,
-                     val addNewTaskClicked: () -> Unit):
+                     val onAddNewTaskClicked: () -> Unit,
+                     val onRemoveTaskClicked: (index: Int) -> Unit,
+                     val onEditTaskClicked: (index: Int) -> Unit):
     RecyclerSwipeAdapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -63,7 +65,7 @@ class NewTaskAdapter(val context: Context,
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         if (viewHolder is NewTaskViewHolder) {
             viewHolder.baseLayout.setOnClickListener {
-                addNewTaskClicked()
+                onAddNewTaskClicked()
             }
         } else {
             viewHolder as TaskViewHolder
@@ -75,6 +77,16 @@ class NewTaskAdapter(val context: Context,
             viewHolder.day.text = task.limitDate.subSequence(0, 2)
             viewHolder.monthYear.text = task.limitDate.subSequence(3, 8)
             viewHolder.explanation.text = task.summary
+
+            viewHolder.deleteButton.setOnClickListener {
+                onRemoveTaskClicked(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, itemCount)
+                closeAllItems()
+            }
+            viewHolder.editButton.setOnClickListener {
+                onEditTaskClicked(position)
+            }
 
             viewHolder.swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
 

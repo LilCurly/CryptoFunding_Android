@@ -25,7 +25,6 @@ class TaskAdapter(val context: Context, var tasksList: MutableList<Task>):
         val currentTask = tasksList[position]
         holder.baseLayout.setOnClickListener {
             currentTask.expanded = !currentTask.expanded
-            //notifyItemChanged(position)
         }
         holder.setupHolder(currentTask)
     }
