@@ -17,6 +17,7 @@ import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.viewmodel.NewProjectViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_add_tasks.*
+import kotlinx.android.synthetic.main.sheet_add_task.*
 
 class AddTasksFragment : Fragment() {
     private lateinit var tasksAdapter: RecyclerSwipeAdapter<RecyclerView.ViewHolder>

@@ -96,7 +96,7 @@
         android:layout_marginTop="13dp"
         android:background="@drawable/background_edit_date"
         android:orientation="horizontal"
-        android:weightSum="5">
+        android:weightSum="6">
 
         <FrameLayout
             android:layout_width="0dp"
@@ -112,13 +112,15 @@
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/dateFrameLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4">
+            android:layout_weight="5">
 
             <EditText
+                android:id="@+id/dateEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/colorBackgroundWhiteApp"
                 android:fontFamily="@font/roboto_regular"
