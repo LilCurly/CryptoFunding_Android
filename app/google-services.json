@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "800125730540",
+    "firebase_url": "https://cryptofunding-4b263.firebaseio.com",
+    "project_id": "cryptofunding-4b263",
+    "storage_bucket": "cryptofunding-4b263.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800125730540:android:2af60830c1823a11aa6fc9",
+        "android_client_info": {
+          "package_name": "com.example.cryptofunding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800125730540-d97ref3nj76nt0f64b7tsqd03g71b0r7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cryptofunding",
+            "certificate_hash": "0cf8ba060a07160f12c243d790e9cf32b8698a89"
+          }
+        },
+        {
+          "client_id": "800125730540-33k2l4uiofs5almiknbte8k7beker3f4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZbuqHyfYb-VwcjyLlgHGHiPKL-iUNyxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800125730540-33k2l4uiofs5almiknbte8k7beker3f4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

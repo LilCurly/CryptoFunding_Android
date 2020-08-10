@@ -90,5 +90,9 @@
         android:id="@+id/addTasksFragment"
         android:name="com.example.cryptofunding.AddTasksFragment"
         android:label="fragment_add_tasks"
-        tools:layout="@layout/fragment_add_tasks" />
+        tools:layout="@layout/fragment_add_tasks" >
+        <argument
+            android:name="project"
+            app:argType="com.example.cryptofunding.data.Project" />
+    </fragment>
 </navigation>

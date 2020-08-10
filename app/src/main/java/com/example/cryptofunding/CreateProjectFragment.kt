@@ -64,8 +64,8 @@ class CreateProjectFragment : Fragment() {
         listenOnEditText()
 
         buttonNext.setOnClickListener {
-            val action = CreateProjectFragmentDirections.actionCreateProjectFragmentToAddTasksFragment()
             val project = viewModel.getProject()
+            val action = CreateProjectFragmentDirections.actionCreateProjectFragmentToAddTasksFragment(project)
             view.findNavController().navigate(action)
         }
     }

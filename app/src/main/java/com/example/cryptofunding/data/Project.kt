@@ -1,12 +1,15 @@
 package com.example.cryptofunding.data
 
+import android.os.Parcelable
 import com.esafirm.imagepicker.model.Image
+import kotlinx.android.parcel.Parcelize
 
-class Project {
+@Parcelize
+class Project(var name: String, var summary: String, var category: CategoryType, var tempImages: List<Image>? = null): Parcelable {
 
-    constructor()
 
-    constructor(name: String, categoryType: CategoryType, percentFunded: Int, img: Int, isFavorite: Boolean = false) {
+
+    constructor(name: String, categoryType: CategoryType, percentFunded: Int, img: Int, isFavorite: Boolean = false) : this(name, "", categoryType) {
         this.name = name
         this.category = categoryType
         this.img = img
@@ -14,11 +17,8 @@ class Project {
         this.percentFunded = percentFunded
     }
 
-    lateinit var name: String
-    lateinit var summary: String
-    lateinit var category: CategoryType
     var isFavorite: Boolean = false
     var percentFunded: Int = 0
     var img: Int = 0
-    var tempImages: List<Image>? = null
+    var tasks: List<Task> = listOf()
 }
