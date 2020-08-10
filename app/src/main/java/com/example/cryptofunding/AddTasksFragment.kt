@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_add_tasks.*
 import kotlinx.android.synthetic.main.sheet_add_task.*
 
 class AddTasksFragment : Fragment() {
-    private lateinit var tasksAdapter: RecyclerSwipeAdapter<RecyclerView.ViewHolder>
+    private lateinit var tasksAdapter: NewTaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +32,13 @@ class AddTasksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val task = Task("Test", "Ok coll", 10, "12/08/20")
         tasksAdapter = NewTaskAdapter(requireContext(),
-            mutableListOf(task, task, task, task, task, task, task),
+            mutableListOf(),
             {
-                val bottomSheet = AddTaskBottomSheet()
+                val bottomSheet = AddTaskBottomSheet {
+                    tasksAdapter.tasksList.add(it)
+                    tasksAdapter.notifyItemInserted(tasksAdapter.tasksList.size)
+                }
                 bottomSheet.show(parentFragmentManager, "TAG")
         })
         tasksRecyclerView.adapter = tasksAdapter

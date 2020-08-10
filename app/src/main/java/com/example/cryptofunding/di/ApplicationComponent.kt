@@ -22,4 +22,5 @@ interface ApplicationComponent {
     val homeViewModel: HomeViewModel
     val detailedProjectListViewModel: DetailedProjectListViewModel
     val projectsViewModel: ProjectsViewModel
+    val addTaskViewModel: AddTaskViewModel
 }

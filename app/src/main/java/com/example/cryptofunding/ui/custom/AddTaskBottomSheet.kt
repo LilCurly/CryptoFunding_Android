@@ -7,7 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.observe
 import com.example.cryptofunding.R
+import com.example.cryptofunding.data.Task
+import com.example.cryptofunding.databinding.SheetAddTaskBinding
+import com.example.cryptofunding.di.injector
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -15,14 +20,22 @@ import kotlinx.android.synthetic.main.sheet_add_task.*
 import java.util.*
 
 
-class AddTaskBottomSheet: BottomSheetDialogFragment() {
+class AddTaskBottomSheet (val onDismiss: (task: Task) -> Unit): BottomSheetDialogFragment() {
+
+    val viewModel by lazy {
+        requireActivity().injector.addTaskViewModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.sheet_add_task, container, false)
+        val binding = DataBindingUtil.inflate<SheetAddTaskBinding>(inflater, R.layout.sheet_add_task, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,6 +43,31 @@ class AddTaskBottomSheet: BottomSheetDialogFragment() {
 
         dateEditText.setOnClickListener {
             setupDatePicker()
+        }
+
+        setupEditTextObservables()
+
+        buttonAddTask.setOnClickListener {
+            onDismiss(viewModel.getTask())
+            dismiss()
+        }
+    }
+
+    private fun setupEditTextObservables() {
+        viewModel.taskAmount.observe(viewLifecycleOwner) {
+            viewModel.updateCanProceed()
+        }
+
+        viewModel.taskFinalDate.observe(viewLifecycleOwner) {
+            viewModel.updateCanProceed()
+        }
+
+        viewModel.taskName.observe(viewLifecycleOwner) {
+            viewModel.updateCanProceed()
+        }
+
+        viewModel.taskSummary.observe(viewLifecycleOwner) {
+            viewModel.updateCanProceed()
         }
     }
 

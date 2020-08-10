@@ -19,7 +19,7 @@ class NewProjectViewModel: ViewModel() {
 
 
     fun updateCanProceed() {
-        if (!projectName.value.isNullOrEmpty() && !projectSummary.value.isNullOrEmpty() && projectImages?.size ?: 0 > 0) {
+        if (!projectName.value.isNullOrEmpty() && !projectSummary.value.isNullOrEmpty() && projectImages.size > 0) {
             canProceed.postValue(true)
         }
         else {
