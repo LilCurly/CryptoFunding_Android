@@ -27,6 +27,7 @@ import com.example.cryptofunding.viewmodel.NewProjectViewModel
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.fragment_create_project.*
+import kotlinx.android.synthetic.main.item_category.view.*
 import travel.ithaka.android.horizontalpickerlib.PickerLayoutManager
 import java.io.File
 
@@ -64,6 +65,7 @@ class CreateProjectFragment : Fragment() {
 
         buttonNext.setOnClickListener {
             val action = CreateProjectFragmentDirections.actionCreateProjectFragmentToAddTasksFragment()
+            val project = viewModel.getProject()
             view.findNavController().navigate(action)
         }
     }
@@ -106,6 +108,11 @@ class CreateProjectFragment : Fragment() {
         pickerLayoutManager.isChangeAlpha = true
         pickerLayoutManager.scaleDownBy = 0.65f
         pickerLayoutManager.scaleDownDistance = 0.8f
+
+        pickerLayoutManager.setOnScrollStopListener {
+            viewModel.categoryName = it.categoryName.text.toString()
+        }
+
         typePicker.layoutManager = pickerLayoutManager
 
         val snapHelper = LinearSnapHelper()
