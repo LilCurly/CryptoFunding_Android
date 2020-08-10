@@ -62,7 +62,7 @@ class AddTasksFragment : Fragment() {
         tasksRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         buttonLaunchProject.setOnClickListener {
-            viewModel.setProjectTasks()
+            viewModel.saveProject()
         }
     }
 }
