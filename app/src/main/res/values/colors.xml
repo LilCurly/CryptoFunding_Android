@@ -8,6 +8,7 @@
     <color name="colorPrimaryApp">#4F4F4F</color>
     <color name="colorSecondaryApp">#6A6A6A</color>
     <color name="colorSecondaryAppLighter">#747474</color>
+    <color name="colorSecondaryAppIcon">#7A7A7A</color>
     <color name="colorSecondaryAppGradient">#c3f3f3f3</color>
     <color name="colorBackgroundDarkApp">#5564FB</color>
     <color name="colorBackgroundWhiteApp">#F3F3F3</color>

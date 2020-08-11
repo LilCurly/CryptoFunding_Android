@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/createProjectFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/walletListFragment"
@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_mainFragment_to_walletListFragment"
             app:destination="@id/walletListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_createProjectFragment"
+            app:destination="@id/createProjectFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailedProjectListFragment"

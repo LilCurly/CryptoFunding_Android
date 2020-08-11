@@ -58,13 +58,19 @@ class MainFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        activity?.walletImageView?.setOnClickListener {
+        requireActivity().walletFrameLayout.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToWalletListFragment()
             findNavController().navigate(action)
         }
 
-        activity?.walletImageView?.visibility = View.VISIBLE
-        activity?.closeImageView?.visibility = View.GONE
+        requireActivity().addFrameLayout.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToCreateProjectFragment()
+            findNavController().navigate(action)
+        }
+
+        requireActivity().walletFrameLayout.visibility = View.VISIBLE
+        requireActivity().addFrameLayout.visibility = View.VISIBLE
+        requireActivity().closeFrameLayout.visibility = View.GONE
     }
 
     fun goToSeeDetailedList() {
