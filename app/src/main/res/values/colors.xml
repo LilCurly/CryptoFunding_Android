@@ -15,4 +15,5 @@
     <color name="colorWhite50">#80F3F3F3</color>
     <color name="colorBackgroundGradientApp">#6278FF</color>
     <color name="colorBlueLighter">#7286FF</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -164,6 +164,7 @@ class WalletListFragment : Fragment() {
     }
 
     private fun setupToolbar() {
+        requireActivity().toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         requireActivity().toolbarTitle.text = getString(R.string.my_wallets)
         requireActivity().walletFrameLayout.visibility = View.GONE
         requireActivity().addFrameLayout.visibility = View.GONE

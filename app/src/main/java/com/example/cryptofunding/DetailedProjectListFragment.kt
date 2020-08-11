@@ -20,6 +20,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.fastadapter.select.selectExtension
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_detailed_project_list.*
 import kotlinx.android.synthetic.main.item_category.view.*
 import kotlinx.android.synthetic.main.item_category_small.view.*
@@ -44,7 +45,7 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireActivity().toolbarTitle.text = resources.getString(R.string.app_name)
         setupCategoriesRecyclerView()
         setupProjectsRecyclerView()
     }

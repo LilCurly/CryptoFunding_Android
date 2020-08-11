@@ -64,7 +64,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupToolBar() {
-        activity?.toolbarTitle?.text = getString(R.string.app_name)
+        requireActivity().toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        requireActivity().toolbarTitle.text = getString(R.string.app_name)
     }
 
     private fun handleSeeMoreClickListener() {

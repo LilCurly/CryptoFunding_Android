@@ -193,6 +193,7 @@ class CreateProjectFragment : Fragment() {
     }
 
     private fun setupToolbar() {
+        requireActivity().toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         requireActivity().toolbarTitle.text = getString(R.string.create_project)
         requireActivity().walletFrameLayout.visibility = View.GONE
         requireActivity().addFrameLayout.visibility = View.GONE
