@@ -48,5 +48,47 @@
             android:text="@string/launch_project"
             android:enabled="@{viewModel.canProceed}"/>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loadingAnimation"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:layout_constraintTop_toTopOf="@id/buttonLaunchProject"
+            app:layout_constraintBottom_toBottomOf="@id/buttonLaunchProject"
+            app:layout_constraintStart_toStartOf="@id/buttonLaunchProject"
+            app:layout_constraintEnd_toEndOf="@id/buttonLaunchProject"
+            android:elevation="8dp"
+            app:lottie_fileName="loadingn.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/successAnimation"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="@id/buttonLaunchProject"
+            app:layout_constraintBottom_toBottomOf="@id/buttonLaunchProject"
+            app:layout_constraintStart_toStartOf="@id/buttonLaunchProject"
+            app:layout_constraintEnd_toEndOf="@id/buttonLaunchProject"
+            android:elevation="8dp"
+            app:lottie_fileName="success.json"
+            app:lottie_loop="false"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/failureAnimation"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            app:lottie_fileName="failure.json"
+            app:layout_constraintTop_toTopOf="@id/buttonLaunchProject"
+            app:layout_constraintBottom_toBottomOf="@id/buttonLaunchProject"
+            app:layout_constraintStart_toStartOf="@id/buttonLaunchProject"
+            app:layout_constraintEnd_toEndOf="@id/buttonLaunchProject"
+            android:elevation="8dp"
+            app:lottie_loop="false"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

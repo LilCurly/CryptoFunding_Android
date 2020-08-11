@@ -3,16 +3,24 @@ package com.example.cryptofunding.data.repository
 import android.net.Uri
 import android.util.Log
 import androidx.core.net.toFile
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.esafirm.imagepicker.model.Image
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Category
 import com.example.cryptofunding.data.CategoryType
 import com.example.cryptofunding.data.Project
+import com.example.cryptofunding.data.Result
 import com.example.cryptofunding.utils.DEBUG
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.android.gms.tasks.Tasks.await
+import com.google.android.gms.tasks.Tasks.whenAll
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import kotlinx.coroutines.*
 import java.io.File
 import javax.inject.Inject
 
@@ -40,16 +48,15 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
         )
     }
 
-    fun saveProject(project: Project) {
+    suspend fun saveProject(project: Project, onSuccess: () -> Unit, onFailure: () -> Unit) {
         project.tempImages?.let {
-            storeImages(it, project)
+            val imagesUrl = mutableListOf<String>()
+            storeImages(it, imagesUrl, onSuccess, onFailure, project)
         }
     }
 
-    private fun storeProject(
-        project: Project,
-        imagesUri: MutableList<String>
-    ) {
+    private fun storeProject(project: Project, imagesUri: MutableList<String>, onSuccess: () -> Unit, onFailure: () -> Unit) {
+        val asyncTaskList = mutableListOf<Task<DocumentReference>>()
         val ref = firestore.collection("projects")
 
         val projectData = HashMap<String, Any>()
@@ -70,33 +77,43 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
                     taskData["summary"] = task.summary
                     taskData["amount"] = task.amount
                     taskData["limitDate"] = task.limitDate
-                    tasksRef.add(taskData)
+                    asyncTaskList.add(tasksRef.add(taskData))
                 }
             }
             .addOnFailureListener {
-                Log.d(DEBUG, "Firestore error: $it")
+                onFailure()
             }
+
+        whenAll(asyncTaskList).addOnSuccessListener {
+            onSuccess()
+        }
     }
 
-    private fun storeImages(
-        images: List<Image>,
-        project: Project
-    ) {
-        val imagesUri = mutableListOf<String>()
-        images.forEach { image ->
-            val file = Uri.fromFile(File(image.path))
-            val storageRef = storage.child("images")
+    private suspend fun storeImages(images: List<Image>, imagesUrl: MutableList<String>, onSuccess: () -> Unit, onFailure: () -> Unit, project: Project) {
+        val asyncTasksList: MutableList<UploadTask> = mutableListOf()
+        val asyncUrlList = mutableListOf<Task<Uri>>()
+        coroutineScope {
+            images.forEach { image ->
+                val file = Uri.fromFile(File(image.path))
+                val storageRef = storage.child("images")
 
-            storageRef.child(file.toFile().name).putFile(file).addOnSuccessListener {
-                val downloadUrl = it.storage.downloadUrl
-                downloadUrl.addOnSuccessListener { url ->
-                    imagesUri.add(url.toString())
-                    storeProject(project, imagesUri)
-                }.addOnFailureListener { error ->
-                    Log.d(DEBUG, "Storage error: $error")
+                launch(Dispatchers.IO) {
+                    val asyncTask = storageRef.child(file.toFile().name).putFile(file)
+                    asyncTasksList.add(asyncTask)
+                    asyncTask.addOnSuccessListener {
+                        val downloadUrl = it.storage.downloadUrl
+                        asyncUrlList.add(downloadUrl)
+                        downloadUrl.addOnSuccessListener { url ->
+                            imagesUrl.add(url.toString())
+                        }
+                    }
                 }
-            }.addOnFailureListener {
-                Log.d(DEBUG, "Storage error: $it")
+            }
+        }
+
+        whenAll(asyncTasksList).addOnSuccessListener {
+            whenAll(asyncUrlList).addOnSuccessListener {
+                storeProject(project, imagesUrl, onSuccess, onFailure)
             }
         }
     }
