@@ -58,7 +58,7 @@ class NewWalletFragment : Fragment() {
         requireActivity().walletFrameLayout.visibility = View.GONE
         requireActivity().addFrameLayout.visibility = View.GONE
         requireActivity().closeFrameLayout.visibility = View.VISIBLE
-        requireActivity().closeImageView.setOnClickListener {
+        requireActivity().closeFrameLayout.setOnClickListener {
             findNavController().popBackStack()
             findNavController().popBackStack()
         }

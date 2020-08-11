@@ -52,4 +52,6 @@
     <string name="add">Ajouter</string>
     <string name="add_date">Quand sera fini cette tâche</string>
     <string name="chooseDateHint">Indiquez la date à laquelle votre tâche sera terminée</string>
+    <string name="create_project">Création du projet</string>
+    <string name="create_tasks">Créations des tâches</string>
 </resources>

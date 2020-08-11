@@ -9,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
+import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -165,6 +168,7 @@ class WalletListFragment : Fragment() {
         requireActivity().walletFrameLayout.visibility = View.GONE
         requireActivity().addFrameLayout.visibility = View.GONE
         requireActivity().closeFrameLayout.visibility = View.VISIBLE
+        requireActivity().closeFrameLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_toolbar_icon)
         requireActivity().closeFrameLayout.setOnClickListener {
             findNavController().popBackStack()
         }

@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.liveData
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptofunding.data.Result
@@ -17,9 +19,12 @@ import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.custom.AddTaskBottomSheet
 import com.example.cryptofunding.ui.viewholder.NewTaskAdapter
 import com.example.cryptofunding.utils.DEBUG
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_tasks.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import java.util.*
+import kotlin.concurrent.schedule
 
 class AddTasksFragment : Fragment() {
     val viewModel by lazy {
@@ -43,6 +48,7 @@ class AddTasksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
 
         viewModel.project = args.project
 
@@ -73,6 +79,10 @@ class AddTasksFragment : Fragment() {
                 loadingAnimation.visibility = View.GONE
                 successAnimation.visibility = View.VISIBLE
                 successAnimation.playAnimation()
+                Timer("Success", false).schedule(1000) {
+                    findNavController().popBackStack()
+                    findNavController().popBackStack()
+                }
             }, onFailure = {
                 loadingAnimation.visibility = View.GONE
                 failureAnimation.visibility = View.VISIBLE
@@ -83,6 +93,18 @@ class AddTasksFragment : Fragment() {
                 loadingAnimation.visibility = View.VISIBLE
                 loadingAnimation.playAnimation()
             })
+        }
+    }
+
+    private fun setupToolbar() {
+        requireActivity().toolbarTitle.text = getString(R.string.create_tasks)
+        requireActivity().walletFrameLayout.visibility = View.GONE
+        requireActivity().addFrameLayout.visibility = View.GONE
+        requireActivity().closeFrameLayout.visibility = View.VISIBLE
+        requireActivity().closeFrameLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_toolbar_icon_light)
+        requireActivity().closeFrameLayout.setOnClickListener {
+            findNavController().popBackStack()
+            findNavController().popBackStack()
         }
     }
 }
