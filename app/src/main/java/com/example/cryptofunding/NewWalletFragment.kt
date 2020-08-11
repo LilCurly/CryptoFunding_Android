@@ -54,10 +54,11 @@ class NewWalletFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        activity?.toolbarTitle?.text = resources.getString(R.string.create_wallet)
-        activity?.walletImageView?.visibility = View.GONE
-        activity?.closeImageView?.visibility = View.VISIBLE
-        activity?.closeImageView?.setOnClickListener {
+        requireActivity().toolbarTitle.text = resources.getString(R.string.create_wallet)
+        requireActivity().walletFrameLayout.visibility = View.GONE
+        requireActivity().addFrameLayout.visibility = View.GONE
+        requireActivity().closeFrameLayout.visibility = View.VISIBLE
+        requireActivity().closeImageView.setOnClickListener {
             findNavController().popBackStack()
             findNavController().popBackStack()
         }

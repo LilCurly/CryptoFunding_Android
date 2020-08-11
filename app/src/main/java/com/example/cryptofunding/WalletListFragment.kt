@@ -161,10 +161,11 @@ class WalletListFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        activity?.toolbarTitle?.text = getString(R.string.my_wallets)
-        activity?.walletImageView?.visibility = View.GONE
-        activity?.closeImageView?.visibility = View.VISIBLE
-        activity?.closeImageView?.setOnClickListener {
+        requireActivity().toolbarTitle.text = getString(R.string.my_wallets)
+        requireActivity().walletFrameLayout.visibility = View.GONE
+        requireActivity().addFrameLayout.visibility = View.GONE
+        requireActivity().closeFrameLayout.visibility = View.VISIBLE
+        requireActivity().closeFrameLayout.setOnClickListener {
             findNavController().popBackStack()
         }
     }
