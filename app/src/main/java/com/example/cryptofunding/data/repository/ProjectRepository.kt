@@ -10,6 +10,7 @@ import com.example.cryptofunding.data.Category
 import com.example.cryptofunding.data.CategoryType
 import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.data.Result
+import com.example.cryptofunding.data.mapper.ProjectMapper
 import com.example.cryptofunding.utils.DEBUG
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -46,6 +47,18 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
             Project("The Avengers | New movies in 4K", CategoryType.Camera, 46, R.drawable.avengers_poster),
             Project("Test2", CategoryType.Camera, 46, R.drawable.avengers_poster)
         )
+    }
+
+    fun getAllTrendingProjects(onComplete: (projectsList: List<Project>) -> Unit) {
+        firestore.collection("projects").get().addOnCompleteListener { task ->
+            task.result?.let {
+                val projectsList = mutableListOf<Project>()
+                it.documents.forEach { doc ->
+                    projectsList.add(ProjectMapper.mapToProject(doc))
+                }
+                onComplete(projectsList)
+            }
+        }
     }
 
     suspend fun saveProject(project: Project, onSuccess: () -> Unit, onFailure: () -> Unit) {
