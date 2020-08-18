@@ -38,13 +38,17 @@ open class BaseProjectsFragment: Fragment() {
                 fastAdapter: FastAdapter<ProjectSmallItem>,
                 item: ProjectSmallItem
             ) {
-                if (viewModel.isFavorite(position)) {
-                    v.projectLikeAnimationView.setMinAndMaxProgress(0.5f, 1.0f)
-                } else {
-                    v.projectLikeAnimationView.setMinAndMaxProgress(0.0f, 0.5f)
+                item.project.id?.let {
+                    if (viewModel.isFavorite(position)) {
+                        viewModel.removeFavorite(it)
+                        v.projectLikeAnimationView.setMinAndMaxProgress(0.5f, 1.0f)
+                    } else {
+                        viewModel.setFavorite(it)
+                        v.projectLikeAnimationView.setMinAndMaxProgress(0.0f, 0.5f)
+                    }
+                    v.projectLikeAnimationView.playAnimation()
+                    viewModel.toggleFavorite(position)
                 }
-                v.projectLikeAnimationView.playAnimation()
-                viewModel.toggleFavorite(position)
             }
         })
     }
