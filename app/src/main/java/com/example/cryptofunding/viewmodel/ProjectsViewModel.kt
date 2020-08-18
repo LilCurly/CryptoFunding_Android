@@ -6,7 +6,7 @@ import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.data.repository.ProjectRepository
 import javax.inject.Inject
 
-class ProjectsViewModel @Inject constructor(val projectRepository: ProjectRepository) : ViewModel() {
+class ProjectsViewModel @Inject constructor(private val projectRepository: ProjectRepository) : ViewModel() {
     val currentCategory = MutableLiveData<Category?>()
     private val projects: MediatorLiveData<List<Project>> = MediatorLiveData()
 
@@ -27,6 +27,10 @@ class ProjectsViewModel @Inject constructor(val projectRepository: ProjectReposi
             projects.value = it
         }
         return projects
+    }
+
+    fun setFavorite() {
+
     }
 
     fun getCategories(): List<Category> {

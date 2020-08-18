@@ -9,6 +9,7 @@ import androidx.lifecycle.*
 import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.data.WalletRepository
 import com.example.cryptofunding.ui.viewholder.WalletItem
+import com.example.cryptofunding.utils.LoggedWallet
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.select.getSelectExtension
@@ -31,8 +32,8 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
     }
 
     fun setCurrentWallet(wallet: Wallet?) {
-        repo.currentWallet = wallet
         currentWallet.value = wallet
+        LoggedWallet.currentlyLoggedWallet = wallet
     }
 
     fun loadAmountIfNeeded(wallet: Wallet) {
