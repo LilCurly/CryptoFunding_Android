@@ -15,11 +15,16 @@ class ProjectsViewModel @Inject constructor(private val projectRepository: Proje
     }
 
     fun toggleFavorite(position: Int) {
-        ProjectRepository.projects[position].isFavorite = !ProjectRepository.projects[position].isFavorite
+        projects.value?.let {
+            it[position].isFavorite = !it[position].isFavorite
+        }
     }
 
     fun isFavorite(position: Int): Boolean {
-        return ProjectRepository.projects[position].isFavorite
+        projects.value?.let {
+            return it[position].isFavorite
+        }
+        return false
     }
 
     fun getProjects(): LiveData<List<Project>> {
@@ -29,8 +34,12 @@ class ProjectsViewModel @Inject constructor(private val projectRepository: Proje
         return projects
     }
 
-    fun setFavorite() {
+    fun setFavorite(projectId: String) {
+        projectRepository.setFavorite(projectId)
+    }
 
+    fun removeFavorite(projectId: String) {
+        projectRepository.removeFavorite(projectId)
     }
 
     fun getCategories(): List<Category> {

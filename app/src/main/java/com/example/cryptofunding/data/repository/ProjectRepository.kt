@@ -12,6 +12,7 @@ import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.data.Result
 import com.example.cryptofunding.data.mapper.ProjectMapper
 import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.utils.LoggedWallet
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.tasks.Tasks.await
@@ -50,13 +51,27 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
     }
 
     fun getAllTrendingProjects(onComplete: (projectsList: List<Project>) -> Unit) {
-        firestore.collection("projects").get().addOnCompleteListener { task ->
-            task.result?.let {
-                val projectsList = mutableListOf<Project>()
-                it.documents.forEach { doc ->
-                    projectsList.add(ProjectMapper.mapToProject(doc))
-                }
-                onComplete(projectsList)
+        firestore.collection("projects").get().addOnCompleteListener { projectsTask ->
+            projectsTask.result?.let { projectsQuery ->
+                firestore.collection("favorites")
+                    .document(LoggedWallet.currentlyLoggedWallet?.publicKey ?: "0")
+                    .get()
+                    .addOnCompleteListener { favTask ->
+                        favTask.result?.let { favDoc ->
+                            val projectsList = mutableListOf<Project>()
+                            if (favDoc.exists()) {
+                                projectsQuery.documents.forEach { doc ->
+                                    projectsList.add(ProjectMapper.mapToProjectWithFavorites(doc, favDoc))
+                                }
+                            }
+                            else {
+                                projectsQuery.documents.forEach { doc ->
+                                    projectsList.add(ProjectMapper.mapToProject(doc))
+                                }
+                            }
+                            onComplete(projectsList)
+                        }
+                    }
             }
         }
     }
@@ -127,6 +142,43 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
         whenAll(asyncTasksList).addOnSuccessListener {
             whenAll(asyncUrlList).addOnSuccessListener {
                 storeProject(project, imagesUrl, onSuccess, onFailure)
+            }
+        }
+    }
+
+    fun setFavorite(projectId: String) {
+        LoggedWallet.currentlyLoggedWallet?.let { wallet ->
+            firestore.collection("favorites").document(wallet.publicKey).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result?.let {
+                        var links = mutableListOf<String>()
+                        if (it.exists()) {
+                            links = it.get("links") as MutableList<String>
+                        }
+                        links.add(projectId)
+                        firestore.collection("favorites").document(wallet.publicKey).set(mapOf(
+                            "links" to links
+                        ))
+                    }
+                }
+            }
+        }
+    }
+
+    fun removeFavorite(projectId: String) {
+        LoggedWallet.currentlyLoggedWallet?.let { wallet ->
+            firestore.collection("favorites").document(wallet.publicKey).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result?.let {
+                        if (it.exists()) {
+                            val links = it.get("links") as MutableList<String>
+                            links.remove(projectId)
+                            firestore.collection("favorites").document(wallet.publicKey).set(mapOf(
+                                "links" to links
+                            ))
+                        }
+                    }
+                }
             }
         }
     }

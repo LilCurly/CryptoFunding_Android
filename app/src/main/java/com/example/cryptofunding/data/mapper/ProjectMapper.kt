@@ -2,6 +2,7 @@ package com.example.cryptofunding.data.mapper
 
 import com.example.cryptofunding.data.CategoryType
 import com.example.cryptofunding.data.Project
+import com.example.cryptofunding.utils.LoggedWallet
 import com.google.firebase.firestore.DocumentSnapshot
 
 class ProjectMapper {
@@ -17,6 +18,15 @@ class ProjectMapper {
             project.imagesUrl = images
             project.id = document.id
 
+            return project
+        }
+
+        fun mapToProjectWithFavorites(document: DocumentSnapshot, favDoc: DocumentSnapshot): Project {
+            val project = mapToProject(document)
+            val links = favDoc.get("links") as List<String>
+            if (links.contains(project.id)) {
+                project.isFavorite = true
+            }
             return project
         }
     }
