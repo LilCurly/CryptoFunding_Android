@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,9 +55,12 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
         projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         projectsRecyclerView.adapter = fastAdapter
 
-        itemAdapter.add(viewModel.getProjects().map {
-            ProjectSmallItem(it)
-        })
+        viewModel.getProjects().observe(viewLifecycleOwner) {
+            itemAdapter.clear()
+            itemAdapter.add(it.map { project ->
+                ProjectSmallItem(project)
+            })
+        }
     }
 
     private fun setupCategoriesRecyclerView() {
