@@ -1,6 +1,7 @@
 package com.example.cryptofunding.ui.viewholder
 
 import android.view.View
+import com.bumptech.glide.Glide
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.utils.LoggedWallet
@@ -27,7 +28,7 @@ class ProjectSmallItem(val project: Project): AbstractItem<ProjectSmallItem.View
         private val title = view.titleTextView
 
         override fun bindView(item: ProjectSmallItem, payloads: List<Any>) {
-            poster.setImageResource(item.project.img)
+            Glide.with(view).load(item.project.imagesUrl[0]).into(poster)
             category.text = item.project.category.title
             percent.text = view.resources.getString(R.string.percentDone, item.project.percentFunded)
             title.text = item.project.name
