@@ -1,14 +1,14 @@
 package com.example.cryptofunding.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.cryptofunding.data.Category
 import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.data.repository.ProjectRepository
 import javax.inject.Inject
 
-class ProjectsViewModel @Inject constructor() : ViewModel() {
+class ProjectsViewModel @Inject constructor(val projectRepository: ProjectRepository) : ViewModel() {
     val currentCategory = MutableLiveData<Category?>()
+    private val projects: MediatorLiveData<List<Project>> = MediatorLiveData()
 
     fun setCurrentCategory(category: Category?) {
         currentCategory.value = category
@@ -22,8 +22,11 @@ class ProjectsViewModel @Inject constructor() : ViewModel() {
         return ProjectRepository.projects[position].isFavorite
     }
 
-    fun getProjects(): List<Project> {
-        return ProjectRepository.projects
+    fun getProjects(): LiveData<List<Project>> {
+        projectRepository.getAllTrendingProjects {
+            projects.value = it
+        }
+        return projects
     }
 
     fun getCategories(): List<Category> {

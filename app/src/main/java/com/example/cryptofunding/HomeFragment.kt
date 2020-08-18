@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -55,11 +56,11 @@ class HomeFragment : Fragment() {
 
         setupToolBar()
 
-        val categories = viewModel.getCategories()
-        val projects = viewModel.getProjects()
+        viewModel.getProjects().observe(viewLifecycleOwner) { projects ->
+            setupProjectsList(projects)
+        }
 
-        setupCategoriesList(categories)
-        setupProjectsList(projects)
+        setupCategoriesList(viewModel.getCategories())
         handleSeeMoreClickListener()
     }
 
@@ -103,6 +104,7 @@ class HomeFragment : Fragment() {
             }
         })
 
+        projectItemAdapter.clear()
         projectItemAdapter.add(projects.map {
             ProjectItem(it)
         })
