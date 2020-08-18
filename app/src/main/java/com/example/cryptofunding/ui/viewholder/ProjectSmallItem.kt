@@ -3,6 +3,7 @@ package com.example.cryptofunding.ui.viewholder
 import android.view.View
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Project
+import com.example.cryptofunding.utils.LoggedWallet
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_project_small.view.*
@@ -33,6 +34,10 @@ class ProjectSmallItem(val project: Project): AbstractItem<ProjectSmallItem.View
 
             if (item.project.isFavorite) {
                 favAnimation.progress = 0.5f
+            }
+
+            if (LoggedWallet.currentlyLoggedWallet == null) {
+                favCardView.visibility = View.GONE
             }
         }
 

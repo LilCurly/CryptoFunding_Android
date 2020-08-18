@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.utils.LoggedWallet
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_project.view.*
@@ -42,6 +43,10 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
 
             if (item.project.isFavorite) {
                 lottieLikeAnimation.progress = 0.5f
+            }
+
+            if (LoggedWallet.currentlyLoggedWallet == null) {
+                likeCardView.visibility = View.GONE
             }
         }
 
