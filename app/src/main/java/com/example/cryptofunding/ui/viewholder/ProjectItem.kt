@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.utils.DEBUG
@@ -24,7 +25,7 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
         return ViewHolder(v)
     }
 
-    class ViewHolder(view: View): FastAdapter.ViewHolder<ProjectItem>(view) {
+    class ViewHolder(private val view: View): FastAdapter.ViewHolder<ProjectItem>(view) {
         private val title: TextView = view.projectTitleTextView
         private val category: TextView = view.projectCategoryTextView
         private val percentFunded: TextView = view.fundedPercentTextView
@@ -35,9 +36,10 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
         override fun bindView(item: ProjectItem, payloads: List<Any>) {
             title.text = item.project.name
             category.text = item.project.category.title
-            percentFunded.text = "${item.project.percentFunded}% financé"
+            percentFunded.text = view.resources.getString(R.string.percentFinanced, item.project.percentFunded)
 
-            background.setImageResource(item.project.img)
+            Glide.with(view).load(item.project.imagesUrl[0]).into(background)
+
             if (item.project.isFavorite) {
                 lottieLikeAnimation.progress = 0.5f
             }
