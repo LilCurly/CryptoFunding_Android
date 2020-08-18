@@ -6,6 +6,8 @@ import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.data.DefaultWalletRepository
 import com.example.cryptofunding.data.Result
 import com.example.cryptofunding.data.WalletRepository
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import org.web3j.crypto.CipherException
 import org.web3j.crypto.Credentials

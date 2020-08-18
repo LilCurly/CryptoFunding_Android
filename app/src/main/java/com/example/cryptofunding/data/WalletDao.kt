@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import io.reactivex.Single
 
 @Dao
 interface WalletDao: AbstractWalletDao {
@@ -21,7 +22,7 @@ interface WalletDao: AbstractWalletDao {
     override fun exists(publicKey: String): Wallet?
 
     @Insert
-    override fun insertWallet(wallet: Wallet)
+    override fun insertWallet(wallet: Wallet): Single<Long>
 
     @Delete
     override fun deleteWallet(wallet: Wallet)

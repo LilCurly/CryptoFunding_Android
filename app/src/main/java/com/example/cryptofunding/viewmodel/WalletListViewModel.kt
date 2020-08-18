@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class WalletListViewModel @Inject  constructor(private val repo: WalletRepository) : ViewModel() {
-    val wallets: LiveData<List<Wallet>> = repo.getAll()
+    var wallets: LiveData<List<Wallet>> = repo.getAll()
     val currentWallet: MutableLiveData<Wallet> = MutableLiveData()
 
     fun isCurrentWallet(wallet: Wallet): Boolean {
@@ -51,5 +51,9 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
         viewModelScope.launch(Dispatchers.IO) {
             repo.insertWallet(wallet)
         }
+    }
+
+    fun refreshWallets() {
+        wallets = repo.getAll()
     }
 }
