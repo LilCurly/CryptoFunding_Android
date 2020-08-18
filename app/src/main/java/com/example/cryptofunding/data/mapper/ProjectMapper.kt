@@ -15,6 +15,7 @@ class ProjectMapper {
 
             val project = Project(title, summary, categoryType)
             project.imagesUrl = images
+            project.id = document.id
 
             return project
         }
