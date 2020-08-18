@@ -20,5 +20,6 @@ class Project(var name: String, var summary: String, var category: CategoryType,
     var isFavorite: Boolean = false
     var percentFunded: Int = 0
     var img: Int = 0
-    var tasks: List<Task> = listOf()
+    var tasks = listOf<Task>()
+    var imagesUrl = listOf<String>()
 }
