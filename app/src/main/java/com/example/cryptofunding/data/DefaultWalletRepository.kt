@@ -3,7 +3,6 @@ package com.example.cryptofunding.data
 import javax.inject.Inject
 
 class DefaultWalletRepository @Inject internal constructor(private val walletDao: AbstractWalletDao): WalletRepository {
-    override var currentWallet: Wallet? = null
 
     override fun getAll() = walletDao.getAll()
     override fun getByPublicKey(publicKey: String) = walletDao.getByPublicKey(publicKey)

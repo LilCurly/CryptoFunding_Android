@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import io.reactivex.Single
 
 interface WalletRepository {
-    var currentWallet: Wallet?
     fun getAll(): LiveData<List<Wallet>>
     fun getByPublicKey(publicKey: String): LiveData<Wallet>
     fun getByName(name: String): LiveData<Wallet>
