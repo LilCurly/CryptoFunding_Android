@@ -60,6 +60,7 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
             itemAdapter.add(it.map { project ->
                 ProjectSmallItem(project)
             })
+            stopLoading()
         }
     }
 
@@ -136,4 +137,8 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
         }
     }
 
+    private fun stopLoading() {
+        loadingAnimation.visibility = View.GONE
+        projectsRecyclerView.visibility = View.VISIBLE
+    }
 }
