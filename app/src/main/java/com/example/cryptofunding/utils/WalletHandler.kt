@@ -75,15 +75,11 @@ object WalletHandler {
     fun loadCurrentWallet(wallet: Wallet, password: String, repository: DefaultWalletRepository): Wallet? {
         return try {
             WalletUtils.loadCredentials(password, wallet.jsonPath)
-            repository.currentWallet = wallet
+            LoggedWallet.currentlyLoggedWallet = wallet
             wallet
         } catch (e: CipherException) {
             null
         }
-    }
-
-    fun getCurrentWallet(repository: DefaultWalletRepository): Wallet? {
-        return repository.currentWallet
     }
 
     fun getPrivateKey(password: String, path: String): LiveData<Result<String>> =
