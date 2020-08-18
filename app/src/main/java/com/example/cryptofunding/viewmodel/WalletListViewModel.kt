@@ -23,7 +23,7 @@ class WalletListViewModel @Inject  constructor(private val repo: WalletRepositor
     val currentWallet: MutableLiveData<Wallet> = MutableLiveData()
 
     fun isCurrentWallet(wallet: Wallet): Boolean {
-        repo.currentWallet?.let {
+        LoggedWallet.currentlyLoggedWallet?.let {
             if (it == wallet) {
                 return true
             }
