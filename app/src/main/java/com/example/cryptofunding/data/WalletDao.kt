@@ -22,7 +22,7 @@ interface WalletDao: AbstractWalletDao {
     override fun exists(publicKey: String): Wallet?
 
     @Insert
-    override fun insertWallet(wallet: Wallet): Single<Long>
+    override fun insertWallet(wallet: Wallet)
 
     @Delete
     override fun deleteWallet(wallet: Wallet)

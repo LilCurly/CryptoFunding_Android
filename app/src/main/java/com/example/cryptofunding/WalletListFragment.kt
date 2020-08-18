@@ -49,6 +49,8 @@ class WalletListFragment : Fragment() {
         setupToolbar()
         hideDetails()
 
+        viewModel.refreshWallets()
+
         wallet_list_recyclerview.itemAnimator = null
 
         viewModel.wallets.observe(viewLifecycleOwner) {
