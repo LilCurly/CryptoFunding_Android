@@ -58,6 +58,7 @@ class HomeFragment : Fragment() {
 
         viewModel.getProjects().observe(viewLifecycleOwner) { projects ->
             setupProjectsList(projects)
+            stopLoading()
         }
 
         setupCategoriesList(viewModel.getCategories())
@@ -107,7 +108,6 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-
         projectItemAdapter.clear()
         projectItemAdapter.add(projects.map {
             ProjectItem(it)
@@ -185,5 +185,10 @@ class HomeFragment : Fragment() {
                 view.categoryImage.drawable.mutate().setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorBackgroundWhiteApp), PorterDuff.Mode.SRC_IN)
             }
         }
+    }
+
+    private fun stopLoading() {
+        loadingAnimation.visibility = View.GONE
+        projectsRecyclerView.visibility = View.VISIBLE
     }
 }
