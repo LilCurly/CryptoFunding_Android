@@ -38,16 +38,6 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
             Category(CategoryType.Camera, R.drawable.camera),
             Category(CategoryType.Joystick, R.drawable.joystick)
         )
-
-        val projects = listOf(
-            Project("Test", CategoryType.Camera, 46, R.drawable.avengers_poster),
-            Project("The Avengers | New movies in 4K", CategoryType.Camera, 46, R.drawable.avengers_poster),
-            Project("The Avengers | New movies in 4K", CategoryType.Camera, 46, R.drawable.avengers_poster, true),
-            Project("The Avengers | New movies in 4K", CategoryType.Camera, 46, R.drawable.avengers_poster),
-            Project("The Avengers | New movies in 4K", CategoryType.Camera, 46, R.drawable.avengers_poster),
-            Project("The Avengers | New movies in 4K", CategoryType.Camera, 46, R.drawable.avengers_poster),
-            Project("Test2", CategoryType.Camera, 46, R.drawable.avengers_poster)
-        )
     }
 
     fun getAllTrendingProjects(onComplete: (projectsList: List<Project>) -> Unit) {
