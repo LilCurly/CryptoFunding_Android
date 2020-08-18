@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_wallet_list" >
         <action
             android:id="@+id/action_walletListFragment_to_newWalletFragment2"
-            app:destination="@id/newWalletFragment" />
+            app:destination="@id/newWalletFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/newWalletFragment"
@@ -36,7 +40,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_detailedProjectListFragment"
-            app:destination="@id/detailedProjectListFragment" />
+            app:destination="@id/detailedProjectListFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -45,10 +53,18 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_walletListFragment"
-            app:destination="@id/walletListFragment" />
+            app:destination="@id/walletListFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_mainFragment_to_createProjectFragment"
-            app:destination="@id/createProjectFragment" />
+            app:destination="@id/createProjectFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/detailedProjectListFragment"
@@ -87,7 +103,11 @@
         tools:layout="@layout/fragment_create_project" >
         <action
             android:id="@+id/action_createProjectFragment_to_addTasksFragment"
-            app:destination="@id/addTasksFragment" />
+            app:destination="@id/addTasksFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/addTasksFragment"
