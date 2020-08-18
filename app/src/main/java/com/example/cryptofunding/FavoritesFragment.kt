@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptofunding.data.repository.ProjectRepository
@@ -40,9 +41,13 @@ class FavoritesFragment : BaseProjectsFragment() {
         projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         projectsRecyclerView.adapter = fastAdapter
 
-        itemAdapter.add(ProjectRepository.projects.map {
-            ProjectSmallItem(it)
-        })
+        viewModel.getFavoritesProjects().observe(viewLifecycleOwner) {
+            itemAdapter.clear()
+            itemAdapter.add(it.map { project ->
+                ProjectSmallItem(project)
+            })
+        }
+
     }
 
     private fun setupToolBar() {

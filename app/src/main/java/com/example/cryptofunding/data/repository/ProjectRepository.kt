@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Tasks.await
 import com.google.android.gms.tasks.Tasks.whenAll
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -63,6 +64,31 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
                         }
                     }
             }
+        }
+    }
+
+    fun getFavoritesProjects(onComplete: (projectsList: List<Project>) -> Unit) {
+        LoggedWallet.currentlyLoggedWallet?.let { wallet ->
+            firestore.collection("favorites").document(wallet.publicKey).get()
+                .addOnCompleteListener { favTask ->
+                    favTask.result?.let { favDoc ->
+                        if (favDoc.exists()) {
+                            val links = favDoc.get("links") as List<String>
+                            firestore.collection("projects").whereIn(FieldPath.documentId(), links).get()
+                                .addOnCompleteListener {
+                                    it.result?.let { projectsQuery ->
+                                        val projectsList = mutableListOf<Project>()
+                                        projectsQuery.documents.forEach { projectDoc ->
+                                            val project = ProjectMapper.mapToProject(projectDoc)
+                                            project.isFavorite = true
+                                            projectsList.add(project)
+                                        }
+                                        onComplete(projectsList)
+                                    }
+                                }
+                        }
+                    }
+                }
         }
     }
 

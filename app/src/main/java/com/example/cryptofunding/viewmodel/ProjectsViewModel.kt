@@ -34,6 +34,13 @@ class ProjectsViewModel @Inject constructor(private val projectRepository: Proje
         return projects
     }
 
+    fun getFavoritesProjects(): LiveData<List<Project>> {
+        projectRepository.getFavoritesProjects {
+            projects.value = it
+        }
+        return projects
+    }
+
     fun setFavorite(projectId: String) {
         projectRepository.setFavorite(projectId)
     }
