@@ -71,9 +71,11 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
             selectWithItemUpdate = true
         }
 
-        categoryItemAdapter.add(viewModel.getCategories().map {
-            CategorySmallItem(it)
-        })
+        if (categoryItemAdapter.adapterItemCount == 0) {
+            categoryItemAdapter.add(viewModel.getCategories().map {
+                CategorySmallItem(it)
+            })
+        }
     }
 
     private fun setCategoryOnClickListener() {

@@ -120,9 +120,11 @@ class HomeFragment : Fragment() {
         homeCategoryRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         homeCategoryRecyclerView.adapter = categoryFastAdapter
 
-        categoryItemAdapter.add(categories.map {
-            CategoryItem(it)
-        })
+        if (categoryItemAdapter.adapterItemCount == 0) {
+            categoryItemAdapter.add(categories.map {
+                CategoryItem(it)
+            })
+        }
     }
 
     private fun setCategoryOnClickListener() {
