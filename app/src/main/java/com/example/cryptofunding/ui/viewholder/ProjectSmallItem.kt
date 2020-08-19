@@ -1,6 +1,7 @@
 package com.example.cryptofunding.ui.viewholder
 
 import android.view.View
+import androidx.core.view.ViewCompat
 import com.bumptech.glide.Glide
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Project
@@ -40,6 +41,11 @@ class ProjectSmallItem(val project: Project): AbstractItem<ProjectSmallItem.View
             if (LoggedWallet.currentlyLoggedWallet == null) {
                 favCardView.visibility = View.GONE
             }
+
+            ViewCompat.setTransitionName(favCardView, item.project.id + "_card")
+            ViewCompat.setTransitionName(poster, item.project.id + "_image")
+            ViewCompat.setTransitionName(category, item.project.id + "_category")
+            ViewCompat.setTransitionName(title, item.project.id + "_title")
         }
 
         override fun unbindView(item: ProjectSmallItem) {
