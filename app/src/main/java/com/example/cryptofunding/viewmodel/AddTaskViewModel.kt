@@ -29,7 +29,7 @@ class AddTaskViewModel @Inject constructor(): ViewModel() {
     fun getTask(): Task {
         return Task(taskName.value.toString(),
             taskSummary.value.toString(),
-            taskAmount.value?.toInt() ?: 0,
+            taskAmount.value?.toDouble() ?: 0.0,
             taskFinalDate.value.toString())
     }
 }

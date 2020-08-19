@@ -76,11 +76,11 @@ class ProjectDetailFragment : Fragment() {
     }
 
     private fun calcultateTotalAmount(it: List<Task>?) {
-        var total = 0.0f
+        var total = 0.0
         it?.forEach {
             total += it.amount
         }
-        viewModel.project.totalAmount = total.toInt()
+        viewModel.project.totalAmount = total
         textToCollect.text = resources.getString(R.string.eth_suffix,
             BigDecimal(total.toString()).setScale(2, RoundingMode.HALF_UP).toString())
     }

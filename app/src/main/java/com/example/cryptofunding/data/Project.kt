@@ -17,7 +17,7 @@ class Project(var name: String, var summary: String, var category: CategoryType,
         this.percentFunded = percentFunded
     }
 
-    var totalAmount: Int = 0
+    var totalAmount: Double = 0.0
     var id: String? = null
     var isFavorite: Boolean = false
     var percentFunded: Int = 0

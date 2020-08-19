@@ -9,7 +9,7 @@ class TaskMapper {
             val title = document.getString("title")!!
             val summary = document.getString("summary")!!
             val limitDate = document.getString("limitDate")!!
-            val amount = document.getLong("amount")!!.toInt()
+            val amount = document.getDouble("amount")!!
 
             return Task(title, summary, amount, limitDate)
         }
