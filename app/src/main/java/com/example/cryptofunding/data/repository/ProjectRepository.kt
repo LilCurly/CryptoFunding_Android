@@ -74,18 +74,21 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
                     favTask.result?.let { favDoc ->
                         if (favDoc.exists()) {
                             val links = favDoc.get("links") as List<String>
-                            firestore.collection("projects").whereIn(FieldPath.documentId(), links).get()
-                                .addOnCompleteListener {
-                                    it.result?.let { projectsQuery ->
-                                        val projectsList = mutableListOf<Project>()
-                                        projectsQuery.documents.forEach { projectDoc ->
-                                            val project = ProjectMapper.mapToProject(projectDoc)
-                                            project.isFavorite = true
-                                            projectsList.add(project)
+                            if (links.isNotEmpty()) {
+                                firestore.collection("projects").whereIn(FieldPath.documentId(), links).get()
+                                    .addOnCompleteListener {
+                                        it.result?.let { projectsQuery ->
+                                            val projectsList = mutableListOf<Project>()
+                                            projectsQuery.documents.forEach { projectDoc ->
+                                                val project = ProjectMapper.mapToProject(projectDoc)
+                                                project.isFavorite = true
+                                                projectsList.add(project)
+                                            }
+                                            onComplete(projectsList)
                                         }
-                                        onComplete(projectsList)
                                     }
-                                }
+                            }
+                            onComplete(listOf())
                         }
                     }
                 }
