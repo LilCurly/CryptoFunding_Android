@@ -63,6 +63,15 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
             stopLoading()
         }
         viewModel.getProjects()
+
+        viewModel.currentCategory.observe(viewLifecycleOwner) { category ->
+            if (category == null) {
+                viewModel.getProjects()
+            }
+            else {
+                viewModel.getProjectsForCategory(category.type.title)
+            }
+        }
     }
 
     private fun setupCategoriesRecyclerView() {

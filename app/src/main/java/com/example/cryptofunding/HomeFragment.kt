@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
                 viewModel.getProjects()
             }
             else {
-                
+                viewModel.getProjectsForCategory(category.type.title)
             }
         }
     }

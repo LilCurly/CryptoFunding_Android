@@ -95,6 +95,33 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
         }
     }
 
+    fun getProjectsForCategory(category: String, onComplete: (projectList: List<Project>) -> Unit) {
+        firestore.collection("projects").whereEqualTo("category", category).get()
+            .addOnCompleteListener { projectsTask ->
+            projectsTask.result?.let { projectsQuery ->
+                firestore.collection("favorites")
+                    .document(LoggedWallet.currentlyLoggedWallet?.publicKey ?: "0")
+                    .get()
+                    .addOnCompleteListener { favTask ->
+                        favTask.result?.let { favDoc ->
+                            val projectsList = mutableListOf<Project>()
+                            if (favDoc.exists()) {
+                                projectsQuery.documents.forEach { doc ->
+                                    projectsList.add(ProjectMapper.mapToProjectWithFavorites(doc, favDoc))
+                                }
+                            }
+                            else {
+                                projectsQuery.documents.forEach { doc ->
+                                    projectsList.add(ProjectMapper.mapToProject(doc))
+                                }
+                            }
+                            onComplete(projectsList)
+                        }
+                    }
+            }
+        }
+    }
+
     suspend fun saveProject(project: Project, onSuccess: () -> Unit, onFailure: () -> Unit) {
         project.tempImages?.let {
             val imagesUrl = mutableListOf<String>()

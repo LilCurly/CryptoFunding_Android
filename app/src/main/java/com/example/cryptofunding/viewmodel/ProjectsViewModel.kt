@@ -51,4 +51,10 @@ class ProjectsViewModel @Inject constructor(private val projectRepository: Proje
     fun getCategories(): List<Category> {
         return ProjectRepository.categories
     }
+
+    fun getProjectsForCategory(category: String) {
+        projectRepository.getProjectsForCategory(category) {
+            projects.value = it
+        }
+    }
 }
