@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
 import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.utils.LoggedWallet
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -54,6 +55,10 @@ class MainFragment : Fragment() {
                     true
                 }
             }
+        }
+
+        if (LoggedWallet.currentlyLoggedWallet == null) {
+            bottomNavigation.visibility = View.GONE
         }
     }
 
