@@ -91,7 +91,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
 
     // FastAdpater
-    implementation "com.mikepenz:fastadapter:5.1.0"
+    implementation "com.mikepenz:fastadapter:5.2.2"
     implementation "com.mikepenz:fastadapter-extensions-swipe:5.1.0"
 
     // Lottie
