@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptofunding.R
 import com.example.cryptofunding.data.Task
@@ -24,6 +25,11 @@ class TaskAdapter(val context: Context, var tasksList: MutableList<Task>):
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentTask = tasksList[position]
         holder.baseLayout.setOnClickListener {
+            if (currentTask.expanded) {
+                holder.expandableLayout.visibility = View.GONE
+            } else {
+                holder.expandableLayout.visibility = View.VISIBLE
+            }
             currentTask.expanded = !currentTask.expanded
         }
         holder.setupHolder(currentTask)
@@ -35,8 +41,8 @@ class TaskAdapter(val context: Context, var tasksList: MutableList<Task>):
         private val date = view.monthYearTextView
         private val amount = view.amountTextView
         private val summary = view.taskSummaryTextView
-        val baseLayout = view.baseLayout
-        private val expandableLayout = view.expandableLayout
+        val baseLayout: ConstraintLayout = view.baseLayout
+        val expandableLayout = view.expandableLayout
 
         fun setupHolder(task: Task) {
             title.text = task.title
