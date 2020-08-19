@@ -21,6 +21,7 @@ import com.example.cryptofunding.data.Task
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.viewholder.TaskAdapter
 import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.utils.LoggedWallet
 import kotlinx.android.synthetic.main.fragment_project_detail.*
 import com.example.cryptofunding.viewmodel.viewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -71,6 +72,30 @@ class ProjectDetailFragment : Fragment() {
         textType.text = viewModel.project.category.title
         textTitle.text = viewModel.project.name
         textSummary.text = viewModel.project.summary
+
+        if (LoggedWallet.currentlyLoggedWallet == null) {
+            favCardView.visibility = View.GONE
+        }
+
+        if (viewModel.project.isFavorite) {
+            projectLikeAnimationView.progress = 0.5f
+        }
+
+        favCardView.setOnClickListener {
+            if (viewModel.project.isFavorite) {
+                projectLikeAnimationView.progress = 0.5f
+                projectLikeAnimationView.setMinAndMaxProgress(0.5f, 1.0f)
+                projectLikeAnimationView.playAnimation()
+                viewModel.removeFavorite()
+            }
+            else {
+                projectLikeAnimationView.progress = 0.0f
+                projectLikeAnimationView.setMinAndMaxProgress(0.0f, 0.5f)
+                projectLikeAnimationView.playAnimation()
+                viewModel.setFavorite()
+            }
+            viewModel.project.isFavorite = !viewModel.project.isFavorite
+        }
 
         handleMotionLayoutTransitions()
     }

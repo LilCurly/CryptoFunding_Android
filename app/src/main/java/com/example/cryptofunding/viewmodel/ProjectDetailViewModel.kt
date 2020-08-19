@@ -19,4 +19,12 @@ class ProjectDetailViewModel @Inject constructor(private val projectRepository: 
             tasks.value = it
         }
     }
+
+    fun setFavorite() {
+        projectRepository.setFavorite(project.id!!)
+    }
+
+    fun removeFavorite() {
+        projectRepository.removeFavorite(project.id!!)
+    }
 }
