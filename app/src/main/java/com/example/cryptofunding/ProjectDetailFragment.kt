@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -23,6 +24,8 @@ import kotlinx.android.synthetic.main.fragment_project_detail.*
 class ProjectDetailFragment : Fragment() {
     lateinit var imageList: List<SlideModel>
 
+    val args: ProjectDetailFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +36,8 @@ class ProjectDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val project = args.project
 
         imageList = listOf(SlideModel(R.drawable.avengers_poster), SlideModel(R.drawable.avengers_poster), SlideModel(R.drawable.avengers_poster))
         imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)

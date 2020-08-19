@@ -65,6 +65,9 @@
             app:exitAnim="@anim/nav_default_pop_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_mainFragment_to_projectDetailFragment"
+            app:destination="@id/projectDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailedProjectListFragment"
@@ -95,7 +98,11 @@
         android:id="@+id/projectDetailFragment"
         android:name="com.example.cryptofunding.ProjectDetailFragment"
         android:label="fragment_project_detail"
-        tools:layout="@layout/fragment_project_detail" />
+        tools:layout="@layout/fragment_project_detail" >
+        <argument
+            android:name="project"
+            app:argType="com.example.cryptofunding.data.Project" />
+    </fragment>
     <fragment
         android:id="@+id/createProjectFragment"
         android:name="com.example.cryptofunding.CreateProjectFragment"

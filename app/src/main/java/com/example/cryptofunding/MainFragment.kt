@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
+import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.utils.LoggedWallet
 import kotlinx.android.synthetic.main.activity_main.*
@@ -80,6 +81,11 @@ class MainFragment : Fragment() {
 
     fun goToSeeDetailedList() {
         childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, DetailedProjectListFragment()).addToBackStack("test").commit()
+    }
+
+    fun getToProjectDetail(project: Project) {
+        val action = MainFragmentDirections.actionMainFragmentToProjectDetailFragment(project)
+        findNavController().navigate(action)
     }
 
 }

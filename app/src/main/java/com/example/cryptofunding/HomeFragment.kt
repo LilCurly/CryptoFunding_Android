@@ -122,6 +122,11 @@ class HomeFragment : Fragment() {
         projectItemAdapter.add(projects.map {
             ProjectItem(it)
         })
+
+        projectFastAdapter.onClickListener = { _, _, item, _ ->
+            (parentFragment as MainFragment).getToProjectDetail(item.project)
+            true
+        }
     }
 
     private fun setupCategoriesList(categories: List<Category>) {
