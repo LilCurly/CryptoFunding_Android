@@ -123,8 +123,8 @@ class HomeFragment : Fragment() {
             ProjectItem(it)
         })
 
-        projectFastAdapter.onClickListener = { _, _, item, _ ->
-            (parentFragment as MainFragment).getToProjectDetail(item.project)
+        projectFastAdapter.onClickListener = { v, _, item, _ ->
+            (parentFragment as MainFragment).getToProjectDetail(item.project, v!!.favCardView, v.projectImageView, v.projectTitleTextView, v.projectCategoryTextView)
             true
         }
     }

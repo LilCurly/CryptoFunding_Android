@@ -9,11 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.view.children
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionInflater
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -66,6 +71,7 @@ class ProjectDetailFragment : Fragment() {
         viewModel.tasks.observe(viewLifecycleOwner) {
             setupTasks(it.toMutableList())
             calcultateTotalAmount(it)
+            stopLoading()
         }
         viewModel.loadTasksForId(viewModel.project.id!!)
 
@@ -98,6 +104,17 @@ class ProjectDetailFragment : Fragment() {
         }
 
         handleMotionLayoutTransitions()
+
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        favCardView.transitionName = args.project.id + "_card"
+        textTitle.transitionName = args.project.id + "_title"
+        textType.transitionName = args.project.id + "_category"
+        ((imageSlider[0] as RelativeLayout)[0] as ViewPager).transitionName = args.project.id + "_image"
+    }
+
+    private fun stopLoading() {
+        loadingAnimation.visibility = View.GONE
+        tasksRecyclerView.visibility = View.VISIBLE
     }
 
     private fun calcultateTotalAmount(it: List<Task>?) {

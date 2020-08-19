@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.view.ViewCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.cryptofunding.R
@@ -48,6 +49,11 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
             if (LoggedWallet.currentlyLoggedWallet == null) {
                 likeCardView.visibility = View.GONE
             }
+
+            ViewCompat.setTransitionName(likeCardView, item.project.id + "_card")
+            ViewCompat.setTransitionName(background, item.project.id + "_image")
+            ViewCompat.setTransitionName(category, item.project.id + "_category")
+            ViewCompat.setTransitionName(title, item.project.id + "_title")
         }
 
         override fun unbindView(item: ProjectItem) {

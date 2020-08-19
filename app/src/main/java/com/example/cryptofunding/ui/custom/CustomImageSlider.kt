@@ -21,7 +21,7 @@ import java.util.*
 
 class CustomImageSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0): RelativeLayout(context, attrs, defStyleAttr) {
 
-    private var viewPager: ViewPager? = null
+    var viewPager: ViewPager? = null
     private var pagerDots: LinearLayout? = null
     private var viewPagerAdapter: ViewPagerAdapter? = null
 

@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavDestination
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.utils.DEBUG
@@ -84,9 +88,14 @@ class MainFragment : Fragment() {
         childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, DetailedProjectListFragment()).addToBackStack("test").commit()
     }
 
-    fun getToProjectDetail(project: Project) {
+    fun getToProjectDetail(project: Project, cardView: CardView, imageView: ImageView, title: TextView, category: TextView) {
         val action = MainFragmentDirections.actionMainFragmentToProjectDetailFragment(project)
-        findNavController().navigate(action)
+        val extras = FragmentNavigatorExtras(
+            cardView to project.id+"_card",
+            imageView to project.id+"_image",
+            title to project.id + "_title",
+            category to project.id + "_category")
+        findNavController().navigate(action, extras)
     }
 
 }
