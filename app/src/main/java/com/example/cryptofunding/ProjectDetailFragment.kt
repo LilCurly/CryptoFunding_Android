@@ -23,6 +23,7 @@ import com.example.cryptofunding.ui.viewholder.TaskAdapter
 import com.example.cryptofunding.utils.DEBUG
 import kotlinx.android.synthetic.main.fragment_project_detail.*
 import com.example.cryptofunding.viewmodel.viewModel
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -49,6 +50,8 @@ class ProjectDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        hideToolbar()
 
         val project = args.project
 
@@ -82,6 +85,10 @@ class ProjectDetailFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun hideToolbar() {
+        requireActivity().toolbar.visibility = View.GONE
     }
 
     private fun setupTasks(listOfTasks: MutableList<Task>) {

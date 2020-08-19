@@ -64,6 +64,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setupToolbar() {
+        requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().walletFrameLayout.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToWalletListFragment()
             findNavController().navigate(action)
