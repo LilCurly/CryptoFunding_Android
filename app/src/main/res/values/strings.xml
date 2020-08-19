@@ -56,4 +56,5 @@
     <string name="create_tasks">Créations des tâches</string>
     <string name="percentFinanced">%1$d%% financé</string>
     <string name="noWallet">Connectez vous à un portefeuille pour voir les favoris qui lui sont associés</string>
+    <string name="eth_suffix">%1$s ETH</string>
 </resources>

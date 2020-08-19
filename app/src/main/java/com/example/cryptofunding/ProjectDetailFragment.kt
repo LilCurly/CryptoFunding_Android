@@ -24,6 +24,8 @@ import com.example.cryptofunding.utils.DEBUG
 import kotlinx.android.synthetic.main.fragment_project_detail.*
 import com.example.cryptofunding.viewmodel.viewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 /**
  * A simple [Fragment] subclass.
@@ -53,19 +55,38 @@ class ProjectDetailFragment : Fragment() {
 
         hideToolbar()
 
-        val project = args.project
+        viewModel.project = args.project
 
-        project.imagesUrl.forEach {
+        viewModel.project.imagesUrl.forEach {
             imageList.add(SlideModel(it))
         }
         imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
 
         viewModel.tasks.observe(viewLifecycleOwner) {
             setupTasks(it.toMutableList())
+            calcultateTotalAmount(it)
         }
-        viewModel.loadTasksForId(project.id!!)
+        viewModel.loadTasksForId(viewModel.project.id!!)
 
-        motionLayout.setTransitionListener(object: MotionLayout.TransitionListener {
+        textType.text = viewModel.project.category.title
+        textTitle.text = viewModel.project.name
+        textSummary.text = viewModel.project.summary
+
+        handleMotionLayoutTransitions()
+    }
+
+    private fun calcultateTotalAmount(it: List<Task>?) {
+        var total = 0.0f
+        it?.forEach {
+            total += it.amount
+        }
+        viewModel.project.totalAmount = total.toInt()
+        textToCollect.text = resources.getString(R.string.eth_suffix,
+            BigDecimal(total.toString()).setScale(2, RoundingMode.HALF_UP).toString())
+    }
+
+    private fun handleMotionLayoutTransitions() {
+        motionLayout.setTransitionListener(object : MotionLayout.TransitionListener {
             override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
 
             }
