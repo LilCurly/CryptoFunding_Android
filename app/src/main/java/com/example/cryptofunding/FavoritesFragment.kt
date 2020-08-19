@@ -54,6 +54,36 @@ class FavoritesFragment : BaseProjectsFragment() {
             stopLoading()
         }
 
+        fastAdapter.addEventHook(object: ClickEventHook<ProjectSmallItem>() {
+            override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
+                return if (viewHolder is ProjectSmallItem.ViewHolder) {
+                    viewHolder.favCardView
+                } else {
+                    null
+                }
+            }
+
+            override fun onClick(
+                v: View,
+                position: Int,
+                fastAdapter: FastAdapter<ProjectSmallItem>,
+                item: ProjectSmallItem
+            ) {
+                item.project.id?.let {
+                    if (itemAdapter.adapterItems[position].project.isFavorite) {
+                        viewModel.removeFavorite(it)
+                        itemAdapter.remove(position)
+                        v.projectLikeAnimationView.setMinAndMaxProgress(0.5f, 1.0f)
+                    } else {
+                        viewModel.setFavorite(it)
+                        v.projectLikeAnimationView.setMinAndMaxProgress(0.0f, 0.5f)
+                    }
+                    v.projectLikeAnimationView.playAnimation()
+                    viewModel.toggleFavorite(position)
+                }
+            }
+        })
+
     }
 
     private fun setupToolBar() {
