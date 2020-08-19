@@ -11,6 +11,7 @@ import com.example.cryptofunding.data.CategoryType
 import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.data.Result
 import com.example.cryptofunding.data.mapper.ProjectMapper
+import com.example.cryptofunding.data.mapper.TaskMapper
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.utils.LoggedWallet
 import com.google.android.gms.tasks.Task
@@ -227,5 +228,20 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
                 }
             }
         }
+    }
+
+    fun loadTasksForId(projectId: String, onComplete: (tasksList: List<com.example.cryptofunding.data.Task>) -> Unit) {
+        firestore.collection("projects").document(projectId).collection("tasks").get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    it.result?.let {
+                        val listOfTasks = mutableListOf<com.example.cryptofunding.data.Task>()
+                        it.documents.forEach {
+                            listOfTasks.add(TaskMapper.mapToTask(it))
+                        }
+                        onComplete(listOfTasks)
+                    }
+                }
+            }
     }
 }

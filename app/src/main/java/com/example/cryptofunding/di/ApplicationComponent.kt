@@ -22,4 +22,5 @@ interface ApplicationComponent {
     val projectsViewModel: ProjectsViewModel
     val addTaskViewModel: AddTaskViewModel
     val handleTasksViewModel: HandleTasksViewModel
+    val projectDetailViewModel: ProjectDetailViewModel
 }
