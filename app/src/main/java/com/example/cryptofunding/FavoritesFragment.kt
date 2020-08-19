@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptofunding.data.repository.ProjectRepository
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.viewholder.ProjectSmallItem
+import com.example.cryptofunding.utils.LoggedWallet
 import com.example.cryptofunding.viewmodel.viewModel
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
@@ -41,11 +42,16 @@ class FavoritesFragment : BaseProjectsFragment() {
         projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         projectsRecyclerView.adapter = fastAdapter
 
+        if (LoggedWallet.currentlyLoggedWallet == null) {
+            stopLoadingWithoutWallet()
+        }
+
         viewModel.getFavoritesProjects().observe(viewLifecycleOwner) {
             itemAdapter.clear()
             itemAdapter.add(it.map { project ->
                 ProjectSmallItem(project)
             })
+            stopLoading()
         }
 
     }
@@ -55,4 +61,13 @@ class FavoritesFragment : BaseProjectsFragment() {
         requireActivity().toolbarTitle.text = getString(R.string.homeBottomFav)
     }
 
+    private fun stopLoading() {
+        loadingAnimation.visibility = View.GONE
+        projectsRecyclerView.visibility = View.VISIBLE
+    }
+
+    private fun stopLoadingWithoutWallet() {
+        loadingAnimation.visibility = View.GONE
+        noWalletTextView.visibility = View.VISIBLE
+    }
 }
