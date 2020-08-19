@@ -56,13 +56,23 @@ class HomeFragment : Fragment() {
 
         setupToolBar()
 
-        viewModel.getProjects().observe(viewLifecycleOwner) { projects ->
+        viewModel.projects.observe(viewLifecycleOwner) { projects ->
             setupProjectsList(projects)
             stopLoading()
         }
+        viewModel.getProjects()
 
         setupCategoriesList(viewModel.getCategories())
         handleSeeMoreClickListener()
+
+        viewModel.currentCategory.observe(viewLifecycleOwner) { category ->
+            if (category == null) {
+                viewModel.getProjects()
+            }
+            else {
+                
+            }
+        }
     }
 
     private fun setupToolBar() {

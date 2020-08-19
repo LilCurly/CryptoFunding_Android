@@ -55,13 +55,14 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
         projectsRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         projectsRecyclerView.adapter = fastAdapter
 
-        viewModel.getProjects().observe(viewLifecycleOwner) {
+        viewModel.projects.observe(viewLifecycleOwner) {
             itemAdapter.clear()
             itemAdapter.add(it.map { project ->
                 ProjectSmallItem(project)
             })
             stopLoading()
         }
+        viewModel.getProjects()
     }
 
     private fun setupCategoriesRecyclerView() {

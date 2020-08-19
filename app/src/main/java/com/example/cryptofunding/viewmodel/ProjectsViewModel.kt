@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class ProjectsViewModel @Inject constructor(private val projectRepository: ProjectRepository) : ViewModel() {
     val currentCategory = MutableLiveData<Category?>()
-    private val projects: MediatorLiveData<List<Project>> = MediatorLiveData()
+    val projects: MediatorLiveData<List<Project>> = MediatorLiveData()
 
     fun setCurrentCategory(category: Category?) {
         currentCategory.value = category
@@ -27,11 +27,10 @@ class ProjectsViewModel @Inject constructor(private val projectRepository: Proje
         return false
     }
 
-    fun getProjects(): LiveData<List<Project>> {
+    fun getProjects() {
         projectRepository.getAllTrendingProjects {
             projects.value = it
         }
-        return projects
     }
 
     fun getFavoritesProjects(): LiveData<List<Project>> {
