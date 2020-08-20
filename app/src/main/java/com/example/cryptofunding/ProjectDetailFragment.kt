@@ -22,13 +22,17 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.cryptofunding.data.SliderImage
 import com.example.cryptofunding.data.Task
 import com.example.cryptofunding.di.injector
+import com.example.cryptofunding.ui.adapter.SliderAdapter
 import com.example.cryptofunding.ui.viewholder.TaskAdapter
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.utils.LoggedWallet
 import kotlinx.android.synthetic.main.fragment_project_detail.*
 import com.example.cryptofunding.viewmodel.viewModel
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -43,7 +47,7 @@ class ProjectDetailFragment : Fragment() {
     }
 
     private val imageList by lazy {
-        mutableListOf<SlideModel>()
+        mutableListOf<SliderImage>()
     }
 
     private val args: ProjectDetailFragmentArgs by navArgs()
@@ -63,10 +67,18 @@ class ProjectDetailFragment : Fragment() {
 
         viewModel.project = args.project
 
-        viewModel.project.imagesUrl.forEach {
-            imageList.add(SlideModel(it))
+        viewModel.project.imagesUrl.forEachIndexed { index, url ->
+            if (index == 0) {
+                imageList.add(SliderImage(url, args.posterBitmap))
+            }
+            else {
+                imageList.add(SliderImage(url))
+            }
         }
-        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+        sliderView.setSliderAdapter(SliderAdapter(requireContext(), imageList))
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM)
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+        sliderView.setInfiniteAdapterEnabled(false)
 
         viewModel.tasks.observe(viewLifecycleOwner) {
             setupTasks(it.toMutableList())
@@ -103,13 +115,11 @@ class ProjectDetailFragment : Fragment() {
             viewModel.project.isFavorite = !viewModel.project.isFavorite
         }
 
-        handleMotionLayoutTransitions()
-
         sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
         favCardView.transitionName = args.project.id + "_card"
         textTitle.transitionName = args.project.id + "_title"
         textType.transitionName = args.project.id + "_category"
-        ((imageSlider[0] as RelativeLayout)[0] as ViewPager).transitionName = args.project.id + "_image"
+        sliderView[0].transitionName = args.project.id + "_image"
     }
 
     private fun stopLoading() {
@@ -125,29 +135,6 @@ class ProjectDetailFragment : Fragment() {
         viewModel.project.totalAmount = total
         textToCollect.text = resources.getString(R.string.eth_suffix,
             BigDecimal(total.toString()).setScale(2, RoundingMode.HALF_UP).toString())
-    }
-
-    private fun handleMotionLayoutTransitions() {
-        motionLayout.setTransitionListener(object : MotionLayout.TransitionListener {
-            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
-
-            }
-
-            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
-                imageSlider.isTouchable = false
-            }
-
-            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
-
-            }
-
-            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentState: Int) {
-                val end = R.id.end
-
-                imageSlider.isTouchable = currentState != end
-            }
-
-        })
     }
 
     private fun hideToolbar() {

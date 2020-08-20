@@ -32,8 +32,8 @@ class FundedProjectsFragment : BaseProjectsFragment() {
         recyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         recyclerView.adapter = fastAdapter
 
-        itemAdapter.add(viewModel.getProjects().map {
-            ProjectSmallItem(it)
-        })
+//        itemAdapter.add(viewModel.getProjects().map {
+//            ProjectSmallItem(it)
+//        })
     }
 }

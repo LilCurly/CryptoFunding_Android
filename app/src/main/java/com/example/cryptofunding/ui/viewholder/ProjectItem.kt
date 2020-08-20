@@ -31,9 +31,9 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
         private val title: TextView = view.projectTitleTextView
         private val category: TextView = view.projectCategoryTextView
         private val percentFunded: TextView = view.fundedPercentTextView
-        private val background: ImageView = view.projectImageView
+        val background: ImageView = view.projectImageView
         val likeCardView: CardView = view.favCardView
-        val lottieLikeAnimation: LottieAnimationView = view.projectLikeAnimationView
+        private val lottieLikeAnimation: LottieAnimationView = view.projectLikeAnimationView
 
         override fun bindView(item: ProjectItem, payloads: List<Any>) {
             title.text = item.project.name

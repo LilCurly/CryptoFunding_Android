@@ -1,5 +1,6 @@
 package com.example.cryptofunding
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -88,8 +89,8 @@ class MainFragment : Fragment() {
         childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, DetailedProjectListFragment()).addToBackStack("test").commit()
     }
 
-    fun getToProjectDetail(project: Project, cardView: CardView, imageView: ImageView, title: TextView, category: TextView) {
-        val action = MainFragmentDirections.actionMainFragmentToProjectDetailFragment(project)
+    fun getToProjectDetail(project: Project, cardView: CardView, imageView: ImageView, title: TextView, category: TextView, posterBitmap: Bitmap? = null) {
+        val action = MainFragmentDirections.actionMainFragmentToProjectDetailFragment(project, posterBitmap)
         val extras = FragmentNavigatorExtras(
             cardView to project.id+"_card",
             imageView to project.id+"_image",

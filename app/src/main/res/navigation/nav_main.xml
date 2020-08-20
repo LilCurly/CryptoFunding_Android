@@ -102,6 +102,10 @@
         <argument
             android:name="project"
             app:argType="com.example.cryptofunding.data.Project" />
+        <argument
+            android:name="posterBitmap"
+            app:argType="android.graphics.Bitmap"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/createProjectFragment"
