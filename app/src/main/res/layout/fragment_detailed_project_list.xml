@@ -19,7 +19,8 @@
         android:elevation="6dp"
         android:paddingTop="?attr/actionBarSize"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:transitionName="categoryLayout">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoriesReyclerView"

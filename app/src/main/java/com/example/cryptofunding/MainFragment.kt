@@ -15,6 +15,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.cryptofunding.data.Project
+import com.example.cryptofunding.ui.custom.ClippingConstraintLayout
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.utils.LoggedWallet
 import kotlinx.android.synthetic.main.activity_main.*
@@ -85,9 +86,12 @@ class MainFragment : Fragment() {
         requireActivity().closeFrameLayout.visibility = View.GONE
     }
 
-    fun goToSeeDetailedList(category: String?) {
+    fun goToSeeDetailedList(category: String?, categoryLayout: ClippingConstraintLayout) {
         val action = MainFragmentDirections.actionMainFragmentToDetailedProjectListFragment(category)
-        findNavController().navigate(action)
+        val extras = FragmentNavigatorExtras(
+            categoryLayout to "categoryLayout"
+        )
+        findNavController().navigate(action, extras)
     }
 
     fun getToProjectDetail(project: Project, imageView: ImageView, posterBitmap: Bitmap? = null) {

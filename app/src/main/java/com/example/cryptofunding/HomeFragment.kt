@@ -79,7 +79,7 @@ class HomeFragment : Fragment() {
 
     private fun handleSeeMoreClickListener() {
         seeMoreTextView.setOnClickListener {
-            (parentFragment as MainFragment).goToSeeDetailedList(viewModel.currentCategory.value?.type?.title)
+            (parentFragment as MainFragment).goToSeeDetailedList(viewModel.currentCategory.value?.type?.title, clippingConstraintLayout)
         }
     }
 

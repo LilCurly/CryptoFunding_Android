@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:paddingTop="?attr/actionBarSize"
         android:clickable="true"
-        android:focusable="true" >
+        android:focusable="true"
+        android:transitionName="categoryLayout">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/homeCategoryRecyclerView"

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
@@ -13,6 +14,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
+import androidx.transition.TransitionSet
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.viewholder.CategorySmallItem
 import com.example.cryptofunding.ui.viewholder.ProjectItem
@@ -45,6 +48,15 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detailed_project_list, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        (sharedElementEnterTransition as TransitionSet).duration = 400
+        (sharedElementEnterTransition as TransitionSet).interpolator = DecelerateInterpolator()
+        sharedElementReturnTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
