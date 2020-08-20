@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -128,7 +129,7 @@ class HomeFragment : Fragment() {
         })
 
         projectFastAdapter.onClickListener = { v, _, item, _ ->
-            (parentFragment as MainFragment).getToProjectDetail(item.project, v!!.projectImageView, item.getViewHolder(v).background.drawToBitmap())
+            (parentFragment as MainFragment).getToProjectDetail(item.project, v!!.projectImageView, item.getViewHolder(v).background.drawable.toBitmap())
             true
         }
     }
