@@ -27,8 +27,6 @@
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
-        <Constraint
-            />
         <Constraint android:id="@id/detailLayout">
             <Layout
                 android:layout_width="match_parent"
@@ -37,7 +35,10 @@
                 android:paddingTop="24dp"
                 android:layout_marginTop="0dp"/>
             <PropertySet
-                android:visibility="visible"/>
+                android:visibility="visible" />
+            <CustomAttribute
+                app:attributeName="setElevation"
+                app:customDimension="4dp"/>
         </Constraint>
         <Constraint
             android:id="@+id/tasksLayout"
@@ -46,11 +47,14 @@
             app:layout_constraintTop_toBottomOf="@id/detailLayout"
             app:layout_constraintBottom_toBottomOf="parent"
             />
-        <Constraint
-            android:id="@+id/sliderView"
-            android:layout_width="match_parent"
-            android:layout_height="221dp"
-            app:layout_constraintTop_toTopOf="parent"/>
+        <Constraint android:id="@+id/sliderView">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="221dp"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <PropertySet
+                android:visibility="visible"/>
+        </Constraint>
         <Constraint
             android:id="@+id/posterGuideline"
             android:layout_width="match_parent"
@@ -117,11 +121,14 @@
             app:layout_constraintTop_toBottomOf="@id/detailLayout"
             app:layout_constraintBottom_toBottomOf="parent"
             />
-        <Constraint
-            android:id="@+id/sliderView"
-            android:layout_width="match_parent"
-            android:layout_height="221dp"
-            app:layout_constraintTop_toTopOf="parent"/>
+        <Constraint android:id="@+id/sliderView">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="221dp"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <PropertySet
+                android:visibility="invisible"/>
+        </Constraint>
         <Constraint
             android:id="@+id/posterGuideline"
             android:layout_width="match_parent"
