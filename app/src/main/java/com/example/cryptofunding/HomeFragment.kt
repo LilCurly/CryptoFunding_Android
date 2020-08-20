@@ -70,15 +70,6 @@ class HomeFragment : Fragment() {
 
         setupCategoriesList(viewModel.getCategories())
         handleSeeMoreClickListener()
-
-        viewModel.currentCategory.observe(viewLifecycleOwner) { category ->
-            if (category == null) {
-                viewModel.getProjects()
-            }
-            else {
-                viewModel.getProjectsForCategory(category.type.title)
-            }
-        }
     }
 
     private fun setupToolBar() {
@@ -183,12 +174,14 @@ class HomeFragment : Fragment() {
             }
             if (!item.isSelected) {
                 viewModel.setCurrentCategory(null)
+                viewModel.getProjects()
                 item.isSelected = false
                 deselectCategory()
                 currentItemPosition = null
             }
             else {
                 viewModel.setCurrentCategory(item.category)
+                viewModel.getProjectsForCategory(item.category.type.title)
                 item.isSelected = true
                 deselectCategory()
                 currentItemPosition = index
