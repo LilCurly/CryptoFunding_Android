@@ -37,15 +37,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.cryptofunding.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_detailedProjectListFragment"
-            app:destination="@id/detailedProjectListFragment"
-            app:enterAnim="@anim/nav_default_pop_enter_anim"
-            app:exitAnim="@anim/nav_default_pop_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.cryptofunding.MainFragment"
@@ -68,12 +60,20 @@
         <action
             android:id="@+id/action_mainFragment_to_projectDetailFragment"
             app:destination="@id/projectDetailFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_detailedProjectListFragment"
+            app:destination="@id/detailedProjectListFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailedProjectListFragment"
         android:name="com.example.cryptofunding.DetailedProjectListFragment"
         android:label="fragment_detailed_project_list"
-        tools:layout="@layout/fragment_detailed_project_list" />
+        tools:layout="@layout/fragment_detailed_project_list" >
+        <argument
+            android:name="categoryString"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.example.cryptofunding.FavoritesFragment"

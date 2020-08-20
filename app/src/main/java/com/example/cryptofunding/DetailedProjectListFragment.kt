@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,8 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
     private val categoryFastAdapter = FastAdapter.with(categoryItemAdapter)
     private var currentItemPosition: Int? = null
 
+    private val args: DetailedProjectListFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,15 +65,9 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
             })
             stopLoading()
         }
-        viewModel.getProjects()
 
-        viewModel.currentCategory.observe(viewLifecycleOwner) { category ->
-            if (category == null) {
-                viewModel.getProjects()
-            }
-            else {
-                viewModel.getProjectsForCategory(category.type.title)
-            }
+        if (!viewModel.hasProjects()) {
+            viewModel.getProjects()
         }
     }
 
@@ -88,7 +85,11 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
 
         if (categoryItemAdapter.adapterItemCount == 0) {
             categoryItemAdapter.add(viewModel.getCategories().map {
-                CategorySmallItem(it)
+                val item = CategorySmallItem(it)
+                if (args.categoryString == it.type.title) {
+                    item.isSelected = true
+                }
+                item
             })
         }
     }
@@ -114,12 +115,14 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
             }
             if (!item.isSelected) {
                 viewModel.setCurrentCategory(null)
+                viewModel.getProjects()
                 item.isSelected = false
                 deselectCategory()
                 currentItemPosition = null
             }
             else {
                 viewModel.setCurrentCategory(item.category)
+                viewModel.getProjectsForCategory(item.category.type.title)
                 item.isSelected = true
                 deselectCategory()
                 currentItemPosition = index

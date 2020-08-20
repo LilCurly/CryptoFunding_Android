@@ -85,8 +85,9 @@ class MainFragment : Fragment() {
         requireActivity().closeFrameLayout.visibility = View.GONE
     }
 
-    fun goToSeeDetailedList() {
-        childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, DetailedProjectListFragment()).addToBackStack("test").commit()
+    fun goToSeeDetailedList(category: String?) {
+        val action = MainFragmentDirections.actionMainFragmentToDetailedProjectListFragment(category)
+        findNavController().navigate(action)
     }
 
     fun getToProjectDetail(project: Project, imageView: ImageView, posterBitmap: Bitmap? = null) {
