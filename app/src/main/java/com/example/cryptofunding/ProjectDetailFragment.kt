@@ -20,6 +20,7 @@ import androidx.core.view.children
 import androidx.core.view.doOnNextLayout
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.get
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
@@ -32,6 +33,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.cryptofunding.data.SliderImage
 import com.example.cryptofunding.data.Task
+import com.example.cryptofunding.databinding.FragmentProjectDetailBinding
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.adapter.SliderAdapter
 import com.example.cryptofunding.ui.viewholder.TaskAdapter
@@ -63,6 +65,8 @@ class ProjectDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.project = args.project
+
         setEnterSharedElementCallback(object: androidx.core.app.SharedElementCallback() {
             override fun onSharedElementEnd(
                 sharedElementNames: MutableList<String>?,
@@ -72,6 +76,8 @@ class ProjectDetailFragment : Fragment() {
                 handleMotionLayout()
             }
         })
+
+        viewModel.loadTasksForId(viewModel.project.id!!)
     }
 
     override fun onCreateView(
@@ -82,15 +88,23 @@ class ProjectDetailFragment : Fragment() {
         (sharedElementEnterTransition as TransitionSet).duration = 400
         (sharedElementEnterTransition as TransitionSet).interpolator = DecelerateInterpolator()
         sharedElementReturnTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
-        return inflater.inflate(R.layout.fragment_project_detail, container, false)
+
+        val binding: FragmentProjectDetailBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_project_detail, container, false)
+        binding.viewModel = viewModel
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hideToolbar()
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            calcultateTotalAmount(it)
+            setupTasks(it.toMutableList())
+            stopLoading()
+        }
 
-        viewModel.project = args.project
+        hideToolbar()
 
         viewModel.project.imagesUrl.forEachIndexed { index, url ->
             if (index == 0) {
@@ -104,17 +118,6 @@ class ProjectDetailFragment : Fragment() {
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM)
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
         sliderView.setInfiniteAdapterEnabled(false)
-
-        viewModel.tasks.observe(viewLifecycleOwner) {
-            setupTasks(it.toMutableList())
-            calcultateTotalAmount(it)
-            stopLoading()
-        }
-        viewModel.loadTasksForId(viewModel.project.id!!)
-
-        textType.text = viewModel.project.category.title
-        textTitle.text = viewModel.project.name
-        textSummary.text = viewModel.project.summary
 
         if (LoggedWallet.currentlyLoggedWallet == null) {
             favCardView.visibility = View.GONE
