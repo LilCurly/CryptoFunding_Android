@@ -1,23 +1,30 @@
 package com.example.cryptofunding
 
 
+import android.animation.TimeInterpolator
+import android.app.SharedElementCallback
 import android.os.Bundle
+import android.transition.Transition
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.children
+import androidx.core.view.doOnNextLayout
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
+import androidx.transition.TransitionSet
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -51,6 +58,23 @@ class ProjectDetailFragment : Fragment() {
     }
 
     private val args: ProjectDetailFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        (sharedElementEnterTransition as TransitionSet).duration = 400
+        (sharedElementEnterTransition as TransitionSet).interpolator = DecelerateInterpolator()
+        setEnterSharedElementCallback(object: androidx.core.app.SharedElementCallback() {
+            override fun onSharedElementEnd(
+                sharedElementNames: MutableList<String>?,
+                sharedElements: MutableList<View>?,
+                sharedElementSnapshots: MutableList<View>?
+            ) {
+                handleMotionLayout()
+            }
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -115,11 +139,13 @@ class ProjectDetailFragment : Fragment() {
             viewModel.project.isFavorite = !viewModel.project.isFavorite
         }
 
-        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
-        favCardView.transitionName = args.project.id + "_card"
-        textTitle.transitionName = args.project.id + "_title"
-        textType.transitionName = args.project.id + "_category"
         sliderView[0].transitionName = args.project.id + "_image"
+    }
+
+    private fun handleMotionLayout() {
+        motionLayout.setTransition(R.id.opened, R.id.start)
+        motionLayout.setTransitionDuration(800)
+        motionLayout.transitionToEnd()
     }
 
     private fun stopLoading() {
@@ -147,6 +173,4 @@ class ProjectDetailFragment : Fragment() {
         tasksRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
     }
-
-
 }

@@ -125,7 +125,7 @@ class HomeFragment : Fragment() {
         })
 
         projectFastAdapter.onClickListener = { v, _, item, _ ->
-            (parentFragment as MainFragment).getToProjectDetail(item.project, v!!.favCardView, v.projectImageView, v.projectTitleTextView, v.projectCategoryTextView, item.getViewHolder(v).background.drawToBitmap())
+            (parentFragment as MainFragment).getToProjectDetail(item.project, v!!.projectImageView, item.getViewHolder(v).background.drawToBitmap())
             true
         }
     }

@@ -42,10 +42,7 @@ class ProjectSmallItem(val project: Project): AbstractItem<ProjectSmallItem.View
                 favCardView.visibility = View.GONE
             }
 
-            ViewCompat.setTransitionName(favCardView, item.project.id + "_card")
             ViewCompat.setTransitionName(poster, item.project.id + "_image")
-            ViewCompat.setTransitionName(category, item.project.id + "_category")
-            ViewCompat.setTransitionName(title, item.project.id + "_title")
         }
 
         override fun unbindView(item: ProjectSmallItem) {

@@ -50,10 +50,7 @@ class ProjectItem(val project: Project): AbstractItem<ProjectItem.ViewHolder>() 
                 likeCardView.visibility = View.GONE
             }
 
-            ViewCompat.setTransitionName(likeCardView, item.project.id + "_card")
             ViewCompat.setTransitionName(background, item.project.id + "_image")
-            ViewCompat.setTransitionName(category, item.project.id + "_category")
-            ViewCompat.setTransitionName(title, item.project.id + "_title")
         }
 
         override fun unbindView(item: ProjectItem) {

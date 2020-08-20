@@ -89,13 +89,9 @@ class MainFragment : Fragment() {
         childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, DetailedProjectListFragment()).addToBackStack("test").commit()
     }
 
-    fun getToProjectDetail(project: Project, cardView: CardView, imageView: ImageView, title: TextView, category: TextView, posterBitmap: Bitmap? = null) {
+    fun getToProjectDetail(project: Project, imageView: ImageView, posterBitmap: Bitmap? = null) {
         val action = MainFragmentDirections.actionMainFragmentToProjectDetailFragment(project, posterBitmap)
-        val extras = FragmentNavigatorExtras(
-            cardView to project.id+"_card",
-            imageView to project.id+"_image",
-            title to project.id + "_title",
-            category to project.id + "_category")
+        val extras = FragmentNavigatorExtras(imageView to project.id+"_image")
         findNavController().navigate(action, extras)
     }
 
