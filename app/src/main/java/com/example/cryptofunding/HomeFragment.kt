@@ -15,6 +15,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.example.cryptofunding.data.Category
 import com.example.cryptofunding.data.Project
 import com.example.cryptofunding.di.injector
@@ -92,8 +93,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupProjectsList(projects: List<Project>) {
-        projectsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        projectsRecyclerView.adapter = projectFastAdapter
+
+        projectsRecyclerView.apply {
+            this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            this.adapter = projectFastAdapter
+            postponeEnterTransition()
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
+        }
 
         projectFastAdapter.addEventHook(object: ClickEventHook<ProjectItem>() {
             override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {

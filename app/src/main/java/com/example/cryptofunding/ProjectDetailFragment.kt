@@ -18,6 +18,7 @@ import android.widget.RelativeLayout
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.children
 import androidx.core.view.doOnNextLayout
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -62,9 +63,6 @@ class ProjectDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
-        (sharedElementEnterTransition as TransitionSet).duration = 400
-        (sharedElementEnterTransition as TransitionSet).interpolator = DecelerateInterpolator()
         setEnterSharedElementCallback(object: androidx.core.app.SharedElementCallback() {
             override fun onSharedElementEnd(
                 sharedElementNames: MutableList<String>?,
@@ -80,7 +78,10 @@ class ProjectDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        (sharedElementEnterTransition as TransitionSet).duration = 400
+        (sharedElementEnterTransition as TransitionSet).interpolator = DecelerateInterpolator()
+        sharedElementReturnTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
         return inflater.inflate(R.layout.fragment_project_detail, container, false)
     }
 
