@@ -57,4 +57,13 @@ class ProjectsViewModel @Inject constructor(private val projectRepository: Proje
             projects.value = it
         }
     }
+
+    fun hasProjects(): Boolean {
+        projects.value?.let {
+            if (it.isNotEmpty()) {
+                return true
+            }
+        }
+        return false
+    }
 }

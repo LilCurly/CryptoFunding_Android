@@ -61,7 +61,10 @@ class HomeFragment : Fragment() {
             setupProjectsList(projects)
             stopLoading()
         }
-        viewModel.getProjects()
+
+        if (!viewModel.hasProjects()) {
+            viewModel.getProjects()
+        }
 
         setupCategoriesList(viewModel.getCategories())
         handleSeeMoreClickListener()
