@@ -19,6 +19,7 @@ import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.custom.AddTaskBottomSheet
 import com.example.cryptofunding.ui.viewholder.NewTaskAdapter
 import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.utils.Global
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_tasks.*
 import kotlinx.coroutines.Dispatchers
@@ -79,6 +80,7 @@ class AddTasksFragment : Fragment() {
                 loadingAnimation.visibility = View.GONE
                 successAnimation.visibility = View.VISIBLE
                 successAnimation.playAnimation()
+                Global.mustReload = true
                 Timer("Success", false).schedule(1000) {
                     findNavController().popBackStack()
                     findNavController().popBackStack()

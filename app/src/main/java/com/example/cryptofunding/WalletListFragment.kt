@@ -21,6 +21,7 @@ import com.example.cryptofunding.data.Wallet
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.custom.CustomDialog
 import com.example.cryptofunding.ui.viewholder.WalletAdapter
+import com.example.cryptofunding.utils.Global
 import com.example.cryptofunding.viewmodel.viewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -97,6 +98,7 @@ class WalletListFragment : Fragment() {
             wallet
         }.toMutableList(), { view, _, item, position ->
             if (!viewModel.isCurrentWallet(item)) {
+                Global.mustReload = true
                 viewModel.setCurrentWallet(item)
                 deselectRow()
                 currentItemPosition = position

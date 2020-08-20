@@ -22,6 +22,7 @@ import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.viewholder.CategoryItem
 import com.example.cryptofunding.ui.viewholder.ProjectItem
 import com.example.cryptofunding.utils.DEBUG
+import com.example.cryptofunding.utils.Global
 import com.example.cryptofunding.viewmodel.viewModel
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
@@ -64,8 +65,16 @@ class HomeFragment : Fragment() {
             stopLoading()
         }
 
-        if (!viewModel.hasProjects()) {
-            viewModel.getProjects()
+        if (!viewModel.hasProjects() || Global.mustReload) {
+            if (viewModel.currentCategory.value == null) {
+                viewModel.getProjects()
+            }
+            else {
+                viewModel.getProjectsForCategory(viewModel.currentCategory.value?.type?.title!!)
+            }
+            if (Global.mustReload) {
+                Global.mustReload = false
+            }
         }
 
         setupCategoriesList(viewModel.getCategories())
