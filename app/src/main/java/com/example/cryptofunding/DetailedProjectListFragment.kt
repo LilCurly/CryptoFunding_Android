@@ -67,7 +67,12 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
         }
 
         if (!viewModel.hasProjects()) {
-            viewModel.getProjects()
+            if (args.categoryString == null) {
+                viewModel.getProjects()
+            }
+            else {
+                viewModel.getProjectsForCategory(args.categoryString!!)
+            }
         }
     }
 
