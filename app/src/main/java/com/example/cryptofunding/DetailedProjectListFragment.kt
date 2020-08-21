@@ -177,12 +177,12 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().toolbarTitle.text = getString(R.string.app_name)
         requireActivity().walletFrameLayout.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToWalletListFragment()
+            val action = DetailedProjectListFragmentDirections.actionDetailedProjectListFragmentToWalletListFragment()
             findNavController().navigate(action)
         }
 
         requireActivity().addFrameLayout.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToCreateProjectFragment()
+            val action = DetailedProjectListFragmentDirections.actionDetailedProjectListFragmentToCreateProjectFragment()
             findNavController().navigate(action)
         }
 

@@ -80,6 +80,12 @@
         <action
             android:id="@+id/action_detailedProjectListFragment_to_projectDetailFragment"
             app:destination="@id/projectDetailFragment" />
+        <action
+            android:id="@+id/action_detailedProjectListFragment_to_walletListFragment"
+            app:destination="@id/walletListFragment" />
+        <action
+            android:id="@+id/action_detailedProjectListFragment_to_createProjectFragment"
+            app:destination="@id/createProjectFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
