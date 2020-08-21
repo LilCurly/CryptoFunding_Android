@@ -10,6 +10,7 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,7 +62,7 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().toolbarTitle.text = resources.getString(R.string.app_name)
+        setupToolbar()
         setupCategoriesRecyclerView()
         setupProjectsRecyclerView()
     }
@@ -170,5 +171,23 @@ class DetailedProjectListFragment : BaseProjectsFragment() {
     private fun stopLoading() {
         loadingAnimation.visibility = View.GONE
         projectsRecyclerView.visibility = View.VISIBLE
+    }
+
+    private fun setupToolbar() {
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().toolbarTitle.text = getString(R.string.app_name)
+        requireActivity().walletFrameLayout.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToWalletListFragment()
+            findNavController().navigate(action)
+        }
+
+        requireActivity().addFrameLayout.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToCreateProjectFragment()
+            findNavController().navigate(action)
+        }
+
+        requireActivity().walletFrameLayout.visibility = View.VISIBLE
+        requireActivity().addFrameLayout.visibility = View.VISIBLE
+        requireActivity().closeFrameLayout.visibility = View.GONE
     }
 }

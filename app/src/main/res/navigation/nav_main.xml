@@ -77,6 +77,9 @@
             android:name="categoryString"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_detailedProjectListFragment_to_projectDetailFragment"
+            app:destination="@id/projectDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"

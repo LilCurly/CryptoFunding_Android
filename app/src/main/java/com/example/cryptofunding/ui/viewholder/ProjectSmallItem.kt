@@ -21,7 +21,7 @@ class ProjectSmallItem(val project: Project): AbstractItem<ProjectSmallItem.View
     }
 
     class ViewHolder(private val view: View): FastAdapter.ViewHolder<ProjectSmallItem>(view) {
-        private val poster = view.projectImageView
+        val poster = view.projectImageView
         private val favAnimation = view.projectLikeAnimationView
         val favCardView = view.favCardView
         private val category = view.categoryTextView
