@@ -7,4 +7,5 @@ import javax.inject.Inject
 
 class FinanceViewModel @Inject constructor(private val repo: WalletRepository) {
     var wallets: LiveData<List<Wallet>> = repo.getAll()
+    var currentWalletKey: String? = null
 }

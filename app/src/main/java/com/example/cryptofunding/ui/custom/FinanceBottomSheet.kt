@@ -1,6 +1,7 @@
 package com.example.cryptofunding.ui.custom
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,13 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.cryptofunding.R
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.viewholder.WalletItem
+import com.example.cryptofunding.utils.DEBUG
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import kotlinx.android.synthetic.main.fragment_create_project.*
+import kotlinx.android.synthetic.main.item_wallet_foreground.view.*
 import kotlinx.android.synthetic.main.sheet_finance.*
 import travel.ithaka.android.horizontalpickerlib.PickerLayoutManager
 
@@ -51,6 +54,11 @@ class FinanceBottomSheet(val onDismiss: () -> Unit): BottomSheetDialogFragment()
         pickerLayoutManager.isChangeAlpha = true
         pickerLayoutManager.scaleDownBy = 0.15f
         pickerLayoutManager.scaleDownDistance = 0.45f
+
+        pickerLayoutManager.setOnScrollStopListener {
+            viewModel.currentWalletKey = it.walletitem_address.text.toString()
+            Log.d(DEBUG, viewModel.currentWalletKey)
+        }
 
         walletPicker.layoutManager = pickerLayoutManager
 
