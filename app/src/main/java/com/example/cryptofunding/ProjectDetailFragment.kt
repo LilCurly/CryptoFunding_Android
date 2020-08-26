@@ -36,6 +36,7 @@ import com.example.cryptofunding.data.Task
 import com.example.cryptofunding.databinding.FragmentProjectDetailBinding
 import com.example.cryptofunding.di.injector
 import com.example.cryptofunding.ui.adapter.SliderAdapter
+import com.example.cryptofunding.ui.custom.FinanceBottomSheet
 import com.example.cryptofunding.ui.viewholder.TaskAdapter
 import com.example.cryptofunding.utils.DEBUG
 import com.example.cryptofunding.utils.LoggedWallet
@@ -59,6 +60,9 @@ class ProjectDetailFragment : Fragment() {
     private val imageList by lazy {
         mutableListOf<SliderImage>()
     }
+
+    private var prevState: Int = 0
+    private var currentState: Int = 0
 
     private val args: ProjectDetailFragmentArgs by navArgs()
 
@@ -144,6 +148,28 @@ class ProjectDetailFragment : Fragment() {
         }
 
         sliderView[0].transitionName = args.project.id + "_image"
+
+        financeButton.setOnClickListener {
+            if (motionLayout.currentState == R.id.start) {
+                prevState = R.id.start
+                currentState = R.id.startClicked
+                motionLayout.setTransition(R.id.start, R.id.startClicked)
+            }
+            else if (motionLayout.currentState == R.id.end) {
+                prevState = R.id.end
+                currentState = R.id.endClicked
+                motionLayout.setTransition(R.id.end, R.id.endClicked)
+            }
+            motionLayout.setTransitionDuration(250)
+            motionLayout.transitionToEnd()
+
+            val bottomSheet = FinanceBottomSheet {
+                motionLayout.setTransition(currentState, prevState)
+                motionLayout.setTransitionDuration(250)
+                motionLayout.transitionToEnd()
+            }
+            bottomSheet.show(parentFragmentManager, "TAG")
+        }
     }
 
     private fun handleMotionLayout() {

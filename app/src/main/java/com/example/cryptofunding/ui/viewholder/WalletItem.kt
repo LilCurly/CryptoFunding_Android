@@ -1,5 +1,7 @@
 package com.example.cryptofunding.ui.viewholder
 
+import android.content.ContextWrapper
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
@@ -19,9 +21,9 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
     val address: String? = wallet.publicKey
 
     override val layoutRes: Int
-        get() = R.layout.item_wallet
+        get() = R.layout.item_wallet_foreground
     override val type: Int
-        get() = R.id.walletitem_name
+        get() = R.id.walletItem
 
     override fun getViewHolder(v: View): ViewHolder {
         return ViewHolder(v)
@@ -37,48 +39,17 @@ class WalletItem(val wallet: Wallet): AbstractItem<WalletItem.ViewHolder>() {
         override fun bindView(item: WalletItem, payloads: List<Any>) {
             address.text = item.address
             name.text = item.name
-            item.wallet.amount.observe(view.context as LifecycleOwner) {
+            item.wallet.amount.observe((view.context as ContextWrapper).baseContext as LifecycleOwner) {
                 amount.text = it
                 stopAnimation()
             }
-
-            if (item.isSelected) {
-                scaleUpView()
-            }
-
-            view.swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
         }
 
         override fun unbindView(item: WalletItem) {
             address.text = null
             amount.text = null
             name.text = null
-            if (item.isSelected) {
-                scaleDownView()
-            }
             itemView.animation = null
-        }
-
-        fun scaleUpView() {
-            itemView.animate()
-                .setDuration(0)
-                .setStartDelay(0)
-                .setListener(null)
-                .setInterpolator(LinearInterpolator())
-                .scaleX(1.04f)
-                .scaleY(1.04f)
-                .start()
-        }
-
-        fun scaleDownView() {
-            itemView.animate()
-                .setDuration(0)
-                .setStartDelay(0)
-                .setListener(null)
-                .setInterpolator(LinearInterpolator())
-                .scaleX(1f)
-                .scaleY(1f)
-                .start()
         }
 
         private fun stopAnimation() {

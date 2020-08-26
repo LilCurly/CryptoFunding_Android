@@ -251,6 +251,8 @@
                 app:layout_constraintTop_toBottomOf="@id/stepsTextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="15dp"
+                android:paddingBottom="78dp"
+                android:clipToPadding="false"
                 tools:listitem="@layout/item_task"
                 android:visibility="gone"/>
 
@@ -268,6 +270,19 @@
                 android:visibility="visible"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/financeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/button_background"
+            android:textColor="@color/colorBackgroundWhiteApp"
+            android:fontFamily="@font/robotomedium"
+            android:text="@string/finance"/>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

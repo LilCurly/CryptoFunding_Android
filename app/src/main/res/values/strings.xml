@@ -57,4 +57,9 @@
     <string name="percentFinanced">%1$d%% financé</string>
     <string name="noWallet">Connectez vous à un portefeuille pour voir les favoris qui lui sont associés</string>
     <string name="eth_suffix">%1$s ETH</string>
+    <string name="finance">Financer</string>
+    <string name="amount">Montant:</string>
+    <string name="amountHint">0.0</string>
+    <string name="continu">Continuer</string>
+    <string name="wallet">Portefeuille:</string>
 </resources>
