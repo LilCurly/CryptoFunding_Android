@@ -33,11 +33,11 @@ class ProjectRepository @Inject constructor(private val firestore: FirebaseFires
     companion object {
         val categories = listOf(
             Category(CategoryType.Blacksmith, R.drawable.blacksmith),
-            Category(CategoryType.Blockchain, R.drawable.blockchain),
+            Category(CategoryType.Blockchain, R.drawable.movie),
             Category(CategoryType.Brain, R.drawable.brain),
-            Category(CategoryType.Drug, R.drawable.drug),
-            Category(CategoryType.Garbage, R.drawable.garbage),
-            Category(CategoryType.Camera, R.drawable.camera),
+            Category(CategoryType.Drug, R.drawable.science),
+            Category(CategoryType.Garbage, R.drawable.study),
+            Category(CategoryType.Camera, R.drawable.paint),
             Category(CategoryType.Joystick, R.drawable.joystick)
         )
     }
